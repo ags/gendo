@@ -1,6 +1,8 @@
 Gendo::Application.routes.draw do
   root 'home#index'
 
+  resources :transaction, only: [:create]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
