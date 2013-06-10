@@ -1,4 +1,4 @@
-class TransactionController < ApplicationController
+class TransactionsController < ApplicationController
   def create
     Transaction.create!(params.require(:transaction).permit(
       :controller,
@@ -15,5 +15,9 @@ class TransactionController < ApplicationController
     ))
 
     render nothing: true, status: 201
+  end
+
+  def index
+    @transactions = Transaction.scoped
   end
 end

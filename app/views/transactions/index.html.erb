@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Controller</th>
+      <th>Action</th>
+      <th>Path</th>
+      <th>Format</th>
+      <th>Method</th>
+      <th>Status</th>
+      <th>Started At</th>
+      <th>Ended At</th>
+      <th>DB Runtime</th>
+      <th>View Runtime</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.id %></td>
+        <td><%= transaction.controller %></td>
+        <td><%= transaction.action %></td>
+        <td><%= transaction.path %></td>
+        <td><%= transaction.format %></td>
+        <td><%= transaction.method %></td>
+        <td><%= transaction.status %></td>
+        <td><%= transaction.started_at %></td>
+        <td><%= transaction.ended_at %></td>
+        <td><%= transaction.db_runtime %></td>
+        <td><%= transaction.view_runtime %></td>
+        <td><%= transaction.duration %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

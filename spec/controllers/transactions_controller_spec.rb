@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TransactionController do
+describe TransactionsController do
   it "creates a Transaction" do
     expect do
       post :create, transaction: {
