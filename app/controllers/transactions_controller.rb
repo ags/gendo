@@ -30,7 +30,7 @@ class TransactionsController < ApplicationController
   end
 
   def index
-    @transactions = Transaction.scoped
+    @transactions = Transaction.recent
   end
 
   def show
