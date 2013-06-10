@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130610061724) do
+ActiveRecord::Schema.define(version: 20130610074217) do
+
+  create_table "sql_events", force: true do |t|
+    t.integer  "transaction_id"
+    t.string   "sql",            limit: 1024
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.float    "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "transactions", force: true do |t|
     t.string   "controller",   null: false

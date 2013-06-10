@@ -4,4 +4,6 @@ class Transaction < ActiveRecord::Base
 
   validates :action,
     presence: true
+
+  has_many :sql_events
 end
