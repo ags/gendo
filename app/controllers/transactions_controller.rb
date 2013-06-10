@@ -24,6 +24,16 @@ class TransactionsController < ApplicationController
           duration:     sql_event[:duration]
         )
       end
+
+      view_events = params[:transaction].fetch(:view_events) { [] }
+      view_events.each do |view_event|
+        transaction.view_events.create!(
+          identifier:   view_event[:identifier],
+          started_at:   view_event[:started_at],
+          ended_at:     view_event[:ended_at],
+          duration:     view_event[:duration]
+        )
+      end
     end
 
     render nothing: true, status: 201

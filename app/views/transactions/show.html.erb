@@ -55,3 +55,26 @@
   <% end %>
 </tbody>
 </table>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Started At</th>
+      <th>Ended At</th>
+      <th>Duration</th>
+      <th>Identifier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transaction.view_events.each do |view_event| %>
+    <tr>
+      <td><%= view_event.id %></td>
+      <td><%= view_event.started_at %></td>
+      <td><%= view_event.ended_at %></td>
+      <td><%= view_event.duration %></td>
+      <td><%= view_event.identifier %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>

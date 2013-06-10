@@ -7,6 +7,8 @@ class Transaction < ActiveRecord::Base
 
   has_many :sql_events
 
+  has_many :view_events
+
   def self.recent(n=100)
     order('created_at DESC').limit(n)
   end

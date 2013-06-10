@@ -35,4 +35,21 @@ describe TransactionsController do
       }
     end.to change { SqlEvent.count }.by(+1)
   end
+
+  it "creates nested view events" do
+    expect do
+      post :create, transaction: {
+        controller: 'PostsController',
+        action:     'new',
+        view_events: [
+          {
+            identifier:   '/foo/bar.html.erb',
+            started_at:   Time.now,
+            ended_at:     1.second.from_now,
+            duration:     0.321,
+          }
+        ]
+      }
+    end.to change { ViewEvent.count }.by(+1)
+  end
 end
