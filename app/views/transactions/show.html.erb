@@ -1,0 +1,57 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Controller</th>
+      <th>Action</th>
+      <th>Path</th>
+      <th>Format</th>
+      <th>Method</th>
+      <th>Status</th>
+      <th>Started At</th>
+      <th>Ended At</th>
+      <th>DB Runtime</th>
+      <th>View Runtime</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @transaction.id %></td>
+      <td><%= @transaction.controller %></td>
+      <td><%= @transaction.action %></td>
+      <td><%= @transaction.path %></td>
+      <td><%= @transaction.format %></td>
+      <td><%= @transaction.method %></td>
+      <td><%= @transaction.status %></td>
+      <td><%= @transaction.started_at %></td>
+      <td><%= @transaction.ended_at %></td>
+      <td><%= @transaction.db_runtime %></td>
+      <td><%= @transaction.view_runtime %></td>
+      <td><%= @transaction.duration %></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Started At</th>
+      <th>Ended At</th>
+      <th>Duration</th>
+      <th>SQL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transaction.sql_events.each do |sql_event| %>
+    <tr>
+      <td><%= sql_event.id %></td>
+      <td><%= sql_event.started_at %></td>
+      <td><%= sql_event.ended_at %></td>
+      <td><%= sql_event.duration %></td>
+      <td><%= sql_event.sql %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
