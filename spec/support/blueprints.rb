@@ -9,3 +9,9 @@ UserAccessToken.blueprint do
   user
   token { sn }
 end
+
+Transaction.blueprint do
+  user
+  controller { 'PostsController' }
+  action     { 'new' }
+end

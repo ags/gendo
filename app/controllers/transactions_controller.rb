@@ -1,6 +1,8 @@
 class TransactionsController < ApplicationController
   def create
     Transaction.transaction do # TODO not the clearest thing
+      user = User.last
+
       transaction_params = params.require(:transaction).permit(
         :controller,
         :action,
@@ -12,7 +14,8 @@ class TransactionsController < ApplicationController
         :view_runtime,
         :duration
       ).merge(started_at: Time.at(params[:transaction][:started_at].to_f),
-              ended_at:   Time.at(params[:transaction][:ended_at].to_f))
+              ended_at:   Time.at(params[:transaction][:ended_at].to_f),
+              user: user)
 
       transaction = Transaction.create!(transaction_params)
 

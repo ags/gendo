@@ -1,6 +1,12 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
 
+  has_many :user_access_tokens,
+    dependent: :destroy
+
+  has_many :transactions,
+    dependent: :destroy
+
   validates :email,
     presence: true,
     uniqueness: true
@@ -12,9 +18,6 @@ class User < ActiveRecord::Base
   validates :password,
     presence: true,
     on: :create
-
-  has_many :user_access_tokens,
-    dependent: :destroy
 
   def self.with_email!(email)
     where(email: email).first!

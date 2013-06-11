@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe TransactionsController do
+  before do
+    User.make!
+  end
+
   it "creates a Transaction" do
     expect do
       post :create, transaction: {
