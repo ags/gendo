@@ -10,8 +10,8 @@ describe TransactionsController do
         format:       '*/*',
         method:       'GET',
         status:       200,
-        started_at:   Time.now,
-        ended_at:     1.second.from_now,
+        started_at:   1370939786.0706801,
+        ended_at:     1370939787.0706801,
         db_runtime:   0.1234,
         view_runtime: 0.4567,
         duration:     1.98,
@@ -27,8 +27,8 @@ describe TransactionsController do
         sql_events: [
           {
             sql: "SELECT * FROM users WHERE id = '1'",
-            started_at:   Time.now,
-            ended_at:     1.second.from_now,
+            started_at:   1370939786.0706801,
+            ended_at:     1370939787.0706801,
             duration:     0.321,
           }
         ]
@@ -44,8 +44,8 @@ describe TransactionsController do
         view_events: [
           {
             identifier:   '/foo/bar.html.erb',
-            started_at:   Time.now,
-            ended_at:     1.second.from_now,
+            started_at:   1370939786.0706801,
+            ended_at:     1370939787.0706801,
             duration:     0.321,
           }
         ]
