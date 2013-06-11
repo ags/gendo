@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
     on: :create
 
   has_many :user_access_tokens,
-    inverse_of: :user,
     dependent: :destroy
 
   def self.with_email!(email)
