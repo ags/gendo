@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130610091821) do
+ActiveRecord::Schema.define(version: 20130611123234) do
 
   create_table "sql_events", force: true do |t|
     t.integer  "transaction_id"
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20130610091821) do
     t.float    "db_runtime"
     t.float    "view_runtime"
     t.float    "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "email",            null: false
+    t.string   "crypted_password"
+    t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -24,9 +24,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Gendo</a>
+          <a class="brand" href="<%= root_url %>">Gendo</a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
+              <% if logged_in? %>
+                <li><%= link_to "logout" %></li>
+              <% else %>
+                <li><%= link_to "sign up", signup_path %></li>
+              <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
