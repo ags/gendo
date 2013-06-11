@@ -15,9 +15,9 @@ describe User do
   end
 
   it "does not permit duplicate emails" do
-    User.create!(email: "foo@bar.com", password: "foobar")
+    User.make!(email: "foo@bar.com")
     expect do
-      User.create!(email: "foo@bar.com", password: 'password')
+      User.make!(email: "foo@bar.com")
     end.to raise_error(ActiveRecord::RecordInvalid)
   end
 

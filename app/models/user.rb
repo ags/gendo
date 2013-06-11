@@ -24,5 +24,4 @@ class User < ActiveRecord::Base
   def current_access_token
     user_access_tokens.last
   end
-
 end
