@@ -19,6 +19,9 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
+    active_attr (0.8.0)
+      activemodel (>= 3.0.2, < 4.1)
+      activesupport (>= 3.0.2, < 4.1)
     activemodel (4.0.0.rc1)
       activesupport (= 4.0.0.rc1)
       builder (~> 3.1.0)
@@ -73,6 +76,7 @@ GEM
     jwt (0.1.8)
       multi_json (>= 1.5)
     kgio (2.8.0)
+    machinist (2.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -165,11 +169,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_attr
   bootstrap-sass
   capybara
   coffee-rails (~> 4.0.0)
   dotenv-rails
   jquery-rails
+  machinist
   pg
   quiet_assets
   rails (= 4.0.0.rc1)

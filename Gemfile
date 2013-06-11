@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
+gem 'active_attr'
 gem 'jquery-rails'
 gem 'pg'
 gem 'rails', '4.0.0.rc1'
@@ -20,6 +21,7 @@ group :test do
   gem 'rspec-rails'
   gem 'turnip'
   gem 'capybara'
+  gem 'machinist'
 end
 
 group :test, :development do

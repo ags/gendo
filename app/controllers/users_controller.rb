@@ -1,16 +1,20 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    @form = Forms::SignUp.new
   end
 
   def create
-    @user = User.new(params.require(:user).permit(:email, :password))
-    if @user.valid?
-      @user.save!
-      auto_login(@user)
+    @form = Forms::SignUp.new(sign_up_params)
+    if @form.valid?
+      @form.save!
+      auto_login(@form.user)
       redirect_to root_url
     else
       render :new
     end
+  end
+
+  def sign_up_params
+    params.require(:forms_sign_up).permit(:email, :password)
   end
 end
