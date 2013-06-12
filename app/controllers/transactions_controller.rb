@@ -26,6 +26,6 @@ class TransactionsController < ApplicationController
   end
 
   def show
-    @transaction = Transaction.find(params[:id])
+    @transaction = Transaction.find(params[:id]).decorate
   end
 end

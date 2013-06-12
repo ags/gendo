@@ -9,6 +9,7 @@ gem 'rails', '4.0.0.rc1'
 gem 'sorcery',
   git: 'git@github.com:NoamB/sorcery.git' # Support for rails 4 strong parameters
 gem 'unicorn'
+gem 'draper'
 
 group :assets do
   gem 'coffee-rails', '~> 4.0.0'
