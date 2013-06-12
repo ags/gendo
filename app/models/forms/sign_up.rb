@@ -19,16 +19,20 @@ module Forms
     def save!
       return false unless valid?
 
-      @user = User.transaction do
-        User.create!(email: email, password: password).tap do |user|
-          UserAccessToken.generate(user).save!
-        end
-      end
+      @user = create_user
 
       true
     end
 
     private
+
+    def create_user
+      User.transaction do
+        User.create!(email: email, password: password).tap do |user|
+          UserAccessToken.generate(user).save!
+        end
+      end
+    end
 
     def email_available?
       if User.with_email!(email).present?
