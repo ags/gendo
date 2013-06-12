@@ -14,7 +14,7 @@ class TransactionsController < ApplicationController
       :started_at,
       :ended_at,
       :duration,
-      sql_events:  [:sql, :started_at, :ended_at, :duration],
+      sql_events:  [:sql, :started_at, :ended_at, :duration, :name],
       view_events: [:identifier, :started_at, :ended_at, :duration]
     )
     Gendo::TransactionCreator.create!(transaction_params)

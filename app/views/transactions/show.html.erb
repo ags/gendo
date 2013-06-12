@@ -49,6 +49,7 @@
         <td><%= event.started_at %></td>
         <td><%= event.ended_at %></td>
         <td><%= event.duration %></td>
+        <td><%= event.name if event.respond_to?(:name) %></td>
         <td><%= event.respond_to?(:sql) ? event.sql : event.identifier %></td>
       </tr>
     <% end %>
