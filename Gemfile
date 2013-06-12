@@ -29,3 +29,7 @@ group :test, :development do
   gem 'dotenv-rails'
   gem 'quiet_assets'
 end
+
+group :development do
+  gem 'foreman'
+end
