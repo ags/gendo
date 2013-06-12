@@ -28,6 +28,8 @@ describe TransactionsController do
       post :create, transaction: {
         controller: 'PostsController',
         action:     'new',
+        started_at:   1370939786.0706801,
+        ended_at:     1370939787.0706801,
         sql_events: [
           {
             sql: "SELECT * FROM users WHERE id = '1'",
@@ -45,6 +47,8 @@ describe TransactionsController do
       post :create, transaction: {
         controller: 'PostsController',
         action:     'new',
+        started_at:   1370939786.0706801,
+        ended_at:     1370939787.0706801,
         view_events: [
           {
             identifier:   '/foo/bar.html.erb',
