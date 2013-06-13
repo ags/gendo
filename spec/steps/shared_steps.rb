@@ -1,4 +1,4 @@
-step "I'm logged in" do
+step "I'm signed in" do
   user = User.make!
   visit bypass_url(user_id: user.id)
 end
