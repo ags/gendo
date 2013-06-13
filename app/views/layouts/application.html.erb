@@ -28,7 +28,7 @@
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <% if logged_in? %>
-                <li><%= link_to "logout" %></li>
+                <li><%= link_to "sign out", sign_out_path %></li>
               <% else %>
                 <li><%= link_to "sign up", signup_path %></li>
               <% end %>

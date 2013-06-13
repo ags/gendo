@@ -3,4 +3,4 @@ Feature: Signing up
     When I sign up as:
       | Email           | Password |
       | bob@example.com | password |
-    Then I should be logged in
+    Then I should see "sign out"

@@ -51,4 +51,13 @@ describe Authenticator do
       end
     end
   end
+
+  describe "#sign_out" do
+    let(:session) { {user_id: 123} }
+
+    it "removes the user_id from the session" do
+      authenticator.sign_out
+      expect(session).to eq({})
+    end
+  end
 end

@@ -5,7 +5,3 @@ step 'I sign up as:' do |table|
   fill_in 'Password', with: details['Password']
   click_button 'Sign Up'
 end
-
-step 'I should be logged in' do
-  expect(page).to have_content('logout')
-end

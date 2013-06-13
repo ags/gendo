@@ -6,4 +6,4 @@ Feature: Login
     And I login as:
       | Email           | Password |
       | bob@example.com | password |
-    Then I should be logged in
+    Then I should see "sign out"

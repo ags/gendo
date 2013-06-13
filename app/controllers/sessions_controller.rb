@@ -10,6 +10,17 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    authenticator.sign_out
+    redirect_to root_url
+  end
+
+  def bypass
+    raise unless Rails.env.test?
+    authenticator.sign_in(User.find(params[:user_id]))
+    redirect_to root_url
+  end
+
   private
 
   def sign_in_form
