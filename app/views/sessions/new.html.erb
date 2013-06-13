@@ -1,4 +1,12 @@
-<%= form_for sign_in_form, url: login_url, method: :post, class: 'form-horizontal' do |f| %>
+<%= form_for sign_in_form, url: sign_in_url, method: :post, class: 'form-horizontal' do |f| %>
+  <% if sign_in_form.errors.any? %>
+    <ul>
+      <% sign_in_form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <fieldset>
     <div class="control-group">
       <%= f.label :email, class: 'control-label' %>

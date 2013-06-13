@@ -1,4 +1,12 @@
 <%= form_for form, url: users_url, method: :post, class: 'form-horizontal' do |f| %>
+  <% if form.errors.any? %>
+    <ul>
+      <% form.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <fieldset>
     <div class="control-group">
       <%= f.label :email, class: 'control-label' %>

@@ -1,9 +1,17 @@
 Feature: Login
-  Scenario: Logging In
+  Background:
     Given there is a User:
       | Email           | Password |
       | bob@example.com | password |
-    And I login as:
+
+  Scenario: Logging In
+    Given I sign in as:
       | Email           | Password |
       | bob@example.com | password |
     Then I should see "sign out"
+
+  Scenario: Entering the wrong password
+    Given I sign in as:
+      | Email           | Password |
+      | bob@example.com | foobar |
+    Then I should see "Incorrect email or password"
