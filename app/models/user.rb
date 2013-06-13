@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  authenticates_with_sorcery!
+  include SecurePasswordWithoutValidation
 
   has_many :user_access_tokens,
     dependent: :destroy

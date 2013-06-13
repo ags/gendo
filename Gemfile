@@ -6,8 +6,7 @@ gem 'active_attr'
 gem 'jquery-rails'
 gem 'pg'
 gem 'rails', '4.0.0.rc1'
-gem 'sorcery',
-  git: 'git@github.com:NoamB/sorcery.git' # Support for rails 4 strong parameters
+gem 'bcrypt-ruby'
 gem 'unicorn'
 gem 'draper'
 

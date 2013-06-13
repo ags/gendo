@@ -1,12 +1,3 @@
-GIT
-  remote: git@github.com:NoamB/sorcery.git
-  revision: bacf0c16b82f85604ee019a45ef7728408f190d1
-  specs:
-    sorcery (0.8.1)
-      bcrypt-ruby (~> 3.0.0)
-      oauth (~> 0.4.4)
-      oauth2 (~> 0.8.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,21 +58,16 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    faraday (0.8.7)
-      multipart-post (~> 1.1)
     foreman (0.63.0)
       dotenv (>= 0.7)
       thor (>= 0.13.6)
     gherkin (2.12.0)
       multi_json (~> 1.3)
     hike (1.2.3)
-    httpauth (0.2.0)
     i18n (0.6.4)
     jquery-rails (3.0.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jwt (0.1.8)
-      multi_json (>= 1.5)
     kgio (2.8.0)
     machinist (2.0)
     mail (2.5.4)
@@ -90,15 +76,7 @@ GEM
     mime-types (1.23)
     minitest (4.7.4)
     multi_json (1.7.6)
-    multipart-post (1.2.0)
     nokogiri (1.5.9)
-    oauth (0.4.7)
-    oauth2 (0.8.1)
-      faraday (~> 0.8)
-      httpauth (~> 0.1)
-      jwt (~> 0.1.4)
-      multi_json (~> 1.0)
-      rack (~> 1.2)
     pg (0.15.1)
     polyglot (0.3.3)
     quiet_assets (1.0.2)
@@ -178,6 +156,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_attr
+  bcrypt-ruby
   bootstrap-sass
   capybara
   coffee-rails (~> 4.0.0)
@@ -191,7 +170,6 @@ DEPENDENCIES
   rails (= 4.0.0.rc1)
   rspec-rails
   sass-rails (~> 4.0.0.rc1)
-  sorcery!
   turnip
   uglifier (>= 1.3.0)
   unicorn

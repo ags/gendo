@@ -1,6 +1,5 @@
 module Forms
   class SignUp < Base
-
     attribute :email
     attribute :password
 
@@ -16,10 +15,17 @@ module Forms
 
     attr_reader :user
 
+    def initialize(authenticator, *args)
+      super(*args)
+      @authenticator = authenticator
+    end
+
     def save!
       return false unless valid?
 
       @user = create_user
+
+      @authenticator.sign_in(user)
 
       true
     end
@@ -40,6 +46,5 @@ module Forms
       end
     rescue ActiveRecord::RecordNotFound
     end
-
   end
 end
