@@ -1,4 +1,4 @@
-require 'machinist/active_record'
+require "machinist/active_record"
 
 User.blueprint do
   email    { "user#{sn}@blargh.com" }
@@ -12,6 +12,11 @@ end
 
 Transaction.blueprint do
   user
-  controller { 'PostsController' }
-  action     { 'new' }
+  controller { "PostsController" }
+  action     { "new" }
+end
+
+App.blueprint do
+  user
+  name { "Shinji Ikari" }
 end

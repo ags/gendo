@@ -6,6 +6,15 @@ class ApplicationController < ActionController::Base
   delegate :logged_in?, to: :authenticator
   helper_method :logged_in?
 
+  delegate :current_user, to: :authenticator
+  helper_method :current_user
+
+  def assert_authenticated!
+    unless logged_in?
+      return render status: :unauthorized
+    end
+  end
+
   def authenticator
     @_authenticator ||= Authenticator.new(session)
   end

@@ -1,5 +1,3 @@
-require "gendo/transaction_creator"
-
 class TransactionsController < ApplicationController
   def create
     transaction_params = params.require(:transaction).permit(

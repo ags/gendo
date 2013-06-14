@@ -1,9 +1,14 @@
 class User < ActiveRecord::Base
   include SecurePasswordWithoutValidation
 
+  has_many :apps,
+    dependent: :destroy
+
+  # TODO move to per app
   has_many :user_access_tokens,
     dependent: :destroy
 
+  # TODO move to app
   has_many :transactions,
     dependent: :destroy
 

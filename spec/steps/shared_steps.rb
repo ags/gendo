@@ -1,6 +1,6 @@
 step "I'm signed in" do
-  user = User.make!
-  visit bypass_url(user_id: user.id)
+  @user = User.make!
+  visit bypass_url(user_id: @user.id)
 end
 
 step "there is a User:" do |table|
