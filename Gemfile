@@ -22,6 +22,7 @@ group :test do
   gem 'turnip'
   gem 'capybara'
   gem 'machinist'
+  gem 'simplecov'
 end
 
 group :test, :development do
