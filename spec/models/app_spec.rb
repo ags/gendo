@@ -18,7 +18,7 @@ describe App do
     expect(app.slug).to eq("shinji-ikari")
   end
 
-  describe "#from_param" do
+  describe ".from_param" do
     it "returns the App with the given id + slug" do
       app = App.make!
       expect(App.from_param(app.to_param)).to eq(app)
@@ -49,6 +49,14 @@ describe App do
       t4 = Transaction.make!(app: app, controller: "BarCtrl", action: "create")
 
       expect(app.latest_transactions).to eq([t4, t3, t2])
+    end
+  end
+
+  describe "#current_access_token" do
+    it "returns the associated UserAccessToken currently in-use" do
+      token = AppAccessToken.make!
+      app = token.app
+      expect(app.current_access_token).to eq(token)
     end
   end
 end

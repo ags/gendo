@@ -33,11 +33,7 @@ module Forms
     private
 
     def create_user
-      User.transaction do
-        User.create!(email: email, password: password).tap do |user|
-          UserAccessToken.generate(user).save!
-        end
-      end
+      User.create!(email: email, password: password)
     end
 
     def email_available?

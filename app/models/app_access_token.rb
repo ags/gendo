@@ -1,11 +1,11 @@
 require 'securerandom'
 
-class UserAccessToken < ActiveRecord::Base
-  belongs_to :user
+class AppAccessToken < ActiveRecord::Base
+  belongs_to :app
 
   class << self
-    def generate(user)
-      new(user: user, token: generate_token)
+    def generate(app)
+      new(app: app, token: generate_token)
     end
 
     private
@@ -16,5 +16,4 @@ class UserAccessToken < ActiveRecord::Base
       end while exists?(token: token); token
     end
   end
-
 end

@@ -21,7 +21,11 @@ module Forms
     private
 
     def create_app
-      @user.apps.create!(name: name)
+      App.transaction do
+        @user.apps.create!(name: name).tap do |app|
+          AppAccessToken.generate(app).save!
+        end
+      end
     end
   end
 end

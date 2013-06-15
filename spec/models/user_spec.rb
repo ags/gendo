@@ -35,12 +35,4 @@ describe User do
       end
     end
   end
-
-  describe "#current_access_token" do
-    it "returns the associated UserAccessToken currently in-use" do
-      token = UserAccessToken.make!
-      user = token.user
-      expect(user.current_access_token).to eq(token)
-    end
-  end
 end

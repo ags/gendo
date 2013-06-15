@@ -13,11 +13,6 @@ describe Forms::SignUp do
       expect(form.user.email).to eq("foo@example.com")
     end
 
-    it "creates an access token for the created user" do
-      form.save!
-      expect(form.user.current_access_token).to be_present
-    end
-
     it "authenticates as the created user" do
       form.save!
       expect(session).to eq({user_id: form.user.id})

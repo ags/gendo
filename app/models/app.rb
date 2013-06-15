@@ -1,6 +1,9 @@
 class App < ActiveRecord::Base
   belongs_to :user
 
+  has_many :app_access_tokens,
+    dependent: :destroy
+
   has_many :transactions,
     dependent: :destroy
 
@@ -22,6 +25,10 @@ class App < ActiveRecord::Base
   def name=(name)
     super
     self.slug ||= name.parameterize
+  end
+
+  def current_access_token
+    app_access_tokens.last
   end
 
   def latest_transactions

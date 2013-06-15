@@ -4,10 +4,6 @@ class User < ActiveRecord::Base
   has_many :apps,
     dependent: :destroy
 
-  # TODO move to per app
-  has_many :user_access_tokens,
-    dependent: :destroy
-
   validates :email,
     presence: true,
     uniqueness: true
@@ -22,9 +18,5 @@ class User < ActiveRecord::Base
 
   def self.with_email!(email)
     where(email: email).first!
-  end
-
-  def current_access_token
-    user_access_tokens.last
   end
 end

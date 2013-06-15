@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130615004449) do
+ActiveRecord::Schema.define(version: 20130615020327) do
+
+  create_table "app_access_tokens", force: true do |t|
+    t.string   "token",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "app_id",     null: false
+  end
 
   create_table "apps", force: true do |t|
     t.integer  "user_id",    null: false
@@ -47,13 +54,6 @@ ActiveRecord::Schema.define(version: 20130615004449) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "app_id",       null: false
-  end
-
-  create_table "user_access_tokens", force: true do |t|
-    t.integer  "user_id",    null: false
-    t.string   "token",      null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
