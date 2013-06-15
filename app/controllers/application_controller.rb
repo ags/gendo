@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def assert_authenticated_as_app_user!
+    unless logged_in? && app.user.id == current_user.id
+      return render status: :unauthorized
+    end
+  end
+
   def authenticator
     @_authenticator ||= Authenticator.new(session)
   end

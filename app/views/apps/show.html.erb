@@ -4,6 +4,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>ID</th>
       <th>Source</th>
       <th>DB Runtime</th>
     </tr>
@@ -11,6 +12,7 @@
   <tbody>
     <% @app.latest_transactions.each do |transaction| %>
     <tr>
+      <td><%= link_to transaction.id, app_transaction_path(transaction.app, transaction) %></td>
       <td><%= transaction.source %></td>
       <td><%= transaction.db_runtime %></td>
     </tr>

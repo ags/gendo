@@ -1,5 +1,8 @@
 class AppsController < ApplicationController
-  before_action :assert_authenticated!
+  include UrlHasApp
+
+  before_action :assert_authenticated!, only: [:new, :create]
+  before_action :assert_authenticated_as_app_user!, only: [:show]
 
   def new
   end
@@ -14,7 +17,7 @@ class AppsController < ApplicationController
   end
 
   def show
-    @app = App.from_param(params[:id]).decorate
+    @app = app.decorate
   end
 
   private
