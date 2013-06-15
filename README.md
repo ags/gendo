@@ -1,6 +1,8 @@
-# GENDO
+GENDO
+-----
 
-## Setup
+Setup
+=====
 
 ### Gems
 
@@ -16,7 +18,7 @@ createdb --owner=gendo gendo
 createdb --owner=gendo gendo_test
 ```
 
-``
+```
 rake db:migrate
 RAILS_ENV=test rake db:migrate
 ```
