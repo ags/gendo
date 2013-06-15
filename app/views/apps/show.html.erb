@@ -1,4 +1,5 @@
-<%= @app.name %>
+<p><%= @app.name %></p>
+<p><%= @app.current_access_token.token %></p>
 
 <table class="table table-striped">
   <thead>
@@ -8,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= @app.latest_transactions.each do |transaction| %>
+    <% @app.latest_transactions.each do |transaction| %>
     <tr>
       <td><%= transaction.source %></td>
       <td><%= transaction.db_runtime %></td>
