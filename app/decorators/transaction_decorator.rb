@@ -17,4 +17,8 @@ class TransactionDecorator < Draper::Decorator
   def source
     "#{controller}##{action}"
   end
+
+  def db_runtime
+    "#{object.db_runtime} ms"
+  end
 end
