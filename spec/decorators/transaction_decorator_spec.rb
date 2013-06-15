@@ -5,6 +5,8 @@ require './app/decorators/transaction_decorator'
 
 Draper::ViewContext.test_strategy :fast
 
+class Transaction; end
+
 describe TransactionDecorator do
   it_behaves_like "an object with decorated event timestamps"
 
@@ -18,6 +20,15 @@ describe TransactionDecorator do
       decorated = TransactionDecorator.new(transaction)
 
       expect(decorated.events).to eq([b, a, c])
+    end
+  end
+
+  describe "#source" do
+    it "is the controller#action" do
+      transaction = stub(controller: "PostsController", action: "new")
+      decorated = TransactionDecorator.new(transaction)
+
+      expect(decorated.source).to eq("PostsController#new")
     end
   end
 end

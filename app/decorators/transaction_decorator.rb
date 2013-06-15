@@ -13,4 +13,8 @@ class TransactionDecorator < Draper::Decorator
   def events
     (sql_events + view_events).sort_by(&:started_at)
   end
+
+  def source
+    "#{controller}##{action}"
+  end
 end
