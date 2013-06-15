@@ -14,7 +14,7 @@ class AppsController < ApplicationController
   end
 
   def show
-    @app = App.from_param(params[:id])
+    @app = App.from_param(params[:id]).decorate
   end
 
   private

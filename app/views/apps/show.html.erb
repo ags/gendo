@@ -1,1 +1,18 @@
 <%= @app.name %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>DB Runtime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= @app.latest_transactions.each do |transaction| %>
+    <tr>
+      <td><%= transaction.source %></td>
+      <td><%= transaction.db_runtime %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

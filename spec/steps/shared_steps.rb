@@ -11,3 +11,7 @@ end
 step "I should see :something" do |something|
   expect(page).to have_content(something)
 end
+
+step "I should not see :something" do |something|
+  expect(page).to_not have_content(something)
+end
