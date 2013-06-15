@@ -8,10 +8,6 @@ class User < ActiveRecord::Base
   has_many :user_access_tokens,
     dependent: :destroy
 
-  # TODO move to app
-  has_many :transactions,
-    dependent: :destroy
-
   validates :email,
     presence: true,
     uniqueness: true
