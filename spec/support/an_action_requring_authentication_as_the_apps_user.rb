@@ -18,6 +18,7 @@ shared_examples_for "an action requiring authentication as the App's User" do
     let(:app) { App.make! }
 
     before do
+      controller.authenticator.sign_in(user)
       action!
     end
 
