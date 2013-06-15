@@ -11,7 +11,7 @@ UserAccessToken.blueprint do
 end
 
 Transaction.blueprint do
-  user
+  app
   controller { "PostsController" }
   action     { "new" }
 end

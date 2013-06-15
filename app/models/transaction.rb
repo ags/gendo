@@ -1,5 +1,5 @@
 class Transaction < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :app
 
   has_many :sql_events
 
@@ -11,7 +11,7 @@ class Transaction < ActiveRecord::Base
   validates :action,
     presence: true
 
-  validates :user,
+  validates :app,
     presence: true
 
   def self.recent(n=100)
