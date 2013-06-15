@@ -39,4 +39,16 @@ describe App do
       expect(app.to_param).to eq("#{app.id}-#{app.slug}")
     end
   end
+
+  describe "#latest_transactions" do
+    it "returns the most recent transaction for each controller / action combination" do
+      app = App.make!
+      t1 = Transaction.make!(app: app, controller: "FooCtrl", action: "new")
+      t2 = Transaction.make!(app: app, controller: "FooCtrl", action: "new")
+      t3 = Transaction.make!(app: app, controller: "BarCtrl", action: "new")
+      t4 = Transaction.make!(app: app, controller: "BarCtrl", action: "create")
+
+      expect(app.latest_transactions).to eq([t4, t3, t2])
+    end
+  end
 end

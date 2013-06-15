@@ -24,5 +24,11 @@ class App < ActiveRecord::Base
     self.slug ||= name.parameterize
   end
 
+  def latest_transactions
+    transactions.
+      select("DISTINCT ON (controller, action) *").
+      order("controller, action, created_at DESC")
+  end
+
   DoesNotExist = Class.new(Exception)
 end
