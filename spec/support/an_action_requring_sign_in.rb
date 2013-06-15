@@ -8,7 +8,6 @@ shared_examples_for "an action requiring sign in" do
 
     it "is accessible" do
       expect(response.status).to eq(200)
-      action!
     end
   end
 

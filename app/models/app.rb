@@ -18,6 +18,12 @@ class App < ActiveRecord::Base
     where(id: id).first || raise(DoesNotExist)
   end
 
+  def self.with_access_token!(access_token)
+    joins(:app_access_tokens).
+      where(app_access_tokens: {token: access_token}).
+      first || raise(DoesNotExist)
+  end
+
   def to_param
     "#{id}-#{slug}"
   end

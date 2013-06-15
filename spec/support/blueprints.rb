@@ -5,8 +5,8 @@ User.blueprint do
   password { "password" }
 end
 
-UserAccessToken.blueprint do
-  user
+AppAccessToken.blueprint do
+  app
   token { sn }
 end
 
@@ -19,4 +19,8 @@ end
 App.blueprint do
   user
   name { "Shinji Ikari" }
+end
+
+App.blueprint(:with_access_token) do
+  app_access_tokens { [AppAccessToken.make!] }
 end

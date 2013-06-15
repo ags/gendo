@@ -33,6 +33,21 @@ describe App do
     end
   end
 
+  describe ".with_access_token!" do
+    it "returns the App associated with the given access token" do
+      token = AppAccessToken.make!(token: "mah-token")
+      expect(App.with_access_token!("mah-token")).to eq(token.app)
+    end
+
+    context "no such App exists" do
+      it "raises App::DoesNotExist" do
+        expect do
+          App.with_access_token!("wat")
+        end.to raise_error(App::DoesNotExist)
+      end
+    end
+  end
+
   describe "#to_param" do
     it "returns the App id + slug" do
       app = App.make!
