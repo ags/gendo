@@ -22,6 +22,12 @@
       <td><%= link_to @source.view.max.view_runtime, app_transaction_path(@source.app, @source.view.max) %></td>
       <td><%= link_to @source.view.min.view_runtime, app_transaction_path(@source.app, @source.view.min) %></td>
     </tr>
+    <tr>
+      <td>Duration</td>
+      <td><%= @source.duration.median %></td>
+      <td><%= link_to @source.duration.max.duration, app_transaction_path(@source.app, @source.duration.max) %></td>
+      <td><%= link_to @source.duration.min.duration, app_transaction_path(@source.app, @source.duration.min) %></td>
+    </tr>
   </tbody>
 </table>
 

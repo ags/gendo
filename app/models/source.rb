@@ -15,6 +15,10 @@ class Source < Struct.new(:app, :name)
     AttributeStats.new(transactions, :view_runtime)
   end
 
+  def duration
+    AttributeStats.new(transactions, :duration)
+  end
+
   class AttributeStats < Struct.new(:transactions, :attribute)
     def median
       @_median ||= transactions.order(attribute).median(attribute)

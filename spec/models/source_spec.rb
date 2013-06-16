@@ -71,4 +71,31 @@ describe Source do
       end
     end
   end
+
+  describe "#duration" do
+    let(:app) { App.make! }
+    let(:source) { Source.new(app, "PostsController#new") }
+
+    let!(:t1) { build_transaction(duration: 2) }
+    let!(:t2) { build_transaction(duration: 1) }
+    let!(:t3) { build_transaction(duration: 3) }
+
+    describe "#median" do
+      it "returns the median of the source's durations" do
+        expect(source.duration.median).to eq(2)
+      end
+    end
+
+    describe "#min" do
+      it "returns the minimum of the source's durations" do
+        expect(source.duration.min).to eq(t2)
+      end
+    end
+
+    describe "#max" do
+      it "returns the maximum of the source's durations" do
+        expect(source.duration.max).to eq(t3)
+      end
+    end
+  end
 end
