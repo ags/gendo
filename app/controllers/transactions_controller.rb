@@ -4,6 +4,6 @@ class TransactionsController < ApplicationController
   before_action :assert_authenticated_as_app_user!
 
   def show
-    @transaction = Transaction.find(params[:id]).decorate
+    @transaction = app.transactions.find(params[:id]).decorate
   end
 end
