@@ -1,3 +1,22 @@
-<p><%= @source %></p>
+<p><%= @source.name %></p>
 
-<%= render "/transactions/table", transactions: @transactions %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Median</th>
+      <th>Worst</th>
+      <th>Best</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DB Runtime</td>
+      <td><%= @source.db.median %></td>
+      <td><%= link_to @source.db.max.db_runtime, app_transaction_path(@source.app, @source.db.max) %></td>
+      <td><%= link_to @source.db.min.db_runtime, app_transaction_path(@source.app, @source.db.min) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= render "/transactions/table", transactions: @source.transactions %>

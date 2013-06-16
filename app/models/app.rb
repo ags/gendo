@@ -44,7 +44,7 @@ class App < ActiveRecord::Base
   end
 
   def transactions_with_source(source)
-    controller, action = source.split("#")
+    controller, action = source.to_s.split("#")
     transactions.where(controller: controller, action: action)
   end
 

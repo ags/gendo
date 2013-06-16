@@ -4,7 +4,6 @@ class SourcesController < ApplicationController
   before_action :assert_authenticated_as_app_user!
 
   def show
-    @source = params[:id]
-    @transactions = app.transactions_with_source(params[:id])
+    @source = Source.new(app, params[:id])
   end
 end
