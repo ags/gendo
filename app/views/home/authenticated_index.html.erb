@@ -1,5 +1,9 @@
 <h3>Apps</h3>
 
+<p>
+  <a class="btn" href="<%= new_app_path %>">New App</a>
+</p>
+
 <% current_user.apps.each do |app| %>
   <p><%= link_to app.name, app_path(app) %></p>
 <% end %>
