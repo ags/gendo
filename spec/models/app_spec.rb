@@ -87,4 +87,20 @@ describe App do
       expect(app_a.transactions_with_source("FooCtrl#new")).to eq([t])
     end
   end
+
+  describe "#sources_by_median_desc" do
+    it "returns the top n Sources for a field sorted by their median value" do
+      app = App.make!
+      Transaction.make!(app: app, controller: "A", action: "a", db_runtime: 1)
+      Transaction.make!(app: app, controller: "A", action: "b", db_runtime: 2)
+      Transaction.make!(app: app, controller: "B", action: "a", db_runtime: 0)
+      Transaction.make!(app: app, controller: "B", action: "b", db_runtime: 9)
+      Transaction.make!(app: app, controller: "B", action: "b", db_runtime: 4)
+
+      expect(app.sources_by_median_desc(:db_runtime, limit: 2)).to eq([
+        Source.new(app, "B#b"),
+        Source.new(app, "A#b")
+      ])
+    end
+  end
 end

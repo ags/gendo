@@ -48,5 +48,14 @@ class App < ActiveRecord::Base
     transactions.where(controller: controller, action: action)
   end
 
+  def sources_by_median_desc(field, limit: 3)
+    sources = transactions.
+      select("controller || '#' || action AS name, median(#{field})").
+      group(:controller, :action).
+      order("median DESC").
+      limit(limit)
+    sources.map { |source| Source.new(self, source.name) }
+  end
+
   DoesNotExist = Class.new(Exception)
 end

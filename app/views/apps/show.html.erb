@@ -1,6 +1,11 @@
 <p><%= @app.name %></p>
 <p><%= @app.current_access_token.token %></p>
 
+<h3>Worst By Median DB Runtime</h3>
+<% @app.worst_sources_by_db_runtime.each do |source| %>
+  <p><%= link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source) %>
+<% end %>
+
 <table class="table table-striped">
   <thead>
     <tr>
