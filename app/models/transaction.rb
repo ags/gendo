@@ -19,6 +19,6 @@ class Transaction < ActiveRecord::Base
   end
 
   def source
-    "#{controller}##{action}"
+    Source.new(app, "#{controller}##{action}")
   end
 end

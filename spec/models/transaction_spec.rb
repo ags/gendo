@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Transaction do
   describe "#source" do
-    it "is the controller#action" do
+    it "is a Source for the associated App named controller#action" do
       transaction = Transaction.make!(controller: "PostsController", action: "new")
-      expect(transaction.source).to eq("PostsController#new")
+      expect(transaction.source).to \
+        eq(Source.new(transaction.app, "PostsController#new"))
     end
   end
 
