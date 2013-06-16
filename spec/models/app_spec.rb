@@ -74,4 +74,17 @@ describe App do
       expect(app.current_access_token).to eq(token)
     end
   end
+
+  describe "#transactions_with_source" do
+    it "returns associated transactions with the given source" do
+      app_a = App.make!
+      t = Transaction.make!(app: app_a, controller: "FooCtrl", action: "new")
+      Transaction.make!(app: app_a, controller: "FooCtrl", action: "create")
+
+      app_b = App.make!
+      Transaction.make!(app: app_b, controller: "FooCtrl", action: "new")
+
+      expect(app_a.transactions_with_source("FooCtrl#new")).to eq([t])
+    end
+  end
 end

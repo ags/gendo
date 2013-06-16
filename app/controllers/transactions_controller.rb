@@ -3,10 +3,6 @@ class TransactionsController < ApplicationController
 
   before_action :assert_authenticated_as_app_user!
 
-  def index
-    @transactions = Transaction.recent.decorate
-  end
-
   def show
     @transaction = Transaction.find(params[:id]).decorate
   end

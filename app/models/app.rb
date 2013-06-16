@@ -43,5 +43,10 @@ class App < ActiveRecord::Base
       order("controller, action, created_at DESC")
   end
 
+  def transactions_with_source(source)
+    controller, action = source.split("#")
+    transactions.where(controller: controller, action: action)
+  end
+
   DoesNotExist = Class.new(Exception)
 end

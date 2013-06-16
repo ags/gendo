@@ -17,4 +17,8 @@ class Transaction < ActiveRecord::Base
   def self.recent(n=100)
     order('created_at DESC').limit(n)
   end
+
+  def source
+    "#{controller}##{action}"
+  end
 end

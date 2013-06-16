@@ -23,15 +23,6 @@ describe TransactionDecorator do
     end
   end
 
-  describe "#source" do
-    it "is the controller#action" do
-      transaction = stub(controller: "PostsController", action: "new")
-      decorated = TransactionDecorator.new(transaction)
-
-      expect(decorated.source).to eq("PostsController#new")
-    end
-  end
-
   describe "#db_runtime" do
     it "returns the db runtime and millsecond time unit" do
       transaction = stub(db_runtime: 1.234)
