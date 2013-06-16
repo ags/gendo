@@ -7,6 +7,7 @@
       <th>ID</th>
       <th>Source</th>
       <th>DB Runtime</th>
+      <th>View Runtime</th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,7 @@
       <td><%= link_to transaction.id, app_transaction_path(transaction.app, transaction) %></td>
       <td><%= link_to transaction.source, app_source_path(transaction.app, transaction.source) %></td>
       <td><%= transaction.db_runtime %></td>
+      <td><%= transaction.view_runtime %></td>
     </tr>
   <% end %>
   </tbody>

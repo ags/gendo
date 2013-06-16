@@ -1,0 +1,5 @@
+<h3>Apps</h3>
+
+<% current_user.apps.each do |app| %>
+  <p><%= link_to app.name, app_path(app) %></p>
+<% end %>
