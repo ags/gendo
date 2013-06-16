@@ -33,4 +33,16 @@ describe AppDecorator do
       expect(decorated.worst_sources_by_db_runtime).to eq(worst_sources)
     end
   end
+
+  describe "#worst_sources_by_view_runtime" do
+    it "delegates to App#sources_by_median_desc for view_runtime" do
+      worst_sources = stub(:worst_sources)
+
+      app.should_receive(:sources_by_median_desc).
+        with(:view_runtime, limit: 3).
+        and_return(worst_sources)
+
+      expect(decorated.worst_sources_by_view_runtime).to eq(worst_sources)
+    end
+  end
 end

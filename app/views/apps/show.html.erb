@@ -6,6 +6,11 @@
   <p><%= link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source) %>
 <% end %>
 
+<h3>Worst By Median View Runtime</h3>
+<% @app.worst_sources_by_view_runtime.each do |source| %>
+  <p><%= link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source) %>
+<% end %>
+
 <table class="table table-striped">
   <thead>
     <tr>
