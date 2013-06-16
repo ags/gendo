@@ -9,7 +9,6 @@ gem 'rails', '4.0.0.rc1'
 gem 'bcrypt-ruby'
 gem 'unicorn'
 gem 'draper'
-gem 'ar_result_calculations'
 
 group :assets do
   gem 'coffee-rails', '~> 4.0.0'

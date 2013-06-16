@@ -21,7 +21,9 @@ class Source < Struct.new(:app, :name)
 
   class AttributeStats < Struct.new(:transactions, :attribute)
     def median
-      @_median ||= transactions.order(attribute).median(attribute)
+      # using #first here attempts to do a LIMIT
+      @_median ||= transactions.
+        select("median(#{attribute}) AS median")[0].median
     end
 
     def min

@@ -1,0 +1,415 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: _final_median(anyarray); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION _final_median(anyarray) RETURNS double precision
+    LANGUAGE sql IMMUTABLE
+    AS $_$
+      WITH q AS
+      (
+        SELECT val
+        FROM unnest($1) val
+        WHERE VAL IS NOT NULL
+        ORDER BY 1
+      ),
+      cnt AS
+      (
+        SELECT COUNT(*) AS c FROM q
+      )
+      SELECT AVG(val)::float8
+      FROM
+      (
+        SELECT val FROM q
+        LIMIT  2 - MOD((SELECT c FROM cnt), 2)
+        OFFSET GREATEST(CEIL((SELECT c FROM cnt) / 2.0) - 1,0)
+      ) q2;
+    $_$;
+
+
+--
+-- Name: median(anyelement); Type: AGGREGATE; Schema: public; Owner: -
+--
+
+CREATE AGGREGATE median(anyelement) (
+    SFUNC = array_append,
+    STYPE = anyarray,
+    INITCOND = '{}',
+    FINALFUNC = _final_median
+);
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: app_access_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE app_access_tokens (
+    id integer NOT NULL,
+    token character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    app_id integer NOT NULL
+);
+
+
+--
+-- Name: app_access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE app_access_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: app_access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE app_access_tokens_id_seq OWNED BY app_access_tokens.id;
+
+
+--
+-- Name: apps; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE apps (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    slug character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE apps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE apps_id_seq OWNED BY apps.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+--
+-- Name: sql_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE sql_events (
+    id integer NOT NULL,
+    transaction_id integer,
+    sql character varying(1024),
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    duration double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    name character varying(255)
+);
+
+
+--
+-- Name: sql_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE sql_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sql_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE sql_events_id_seq OWNED BY sql_events.id;
+
+
+--
+-- Name: transactions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE transactions (
+    id integer NOT NULL,
+    controller character varying(255) NOT NULL,
+    action character varying(255) NOT NULL,
+    path character varying(255),
+    format character varying(255),
+    method character varying(255),
+    status integer,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    db_runtime double precision,
+    view_runtime double precision,
+    duration double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    app_id integer NOT NULL
+);
+
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE transactions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE transactions_id_seq OWNED BY transactions.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying(255) NOT NULL,
+    password_digest character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: view_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE view_events (
+    id integer NOT NULL,
+    transaction_id integer,
+    identifier character varying(255) NOT NULL,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    duration double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: view_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE view_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: view_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE view_events_id_seq OWNED BY view_events.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY app_access_tokens ALTER COLUMN id SET DEFAULT nextval('app_access_tokens_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY apps ALTER COLUMN id SET DEFAULT nextval('apps_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY sql_events ALTER COLUMN id SET DEFAULT nextval('sql_events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY transactions ALTER COLUMN id SET DEFAULT nextval('transactions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY view_events ALTER COLUMN id SET DEFAULT nextval('view_events_id_seq'::regclass);
+
+
+--
+-- Name: apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY apps
+    ADD CONSTRAINT apps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sql_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY sql_events
+    ADD CONSTRAINT sql_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY app_access_tokens
+    ADD CONSTRAINT user_access_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: view_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY view_events
+    ADD CONSTRAINT view_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+SET search_path TO "$user",public;
+
+INSERT INTO schema_migrations (version) VALUES ('20130610061724');
+
+INSERT INTO schema_migrations (version) VALUES ('20130610074217');
+
+INSERT INTO schema_migrations (version) VALUES ('20130610091821');
+
+INSERT INTO schema_migrations (version) VALUES ('20130611123234');
+
+INSERT INTO schema_migrations (version) VALUES ('20130611140611');
+
+INSERT INTO schema_migrations (version) VALUES ('20130611152546');
+
+INSERT INTO schema_migrations (version) VALUES ('20130612142340');
+
+INSERT INTO schema_migrations (version) VALUES ('20130613132118');
+
+INSERT INTO schema_migrations (version) VALUES ('20130613152756');
+
+INSERT INTO schema_migrations (version) VALUES ('20130615004449');
+
+INSERT INTO schema_migrations (version) VALUES ('20130615020327');
+
+INSERT INTO schema_migrations (version) VALUES ('20130616085600');
