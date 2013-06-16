@@ -8,47 +8,66 @@ describe Source do
     end
   end
 
-  describe Source::DBStats do
+  def build_transaction(*params)
+    Transaction.make!(
+      {
+        app: app,
+        controller: "PostsController",
+        action: "new"
+      }.merge(*params)
+    )
+  end
+
+  describe "#db" do
     let(:app) { App.make! }
     let(:source) { Source.new(app, "PostsController#new") }
 
-    def build_transaction(*params)
-      Transaction.make!(
-        {
-          app: app,
-          controller: "PostsController",
-          action: "new"
-        }.merge(*params)
-      )
-    end
+    let!(:t1) { build_transaction(db_runtime: 2) }
+    let!(:t2) { build_transaction(db_runtime: 1) }
+    let!(:t3) { build_transaction(db_runtime: 3) }
 
     describe "#median" do
       it "returns the median of the source's db_runtimes" do
-        t1 = build_transaction(db_runtime: 2)
-        t2 = build_transaction(db_runtime: 1)
-        t3 = build_transaction(db_runtime: 3)
-
         expect(source.db.median).to eq(2)
       end
     end
 
     describe "#min" do
       it "returns the minimum of the source's db_runtimes" do
-        t1 = build_transaction(db_runtime: 2)
-        t2 = build_transaction(db_runtime: 1)
-        t3 = build_transaction(db_runtime: 3)
-
         expect(source.db.min).to eq(t2)
       end
     end
 
     describe "#max" do
       it "returns the maximum of the source's db_runtimes" do
-        t1 = build_transaction(db_runtime: 2)
-        t2 = build_transaction(db_runtime: 1)
-        t3 = build_transaction(db_runtime: 3)
-
         expect(source.db.max).to eq(t3)
+      end
+    end
+  end
+
+  describe "#view" do
+    let(:app) { App.make! }
+    let(:source) { Source.new(app, "PostsController#new") }
+
+    let!(:t1) { build_transaction(view_runtime: 2) }
+    let!(:t2) { build_transaction(view_runtime: 1) }
+    let!(:t3) { build_transaction(view_runtime: 3) }
+
+    describe "#median" do
+      it "returns the median of the source's view_runtimes" do
+        expect(source.view.median).to eq(2)
+      end
+    end
+
+    describe "#min" do
+      it "returns the minimum of the source's view_runtimes" do
+        expect(source.view.min).to eq(t2)
+      end
+    end
+
+    describe "#max" do
+      it "returns the maximum of the source's view_runtimes" do
+        expect(source.view.max).to eq(t3)
       end
     end
   end

@@ -16,6 +16,12 @@
       <td><%= link_to @source.db.max.db_runtime, app_transaction_path(@source.app, @source.db.max) %></td>
       <td><%= link_to @source.db.min.db_runtime, app_transaction_path(@source.app, @source.db.min) %></td>
     </tr>
+    <tr>
+      <td>View Runtime</td>
+      <td><%= @source.view.median %></td>
+      <td><%= link_to @source.view.max.view_runtime, app_transaction_path(@source.app, @source.view.max) %></td>
+      <td><%= link_to @source.view.min.view_runtime, app_transaction_path(@source.app, @source.view.min) %></td>
+    </tr>
   </tbody>
 </table>
 
