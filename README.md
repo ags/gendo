@@ -4,6 +4,12 @@ GENDO
 Setup
 =====
 
+### Environment
+
+```
+cp sample.env .env
+```
+
 ### Gems
 
 ```
@@ -21,12 +27,6 @@ createdb --owner=gendo gendo_test
 ```
 rake db:migrate
 RAILS_ENV=test rake db:migrate
-```
-
-### Environment
-
-```
-cp sample.env .env
 ```
 
 ### Run!
