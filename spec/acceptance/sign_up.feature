@@ -3,7 +3,7 @@ Feature: Signing up
     When I sign up as:
       | Email           | Password |
       | bob@example.com | password |
-    Then I should see "sign out"
+    Then I should see "Sign Out"
 
   Scenario: Signing up with invalid details
     When I sign up as:

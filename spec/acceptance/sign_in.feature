@@ -8,7 +8,7 @@ Feature: Login
     Given I sign in as:
       | Email           | Password |
       | bob@example.com | password |
-    Then I should see "sign out"
+    Then I should see "Sign Out"
 
   Scenario: Entering the wrong password
     Given I sign in as:

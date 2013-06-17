@@ -3,5 +3,5 @@ step "I sign in as:" do |table|
   details = table.hashes.first
   fill_in 'Email', with: details['Email']
   fill_in 'Password', with: details['Password']
-  click_button 'Login'
+  click_button 'Sign In'
 end
