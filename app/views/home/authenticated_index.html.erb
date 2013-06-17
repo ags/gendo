@@ -1,9 +1,17 @@
-<h3>Apps</h3>
+<div class="row">
+  <div class="small-12 columns">
+    <h3>Apps</h3>
 
-<p>
-  <a class="btn" href="<%= new_app_path %>">New App</a>
-</p>
+    <p>
+    <a class="button" href="<%= new_app_path %>">New App</a>
+    </p>
 
-<% current_user.apps.each do |app| %>
-  <p><%= link_to app.name, app_path(app) %></p>
-<% end %>
+    <ul class="small-block-grid-4">
+      <% current_user.apps.each do |app| %>
+        <li>
+          <h4><%= link_to app.name, app_path(app) %></h4>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

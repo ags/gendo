@@ -1,31 +1,37 @@
-<%= form_for form, url: users_url, method: :post, class: 'form-horizontal' do |f| %>
-  <% if form.errors.any? %>
-    <ul>
-      <% form.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+<div class="row">
+  <div class="small-6 small-centered columns">
+    <%= form_for form, url: users_url, method: :post do |f| %>
+      <% if form.errors.any? %>
+        <ul>
+          <% form.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
       <% end %>
-    </ul>
-  <% end %>
 
-  <fieldset>
-    <div class="control-group">
-      <%= f.label :email, class: 'control-label' %>
-      <div class="controls">
-        <%= f.email_field :email, placeholder: "me@example.com", class: "input-xlarge" %>
-      </div>
-    </div>
+      <fieldset>
+        <legend>Sign Up</legend>
 
-    <div class="control-group">
-      <%= f.label :password, class: 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password, placeholder: "something secure!", class: "input-xlarge" %>
-      </div>
-    </div>
+        <div class="row">
+          <div class="small-2 columns">
+            <%= f.label :email, class: "inline" %>
+          </div>
+          <div class="small-10 columns">
+            <%= f.email_field :email, placeholder: "Email Address" %>
+          </div>
+        </div>
 
-    <div class="control-group">
-      <div class="controls">
-        <%= f.submit "Sign Up", class: "btn btn-primary" %>
-      </div>
-    </div>
-  </fieldset>
-<% end %>
+        <div class="row">
+          <div class="small-2 columns">
+            <%= f.label :password, class: "inline" %>
+          </div>
+          <div class="small-10 columns">
+            <%= f.password_field :password, placeholder: "Password" %>
+          </div>
+        </div>
+
+        <%= f.submit "Sign Up", class: "button" %>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

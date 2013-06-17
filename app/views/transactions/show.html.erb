@@ -1,55 +1,59 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Source</th>
-      <th>Path</th>
-      <th>Format</th>
-      <th>Method</th>
-      <th>Status</th>
-      <th>Started At</th>
-      <th>Ended At</th>
-      <th>DB Runtime</th>
-      <th>View Runtime</th>
-      <th>Duration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= @transaction.id %></td>
-      <td><%= @transaction.source %></td>
-      <td><%= @transaction.path %></td>
-      <td><%= @transaction.format %></td>
-      <td><%= @transaction.method %></td>
-      <td><%= @transaction.status %></td>
-      <td><%= @transaction.started_at %></td>
-      <td><%= @transaction.ended_at %></td>
-      <td><%= @transaction.db_runtime %></td>
-      <td><%= @transaction.view_runtime %></td>
-      <td><%= @transaction.duration %></td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">
+  <div class="small-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Source</th>
+          <th>Path</th>
+          <th>Format</th>
+          <th>Method</th>
+          <th>Status</th>
+          <th>Started At</th>
+          <th>Ended At</th>
+          <th>DB Runtime</th>
+          <th>View Runtime</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @transaction.id %></td>
+          <td><%= @transaction.source %></td>
+          <td><%= @transaction.path %></td>
+          <td><%= @transaction.format %></td>
+          <td><%= @transaction.method %></td>
+          <td><%= @transaction.status %></td>
+          <td><%= @transaction.started_at %></td>
+          <td><%= @transaction.ended_at %></td>
+          <td><%= @transaction.db_runtime %></td>
+          <td><%= @transaction.view_runtime %></td>
+          <td><%= @transaction.duration %></td>
+        </tr>
+      </tbody>
+    </table>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Started At</th>
-      <th>Ended At</th>
-      <th>Duration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @transaction.events.each do |event| %>
-      <tr>
-        <td><%= event.id %></td>
-        <td><%= event.started_at %></td>
-        <td><%= event.ended_at %></td>
-        <td><%= event.duration %></td>
-        <td><%= event.name if event.respond_to?(:name) %></td>
-        <td><%= event.respond_to?(:sql) ? event.sql : event.identifier %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Started At</th>
+          <th>Ended At</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @transaction.events.each do |event| %>
+          <tr>
+            <td><%= event.id %></td>
+            <td><%= event.started_at %></td>
+            <td><%= event.ended_at %></td>
+            <td><%= event.duration %></td>
+            <td><%= event.name if event.respond_to?(:name) %></td>
+            <td><%= event.respond_to?(:sql) ? event.sql : event.identifier %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
