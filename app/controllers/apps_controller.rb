@@ -18,6 +18,12 @@ class AppsController < ApplicationController
 
   def show
     @app = app.decorate
+
+    if @app.collected_transactions?
+      render :overview
+    else
+      render :setup_instructions
+    end
   end
 
   private

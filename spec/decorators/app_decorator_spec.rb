@@ -45,4 +45,24 @@ describe AppDecorator do
       expect(decorated.worst_sources_by_view_runtime).to eq(worst_sources)
     end
   end
+
+  describe "#collected_transactions?" do
+    let(:app) { stub(:app, transactions: transactions) }
+
+    context "with transactions" do
+      let(:transactions) { [stub(:transaction, decorate: stub)] }
+
+      it "is true" do
+        expect(decorated.collected_transactions?).to be_true
+      end
+    end
+
+    context "with no transactions" do
+      let(:transactions) { [] }
+
+      it "is false" do
+        expect(decorated.collected_transactions?).to be_false
+      end
+    end
+  end
 end

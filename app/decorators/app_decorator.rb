@@ -14,4 +14,8 @@ class AppDecorator < Draper::Decorator
   def worst_sources_by_view_runtime(limit: 3)
     sources_by_median_desc(:view_runtime, limit: limit)
   end
+
+  def collected_transactions?
+    !transactions.count.zero?
+  end
 end

@@ -1,0 +1,21 @@
+.row
+  .small-12.columns
+    h3= @app.name
+
+    .instructions.panel
+      p Almost there!
+
+      p Add the shinji gem to your Gemfile:
+
+      pre
+        | gem "shinji"
+
+      p Add an initializer with the following:
+
+      pre
+        | 
+          Shinji.configure do |config|
+            config.app_key = "#{@app.current_access_token.token}"
+          end
+
+      p For more info, check out the gem documentation.
