@@ -2,10 +2,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Source</th>
       <th>Path</th>
-      <th>Format</th>
-      <th>Method</th>
       <th>Status</th>
       <th>Started At</th>
       <th>Ended At</th>
@@ -17,11 +14,8 @@
   <tbody>
     <% transactions.each do |transaction| %>
       <tr>
-        <td><%= link_to transaction.id, app_transaction_path(transaction.app, transaction) %></td>
-        <td><%= transaction.source %></td>
+        <td><%= link_to transaction.id, app_source_transaction_path(transaction.source.app, transaction.source, transaction) %></td>
         <td><%= transaction.path %></td>
-        <td><%= transaction.format %></td>
-        <td><%= transaction.method %></td>
         <td><%= transaction.status %></td>
         <td><%= transaction.started_at %></td>
         <td><%= transaction.ended_at %></td>

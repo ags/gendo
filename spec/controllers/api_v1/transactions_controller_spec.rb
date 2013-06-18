@@ -3,17 +3,20 @@ require "spec_helper"
 describe ApiV1::TransactionsController do
   let(:params) { {
     transaction: {
-      controller:   'PostsController',
-      action:       'new',
-      path:         '/posts/new',
-      format:       '*/*',
-      method:       'GET',
-      status:       200,
-      started_at:   1370939786.0706801,
-      ended_at:     1370939787.0706801,
-      db_runtime:   0.1234,
-      view_runtime: 0.4567,
-      duration:     1.98,
+      path:           '/posts/new',
+      status:         200,
+      started_at:     1370939786.0706801,
+      ended_at:       1370939787.0706801,
+      db_runtime:     0.1234,
+      view_runtime:   0.4567,
+      duration:       1.98,
+      shinji_version: "0.0.1",
+      source: {
+        controller:   'PostsController',
+        action:       'new',
+        format_type:  '*/*',
+        method_name:  'GET',
+      },
       sql_events: [
         {
           sql: "SELECT * FROM users WHERE id = '1'",
@@ -40,7 +43,11 @@ describe ApiV1::TransactionsController do
       include_context "App authentication"
 
       it "creates a Transaction" do
-        expect(create!).to change { app.transactions.count }.by(+1)
+        expect(create!).to change { Transaction.count }.by(+1)
+      end
+
+      it "creates a Source" do
+        expect(create!).to change { app.sources.count }.by(+1)
       end
 
       it "creates an SqlEvent" do

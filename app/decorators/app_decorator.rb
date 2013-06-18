@@ -3,8 +3,8 @@ class AppDecorator < Draper::Decorator
 
   decorates_association :transactions
 
-  def latest_transactions
-    object.latest_transactions.decorate
+  def alphabetized_sources
+    sources.order(:controller, :action)
   end
 
   def worst_sources_by_db_runtime(limit: 3)
@@ -15,7 +15,7 @@ class AppDecorator < Draper::Decorator
     sources_by_median_desc(:view_runtime, limit: limit)
   end
 
-  def collected_transactions?
-    !transactions.count.zero?
+  def collecting_data?
+    !sources.count.zero?
   end
 end

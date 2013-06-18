@@ -3,11 +3,8 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Source</th>
           <th>Path</th>
-          <th>Format</th>
-          <th>Method</th>
           <th>Status</th>
           <th>Started At</th>
           <th>Ended At</th>
@@ -18,11 +15,8 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= @transaction.id %></td>
-          <td><%= @transaction.source %></td>
+          <td><%= @transaction.source.name %></td>
           <td><%= @transaction.path %></td>
-          <td><%= @transaction.format %></td>
-          <td><%= @transaction.method %></td>
           <td><%= @transaction.status %></td>
           <td><%= @transaction.started_at %></td>
           <td><%= @transaction.ended_at %></td>
@@ -36,7 +30,6 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Started At</th>
           <th>Ended At</th>
           <th>Duration</th>
@@ -45,7 +38,6 @@
       <tbody>
         <% @transaction.events.each do |event| %>
           <tr>
-            <td><%= event.id %></td>
             <td><%= event.started_at %></td>
             <td><%= event.ended_at %></td>
             <td><%= event.duration %></td>

@@ -1,24 +1,10 @@
 class Transaction < ActiveRecord::Base
-  belongs_to :app
+  belongs_to :source
 
   has_many :sql_events
 
   has_many :view_events
 
-  validates :controller,
+  validates :source,
     presence: true
-
-  validates :action,
-    presence: true
-
-  validates :app,
-    presence: true
-
-  def self.recent(n=100)
-    order('created_at DESC').limit(n)
-  end
-
-  def source
-    Source.new(app, "#{controller}##{action}")
-  end
 end

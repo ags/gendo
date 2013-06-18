@@ -1,25 +1,49 @@
-class Source < Struct.new(:app, :name)
-  def to_s
+class Source < ActiveRecord::Base
+  belongs_to :app
+
+  has_many :transactions
+
+  validates :app,
+    presence: true
+
+  validates :controller,
+    presence: true
+
+  validates :action,
+    presence: true
+
+  validates :method_name,
+    presence: true
+
+  validates :format_type,
+    presence: true
+
+  def self.from_param!(param)
+    controller, action = param.split("#")
+    where(controller: controller, action: action).first!
+  end
+
+  def to_param
     name
   end
 
-  def transactions
-    app.transactions_with_source(name)
+  def name
+    "#{controller}##{action}"
   end
 
   def db
-    AttributeStats.new(transactions, :db_runtime)
+    TransactionStats.new(transactions, :db_runtime)
   end
 
   def view
-    AttributeStats.new(transactions, :view_runtime)
+    TransactionStats.new(transactions, :view_runtime)
   end
 
   def duration
-    AttributeStats.new(transactions, :duration)
+    TransactionStats.new(transactions, :duration)
   end
 
-  class AttributeStats < Struct.new(:transactions, :attribute)
+  class TransactionStats < Struct.new(:transactions, :attribute)
     def median
       # using #first here attempts to do a LIMIT
       @_median ||= transactions.

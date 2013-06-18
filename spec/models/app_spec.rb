@@ -55,18 +55,6 @@ describe App do
     end
   end
 
-  describe "#latest_transactions" do
-    it "returns the most recent transaction for each controller / action combination" do
-      app = App.make!
-      t1 = Transaction.make!(app: app, controller: "FooCtrl", action: "new")
-      t2 = Transaction.make!(app: app, controller: "FooCtrl", action: "new")
-      t3 = Transaction.make!(app: app, controller: "BarCtrl", action: "new")
-      t4 = Transaction.make!(app: app, controller: "BarCtrl", action: "create")
-
-      expect(app.latest_transactions).to eq([t4, t3, t2])
-    end
-  end
-
   describe "#current_access_token" do
     it "returns the associated UserAccessToken currently in-use" do
       token = AppAccessToken.make!
@@ -75,31 +63,23 @@ describe App do
     end
   end
 
-  describe "#transactions_with_source" do
-    it "returns associated transactions with the given source" do
-      app_a = App.make!
-      t = Transaction.make!(app: app_a, controller: "FooCtrl", action: "new")
-      Transaction.make!(app: app_a, controller: "FooCtrl", action: "create")
-
-      app_b = App.make!
-      Transaction.make!(app: app_b, controller: "FooCtrl", action: "new")
-
-      expect(app_a.transactions_with_source("FooCtrl#new")).to eq([t])
-    end
-  end
-
   describe "#sources_by_median_desc" do
     it "returns the top n Sources for a field sorted by their median value" do
       app = App.make!
-      Transaction.make!(app: app, controller: "A", action: "a", db_runtime: 1)
-      Transaction.make!(app: app, controller: "A", action: "b", db_runtime: 2)
-      Transaction.make!(app: app, controller: "B", action: "a", db_runtime: 0)
-      Transaction.make!(app: app, controller: "B", action: "b", db_runtime: 9)
-      Transaction.make!(app: app, controller: "B", action: "b", db_runtime: 4)
+      source_a_1 = Source.make!(app: app, controller: "A", action: "a")
+      source_a_2 = Source.make!(app: app, controller: "A", action: "b")
+      source_b_1 = Source.make!(app: app, controller: "B", action: "a")
+      source_b_2 = Source.make!(app: app, controller: "B", action: "b")
+
+      Transaction.make!(source: source_a_1, db_runtime: 1)
+      Transaction.make!(source: source_a_2, db_runtime: 2)
+      Transaction.make!(source: source_b_1, db_runtime: 0)
+      Transaction.make!(source: source_b_2, db_runtime: 9)
+      Transaction.make!(source: source_b_2, db_runtime: 4)
 
       expect(app.sources_by_median_desc(:db_runtime, limit: 2)).to eq([
-        Source.new(app, "B#b"),
-        Source.new(app, "A#b")
+        source_b_2,
+        source_a_2
       ])
     end
   end

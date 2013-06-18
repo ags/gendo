@@ -1,32 +1,33 @@
 .row
-  .small-12.columns
-    h3= @app.name
+  .small-9.columns
 
-    p
-      ' App Key:
-      = @app.current_access_token.token
-
-    h3 Worst By Median DB Runtime
-    - @app.worst_sources_by_db_runtime.each do |source|
-      p
-        = link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source)
-
-    h3 Worst By Median View Runtime
-    - @app.worst_sources_by_view_runtime.each do |source|
-      p
-        = link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source)
+    .row
+      .small-3.columns
+        h3= @app.name
 
     table
       thead
         tr
-          th ID
           th Source
-          th DB Runtime
-          th View Runtime
+          th Duration
+          th Database
+          th Views
+
       tbody
-        - @app.latest_transactions.each do |transaction|
+        - @app.alphabetized_sources.each do |source|
           tr
-            td= link_to transaction.id, app_transaction_path(transaction.app, transaction)
-            td= link_to transaction.source, app_source_path(transaction.app, transaction.source)
-            td= transaction.db_runtime
-            td= transaction.view_runtime
+            td= link_to source.name, app_source_path(source.app, source)
+            td= source.duration.median
+            td= source.db.median
+            td= source.view.median
+
+  .small-3.columns
+    h4 Database
+    - @app.worst_sources_by_db_runtime.each do |source|
+      p
+        = link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source)
+
+    h4 Views
+    - @app.worst_sources_by_view_runtime.each do |source|
+      p
+        = link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source)

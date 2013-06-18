@@ -20,7 +20,7 @@ describe AppsController do
 
       context "when the app has data" do
         before do
-          Transaction.make!(app: app)
+          Source.make!(app: app)
         end
 
         it "should render the app overview" do

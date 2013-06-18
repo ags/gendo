@@ -8,9 +8,12 @@ module Gendo
       def initialize(app, params)
         @app = app
         params = params.deep_symbolize_keys
-        @sql_events = params.fetch(:sql_events) { [] }
-        @view_events = params.fetch(:view_events) { [] }
-        @transaction = params.except(:sql_events, :view_events)
+
+        @sql_events =   params.fetch(:sql_events) { [] }
+        @view_events =  params.fetch(:view_events) { [] }
+        @source =       params.fetch(:source)
+
+        @transaction = params.except(:sql_events, :view_events, :source)
 
         @transaction[:started_at] = Time(@transaction.fetch(:started_at))
         @transaction[:ended_at] = Time(@transaction.fetch(:ended_at))
@@ -23,7 +26,9 @@ module Gendo
 
       def create!
         User.transaction do
-          transaction = ::Transaction.create!(@transaction.merge(app: @app))
+          source = @app.sources.where(@source).first_or_create!
+          transaction = source.transactions.create!(@transaction)
+
           @view_events.each do |view_event|
             transaction.view_events.create!(view_event)
           end

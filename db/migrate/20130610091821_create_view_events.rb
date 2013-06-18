@@ -1,7 +1,7 @@
 class CreateViewEvents < ActiveRecord::Migration
   def change
     create_table :view_events do |t|
-      t.references :transaction
+      t.references :transaction, index: true
 
       t.string :identifier, null: false
       t.datetime :started_at

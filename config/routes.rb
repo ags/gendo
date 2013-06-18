@@ -5,9 +5,10 @@ Gendo::Application.routes.draw do
     resource :transactions, only: [:create]
   end
 
-  resources :apps, only: [:new, :create, :show] do
-    resources :transactions, only: [:index, :show]
-    resources :sources, only: [:show]
+  resources :apps, only: [:index, :new, :create, :show] do
+    resources :sources, only: [:show] do
+      resources :transactions, only: [:show]
+    end
   end
 
   resources :users, only: [:create]

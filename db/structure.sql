@@ -143,13 +143,48 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE sources (
+    id integer NOT NULL,
+    app_id integer NOT NULL,
+    controller character varying(255) NOT NULL,
+    action character varying(255) NOT NULL,
+    method_name character varying(255) NOT NULL,
+    format_type character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: sources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE sources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE sources_id_seq OWNED BY sources.id;
+
+
+--
 -- Name: sql_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE sql_events (
     id integer NOT NULL,
     transaction_id integer,
-    sql character varying(1024),
+    sql text,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
     duration double precision,
@@ -184,11 +219,7 @@ ALTER SEQUENCE sql_events_id_seq OWNED BY sql_events.id;
 
 CREATE TABLE transactions (
     id integer NOT NULL,
-    controller character varying(255) NOT NULL,
-    action character varying(255) NOT NULL,
     path character varying(255),
-    format character varying(255),
-    method character varying(255),
     status integer,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
@@ -197,7 +228,8 @@ CREATE TABLE transactions (
     duration double precision,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    app_id integer NOT NULL
+    source_id integer NOT NULL,
+    shinji_version character varying(255)
 );
 
 
@@ -305,6 +337,13 @@ ALTER TABLE ONLY apps ALTER COLUMN id SET DEFAULT nextval('apps_id_seq'::regclas
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY sources ALTER COLUMN id SET DEFAULT nextval('sources_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY sql_events ALTER COLUMN id SET DEFAULT nextval('sql_events_id_seq'::regclass);
 
 
@@ -335,6 +374,14 @@ ALTER TABLE ONLY view_events ALTER COLUMN id SET DEFAULT nextval('view_events_id
 
 ALTER TABLE ONLY apps
     ADD CONSTRAINT apps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY sources
+    ADD CONSTRAINT sources_pkey PRIMARY KEY (id);
 
 
 --
@@ -378,6 +425,83 @@ ALTER TABLE ONLY view_events
 
 
 --
+-- Name: index_apps_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_apps_on_user_id ON apps USING btree (user_id);
+
+
+--
+-- Name: index_sources_on_action; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_sources_on_action ON sources USING btree (action);
+
+
+--
+-- Name: index_sources_on_app_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_sources_on_app_id ON sources USING btree (app_id);
+
+
+--
+-- Name: index_sources_on_controller; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_sources_on_controller ON sources USING btree (controller);
+
+
+--
+-- Name: index_sources_on_method_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_sources_on_method_name ON sources USING btree (method_name);
+
+
+--
+-- Name: index_sql_events_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_sql_events_on_transaction_id ON sql_events USING btree (transaction_id);
+
+
+--
+-- Name: index_transactions_on_db_runtime; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transactions_on_db_runtime ON transactions USING btree (db_runtime);
+
+
+--
+-- Name: index_transactions_on_duration; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transactions_on_duration ON transactions USING btree (duration);
+
+
+--
+-- Name: index_transactions_on_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transactions_on_source_id ON transactions USING btree (source_id);
+
+
+--
+-- Name: index_transactions_on_view_runtime; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_transactions_on_view_runtime ON transactions USING btree (view_runtime);
+
+
+--
+-- Name: index_view_events_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_view_events_on_transaction_id ON view_events USING btree (transaction_id);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -413,3 +537,11 @@ INSERT INTO schema_migrations (version) VALUES ('20130615004449');
 INSERT INTO schema_migrations (version) VALUES ('20130615020327');
 
 INSERT INTO schema_migrations (version) VALUES ('20130616085600');
+
+INSERT INTO schema_migrations (version) VALUES ('20130618082227');
+
+INSERT INTO schema_migrations (version) VALUES ('20130618084139');
+
+INSERT INTO schema_migrations (version) VALUES ('20130618115306');
+
+INSERT INTO schema_migrations (version) VALUES ('20130618115452');

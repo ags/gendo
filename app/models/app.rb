@@ -4,7 +4,11 @@ class App < ActiveRecord::Base
   has_many :app_access_tokens,
     dependent: :destroy
 
+  has_many :sources,
+    dependent: :destroy
+
   has_many :transactions,
+    through: :sources,
     dependent: :destroy
 
   validates :user,
@@ -37,24 +41,12 @@ class App < ActiveRecord::Base
     app_access_tokens.last
   end
 
-  def latest_transactions
-    transactions.
-      select("DISTINCT ON (controller, action) *").
-      order("controller, action, created_at DESC")
-  end
-
-  def transactions_with_source(source)
-    controller, action = source.to_s.split("#")
-    transactions.where(controller: controller, action: action)
-  end
-
   def sources_by_median_desc(field, limit: 3)
-    sources = transactions.
-      select("controller || '#' || action AS name, median(#{field})").
-      group(:controller, :action).
-      order("median DESC").
+    sources.
+      joins(:transactions).
+      group("sources.id").
+      order("median(transactions.#{field}) DESC").
       limit(limit)
-    sources.map { |source| Source.new(self, source.name) }
   end
 
   DoesNotExist = Class.new(Exception)

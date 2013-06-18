@@ -10,15 +10,15 @@ describe AppDecorator do
   let(:app) { stub(:app) }
   subject(:decorated) { AppDecorator.new(app) }
 
-  describe "#latest_transactions" do
-    it "delegates to the App and decorates the result" do
-      latest_transactions = stub(:latest_transactions)
-      decorated_transactions = stub(:decorated_transactions)
+  describe "#alphabetized_sources" do
+    it "orders sources by their controller and action" do
+      sources = double(:sources)
+      ordered = double(:ordered_sources)
 
-      app.should_receive(:latest_transactions) { latest_transactions }
-      latest_transactions.should_receive(:decorate) { decorated_transactions }
+      app.stub(:sources) { sources }
+      sources.should_receive(:order).with(:controller, :action) { ordered }
 
-      expect(decorated.latest_transactions).to eq(decorated_transactions)
+      expect(decorated.alphabetized_sources).to eq(ordered)
     end
   end
 
@@ -46,22 +46,22 @@ describe AppDecorator do
     end
   end
 
-  describe "#collected_transactions?" do
-    let(:app) { stub(:app, transactions: transactions) }
+  describe "#collecting_data?" do
+    let(:app) { stub(:app, sources: sources) }
 
-    context "with transactions" do
-      let(:transactions) { [stub(:transaction, decorate: stub)] }
+    context "with sources" do
+      let(:sources) { [stub(:source, decorate: stub)] }
 
       it "is true" do
-        expect(decorated.collected_transactions?).to be_true
+        expect(decorated.collecting_data?).to be_true
       end
     end
 
-    context "with no transactions" do
-      let(:transactions) { [] }
+    context "with no sources" do
+      let(:sources) { [] }
 
       it "is false" do
-        expect(decorated.collected_transactions?).to be_false
+        expect(decorated.collecting_data?).to be_false
       end
     end
   end

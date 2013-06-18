@@ -19,7 +19,7 @@ class AppsController < ApplicationController
   def show
     @app = app.decorate
 
-    if @app.collected_transactions?
+    if @app.collecting_data?
       render :overview
     else
       render :setup_instructions

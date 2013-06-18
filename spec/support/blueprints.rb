@@ -11,9 +11,15 @@ AppAccessToken.blueprint do
 end
 
 Transaction.blueprint do
+  source
+end
+
+Source.blueprint do
   app
-  controller { "PostsController" }
-  action     { "new" }
+  controller    { "PostsController" }
+  action        { "new" }
+  method_name   { "GET" }
+  format_type   { "*/*" }
 end
 
 App.blueprint do

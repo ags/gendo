@@ -1,0 +1,11 @@
+.row
+  .small-12.columns
+    h3 Apps
+
+    p
+      a.button(href="#{new_app_path}") New App
+
+    ul.small-block-grid-4
+      - current_user.apps.each do |app|
+        li
+          h4= link_to app.name, app_path(app)
