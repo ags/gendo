@@ -24,6 +24,7 @@ shared_examples_for "an action requiring authentication as the App's User" do
 
     it "requires login" do
       expect(response.status).to eq(401)
+      expect(response).to render_template("statics/unauthorized")
     end
   end
 
@@ -34,6 +35,7 @@ shared_examples_for "an action requiring authentication as the App's User" do
 
     it "requires login" do
       expect(response.status).to eq(401)
+      expect(response).to render_template("statics/unauthorized")
     end
   end
 end

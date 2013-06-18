@@ -10,18 +10,23 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def assert_authenticated!
-    unless logged_in?
-      return render status: :unauthorized
-    end
+    render_unauthorized unless logged_in?
   end
 
   def assert_authenticated_as_app_user!
     unless logged_in? && app.user.id == current_user.id
-      return render status: :unauthorized
+      render_unauthorized
     end
   end
 
   def authenticator
     @_authenticator ||= Authenticator.new(session)
   end
+
+  private
+
+  def render_unauthorized
+    return render "/statics/unauthorized", status: :unauthorized
+  end
+
 end
