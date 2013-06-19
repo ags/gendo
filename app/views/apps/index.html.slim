@@ -1,11 +1,12 @@
-.row
-  .small-12.columns
-    h3 Apps
-
-    p
+section.content
+  .row
+    .small-3.columns
+      h3 Apps
       a.button(href="#{new_app_path}") New App
 
-    ul.small-block-grid-4
-      - current_user.apps.each do |app|
-        li
-          h4= link_to app.name, app_path(app)
+  .row
+    .small-12.columns
+      ul.small-block-grid-4
+        - current_user.apps.each do |app|
+          li
+            h4= link_to app.name, app_path(app)

@@ -1,33 +1,36 @@
-.row
-  .small-9.columns
+section.content
+  .row
+    .large-9.small-12.columns
 
-    .row
-      .small-3.columns
-        h3= @app.name
+      .row
+        .small-3.columns
+          h3= @app.name
 
-    table
-      thead
-        tr
-          th Source
-          th Duration
-          th Database
-          th Views
-
-      tbody
-        - @app.alphabetized_sources.each do |source|
+      table
+        thead
           tr
-            td= link_to source.name, app_source_path(source.app, source)
-            td= source.duration.median
-            td= source.db.median
-            td= source.view.median
+            th Source
+            th
+              span(data-tooltip class="has-tip" title="Total action duration (ms)")
+                | Duration
+            th Database
+            th Views
 
-  .small-3.columns
-    h4 Database
-    - @app.worst_sources_by_db_runtime.each do |source|
-      p
-        = link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source)
+        tbody
+          - @app.alphabetized_sources.each do |source|
+            tr
+              td= link_to source.name, app_source_path(source.app, source)
+              td= source.duration.median
+              td= source.db.median
+              td= source.view.median
 
-    h4 Views
-    - @app.worst_sources_by_view_runtime.each do |source|
-      p
-        = link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source)
+    .large-3.small-12.columns
+      h4 Database
+      - @app.worst_sources_by_db_runtime.each do |source|
+        p
+          = link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source)
+
+      h4 Views
+      - @app.worst_sources_by_view_runtime.each do |source|
+        p
+          = link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source)

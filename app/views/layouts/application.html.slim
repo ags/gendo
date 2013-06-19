@@ -1,0 +1,46 @@
+doctype html
+== "<!--[if lt IE 7 ]> <html class=\"ie6\" lang=\"en\"> <![endif]-->"
+== "<!--[if IE 7 ]>    <html class=\"ie7\" lang=\"en\"> <![endif]-->"
+== "<!--[if IE 8 ]>    <html class=\"ie8\" lang=\"en\"> <![endif]-->"
+== "<!--[if IE 9 ]>    <html class=\"ie9\" lang=\"en\"> <![endif]-->"
+== "<!--[if (gt IE 9)|!(IE)]><!--> <html lang=\"en\"> <!--<![endif]-->"
+
+head
+  meta charset="utf-8"
+
+  meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+  title= content_for?(:title) ? yield(:title) : "Untitled"
+
+  = stylesheet_link_tag "application"
+  = javascript_include_tag "vendor/custom.modernizr"
+  = csrf_meta_tags
+
+body class="antialiased"
+  nav class="top-bar"
+    ul class="title-area"
+      li class="name"
+        h1
+          a href=root_url Gendo
+      li class="toggle-topbar menu-icon"
+        a href="#"
+
+    section class="top-bar-section"
+      ul class="right"
+        li class="divider"
+          - if logged_in?
+            li= link_to "Apps", apps_path
+            li class="divider"
+            li= link_to "Sign Out", sign_out_path
+          - else
+            li
+              a href="#" Features
+            li class="divider"
+            li
+              a href="#" Pricing
+            li class="divider"
+            li= link_to "Sign In", sign_in_path
+
+  = yield
+
+  = javascript_include_tag "application"

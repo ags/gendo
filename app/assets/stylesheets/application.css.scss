@@ -4,21 +4,42 @@
   margin-bottom: 0;
 }
 
+.text-centered {
+  text-align: center;
+}
+
 header.hero {
   padding: 20px 0 20px;
+  margin-bottom: 30px;
   background-color: #8560A5;
 
   h1, h4 {
     color: #fff;
   }
+
   h1 {
     font-weight: 500;
   }
+
   h4 {
     font-weight: 300;
   }
+
+  a.button {
+    margin-top: 15px;
+  }
+}
+
+section.content {
+  margin-top: 1.25em;
 }
 
 pre {
-  margin-bottom: 1.25em
+  margin-bottom: 1.25em;
+}
+
+form {
+  input.button {
+    margin: 1em 0 0;
+  }
 }
