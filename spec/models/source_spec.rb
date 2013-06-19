@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Source do
-  describe ".from_param" do
+  describe ".from_param!" do
     it "finds by name" do
       source = Source.make!(controller: "PostsController", action: "new")
       expect(Source.from_param!("PostsController#new")).to eq(source)

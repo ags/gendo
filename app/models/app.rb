@@ -17,7 +17,7 @@ class App < ActiveRecord::Base
   validates :name,
     presence: true
 
-  def self.from_param(param)
+  def self.from_param!(param)
     id = param.split("-").first
     where(id: id).first!
   end

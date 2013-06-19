@@ -18,16 +18,16 @@ describe App do
     expect(app.slug).to eq("shinji-ikari")
   end
 
-  describe ".from_param" do
+  describe ".from_param!" do
     it "returns the App with the given id + slug" do
       app = App.make!
-      expect(App.from_param(app.to_param)).to eq(app)
+      expect(App.from_param!(app.to_param)).to eq(app)
     end
 
     context "when no such app exists" do
       it "raises ActiveRecord::RecordNotFound" do
         expect do
-          App.from_param("rei")
+          App.from_param!("rei")
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
