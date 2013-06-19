@@ -2,7 +2,7 @@ module ApiV1
   module Authentication
     def current_app
       App.with_access_token!(bearer_token)
-    rescue RequestError, App::DoesNotExist => e
+    rescue RequestError, ActiveRecord::RecordNotFound => e
       raise ::ApiV1::Unauthorized, e.message
     end
 

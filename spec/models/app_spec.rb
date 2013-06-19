@@ -25,10 +25,10 @@ describe App do
     end
 
     context "when no such app exists" do
-      it "raises App::DoesNotExist" do
+      it "raises ActiveRecord::RecordNotFound" do
         expect do
           App.from_param("rei")
-        end.to raise_error(App::DoesNotExist)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
@@ -40,10 +40,10 @@ describe App do
     end
 
     context "no such App exists" do
-      it "raises App::DoesNotExist" do
+      it "raises ActiveRecord::RecordNotFound" do
         expect do
           App.with_access_token!("wat")
-        end.to raise_error(App::DoesNotExist)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
