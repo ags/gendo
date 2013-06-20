@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="small-6 small-centered columns">
+  <div class="small-12 large-6 small-centered columns">
     <%= form_for sign_in_form, url: sign_in_url, method: :post do |f| %>
       <% if sign_in_form.errors.any? %>
         <ul>
@@ -9,9 +9,7 @@
         </ul>
       <% end %>
 
-      <fieldset>
-        <legend>Sign In</legend>
-
+      <div class="panel">
         <div class="row">
           <div class="small-2 columns">
             <%= f.label :email, class: "inline" %>
@@ -31,7 +29,7 @@
         </div>
 
         <%= f.submit "Sign In", class: "button" %>
-      </fieldset>
+      </div>
     <% end %>
   </div>
 </div>

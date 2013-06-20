@@ -1,7 +1,7 @@
 //= require foundation_and_overrides
 
 .top-bar {
-  margin-bottom: 0;
+  margin-bottom: 0.5em;
 }
 
 .text-centered {
@@ -11,10 +11,11 @@
 header.hero {
   padding: 20px 0 20px;
   margin-bottom: 30px;
-  background-color: #8560A5;
 
   h1, h4 {
-    color: #fff;
+    a {
+      color: #000;
+    }
   }
 
   h1 {
