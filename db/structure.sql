@@ -229,7 +229,8 @@ CREATE TABLE transactions (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     source_id integer NOT NULL,
-    shinji_version character varying(255)
+    shinji_version character varying(255),
+    framework character varying(255)
 );
 
 
@@ -545,3 +546,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130618084139');
 INSERT INTO schema_migrations (version) VALUES ('20130618115306');
 
 INSERT INTO schema_migrations (version) VALUES ('20130618115452');
+
+INSERT INTO schema_migrations (version) VALUES ('20130621124854');

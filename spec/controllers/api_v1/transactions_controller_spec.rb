@@ -11,6 +11,7 @@ describe ApiV1::TransactionsController do
       view_runtime:   0.4567,
       duration:       1.98,
       shinji_version: "0.0.1",
+      framework:      "Rails 5.0.0",
       source: {
         controller:   'PostsController',
         action:       'new',

@@ -18,6 +18,7 @@ module ApiV1
         :ended_at,
         :duration,
         :shinji_version,
+        :framework,
         source:      [:controller, :action, :format_type, :method_name],
         sql_events:  [:sql, :started_at, :ended_at, :duration, :name],
         view_events: [:identifier, :started_at, :ended_at, :duration]

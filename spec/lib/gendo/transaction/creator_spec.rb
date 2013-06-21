@@ -11,6 +11,7 @@ describe Gendo::Transaction::Creator do
   let(:params) { {
     source:         source,
     shinji_version: "0.0.1",
+    framework:      "Rails 5.0.0",
     path:           "/posts/new",
     status:         200,
     started_at:     1370939786.0706801,
@@ -32,6 +33,7 @@ describe Gendo::Transaction::Creator do
       expect(transaction.source.format_type).to eq("*/*")
 
       expect(transaction.shinji_version).to     eq("0.0.1")
+      expect(transaction.framework).to          eq("Rails 5.0.0")
       expect(transaction.path).to               eq("/posts/new")
       expect(transaction.status).to             eq(200)
       expect(transaction.started_at.to_f).to    eq(1370939786.0706801)
