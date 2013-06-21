@@ -6,7 +6,12 @@ section.content
 
   .row
     .small-12.columns
-      ul.small-block-grid-4
+      ul.small.block-grid-2
         - current_user.apps.each do |app|
           li
-            h4= link_to app.name, app_path(app)
+            .app.panel
+              h4= link_to app.name, app_path(app)
+              p
+                = app.transactions.count
+                |  transactions
+              p= link_to "settings", app_settings_path(app)

@@ -2,7 +2,7 @@ class AppsController < ApplicationController
   include UrlHasApp
 
   before_action :assert_authenticated!, only: [:new, :create]
-  before_action :assert_authenticated_as_app_user!, only: [:show]
+  before_action :assert_authenticated_as_app_user!, only: [:show, :settings]
 
   def new
   end
@@ -24,6 +24,10 @@ class AppsController < ApplicationController
     else
       render :setup_instructions
     end
+  end
+
+  def settings
+    @app = app.decorate
   end
 
   private

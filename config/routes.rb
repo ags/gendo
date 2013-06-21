@@ -6,6 +6,7 @@ Gendo::Application.routes.draw do
   end
 
   resources :apps, only: [:index, :new, :create, :show] do
+    get :settings
     resources :sources, only: [:show] do
       resources :transactions, only: [:show]
     end

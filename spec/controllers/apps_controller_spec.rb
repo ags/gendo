@@ -37,4 +37,11 @@ describe AppsController do
       end
     end
   end
+
+  describe "#settings" do
+    let(:action!) { get :settings, app_id: app.to_param }
+    let(:app) { App.make! }
+
+    it_behaves_like "an action requiring authentication as the App's User"
+  end
 end
