@@ -1,0 +1,24 @@
+.row
+  .small-6.small-centered.columns
+    = form_for(form, url: users_url, method: :post) do |f|
+      - if form.errors.any?
+        ul
+          - form.errors.full_messages.each do |message|
+            li= message
+
+      fieldset
+        legend Sign Up
+
+        .row
+          .small-2.columns
+            = f.label :email, class: "inline"
+          .small-10.columns
+            = f.email_field :email, placeholder: "Email Address"
+
+        .row
+          .small-2.columns
+            = f.label :password, class: "inline"
+          .small-10.columns
+            = f.password_field :password, placeholder: "Password"
+
+        = f.submit "Sign Up", class: "button"
