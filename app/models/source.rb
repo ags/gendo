@@ -19,12 +19,12 @@ class Source < ActiveRecord::Base
     presence: true
 
   def self.from_param!(param)
-    controller, action = param.split("#")
-    where(controller: controller, action: action).first!
+    id, name = param.split("-")
+    where(id: id).first!
   end
 
   def to_param
-    name
+    "#{id}-#{name}"
   end
 
   def name
