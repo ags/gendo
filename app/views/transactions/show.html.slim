@@ -1,33 +1,51 @@
 section.content
   .row
     .small-12.columns
-      table
-        thead
-          tr
-            th Source
-            th Path
-            th Status
-        tbody
-          tr
-            td= link_to @transaction.source.name, app_source_path(@transaction.source.app, @transaction.source)
-            td= @transaction.path
-            td= @transaction.status
+      .panel
+        h3
+          ' Summary of
+          = link_to @transaction.source.name, app_source_path(@transaction.source.app, @transaction.source)
 
-      table
-        thead
-          tr
-            th Started At
-            th Ended At
-            th DB Runtime
-            th View Runtime
-            th Duration
-        tbody
-          tr
-            td= @transaction.started_at
-            td= @transaction.ended_at
-            td= @transaction.db_runtime
-            td= @transaction.view_runtime
-            td= @transaction.duration
+        .row
+          .small-12.large-4.columns
+            = content_tag :div, "", id: "time-breakdown", data: {breakdown: @transaction.time_breakdown_graph_data}
+
+          .small-12.large-4.columns
+            h4 Timing
+            table
+              tbody
+                tr
+                  td Total Duration
+                  td= @transaction.duration
+                tr
+                  td Database
+                  td= @transaction.db_runtime
+                tr
+                  td Views
+                  td= @transaction.view_runtime
+
+          .small-12.large-4.columns
+            h4 Request
+            table
+              tbody
+                tr
+                  td Started
+                  td= @transaction.started_at
+                tr
+                  td Ended
+                  td= @transaction.ended_at
+                tr
+                  td Path
+                  td= @transaction.path
+                tr
+                  td Method
+                  td= @transaction.source.method_name
+                tr
+                  td Format
+                  td= @transaction.source.format_type
+                tr
+                  td Status
+                  td= @transaction.status
 
       table
         thead
@@ -43,3 +61,15 @@ section.content
               td= event.duration
               td= event.name if event.respond_to?(:name)
               td= event.respond_to?(:sql) ? event.sql : event.identifier
+
+- content_for :javascript_body do
+  javascript:
+    Morris.Donut({
+      element: 'time-breakdown',
+      data: $("#time-breakdown").data("breakdown"),
+      formatter: function(value) { return value + "ms" },
+      colors: [
+        '#b00028',
+        '#202027',
+      ],
+    });

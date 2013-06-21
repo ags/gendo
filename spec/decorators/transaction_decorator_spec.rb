@@ -31,4 +31,22 @@ describe TransactionDecorator do
       expect(decorated.db_runtime).to eq("1.234 ms")
     end
   end
+
+  describe "#view_runtime" do
+    it "returns the view runtime and millsecond time unit" do
+      transaction = stub(view_runtime: 1.234)
+      decorated = TransactionDecorator.new(transaction)
+
+      expect(decorated.view_runtime).to eq("1.234 ms")
+    end
+  end
+
+  describe "#duration" do
+    it "returns the view runtime and millsecond time unit" do
+      transaction = stub(duration: 1.234)
+      decorated = TransactionDecorator.new(transaction)
+
+      expect(decorated.duration).to eq("1.234 ms")
+    end
+  end
 end
