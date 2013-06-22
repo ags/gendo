@@ -12,37 +12,42 @@ describe AppDecorator do
 
   describe "#alphabetized_sources" do
     it "orders sources by their controller and action" do
-      sources = double(:sources)
-      ordered = double(:ordered_sources)
+      decorated_sources = stub(:decorated_sources)
+      sources = stub(:sources, decorate: decorated_sources)
 
       app.stub(:sources) { sources }
-      sources.should_receive(:order).with(:controller, :action) { ordered }
+      sources.
+        should_receive(:order).
+        with(:controller, :action).
+        and_return(sources)
 
-      expect(decorated.alphabetized_sources).to eq(ordered)
+      expect(decorated.alphabetized_sources).to eq(decorated_sources)
     end
   end
 
   describe "#worst_sources_by_db_runtime" do
     it "delegates to App#sources_by_median_desc for db_runtime" do
-      worst_sources = stub(:worst_sources)
+      decorated_worst_sources = stub(:decorated_worst_sources)
 
       app.should_receive(:sources_by_median_desc).
         with(:db_runtime, limit: 3).
-        and_return(worst_sources)
+        and_return(stub(:worst_sources, decorate: decorated_worst_sources))
 
-      expect(decorated.worst_sources_by_db_runtime).to eq(worst_sources)
+      expect(decorated.worst_sources_by_db_runtime).to \
+        eq(decorated_worst_sources)
     end
   end
 
   describe "#worst_sources_by_view_runtime" do
     it "delegates to App#sources_by_median_desc for view_runtime" do
-      worst_sources = stub(:worst_sources)
+      decorated_worst_sources = stub(:decorated_worst_sources)
 
       app.should_receive(:sources_by_median_desc).
         with(:view_runtime, limit: 3).
-        and_return(worst_sources)
+        and_return(stub(:worst_sources, decorate: decorated_worst_sources))
 
-      expect(decorated.worst_sources_by_view_runtime).to eq(worst_sources)
+      expect(decorated.worst_sources_by_view_runtime).to \
+        eq(decorated_worst_sources)
     end
   end
 

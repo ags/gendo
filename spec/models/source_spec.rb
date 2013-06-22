@@ -29,5 +29,4 @@ describe Source do
       expect(source.to_param).to eq("#{source.id}-#{source.name}")
     end
   end
-
 end
