@@ -26,6 +26,10 @@ class TransactionDecorator < Draper::Decorator
     "#{object.duration} ms"
   end
 
+  def collected_timings?
+    object.db_runtime.present? && object.view_runtime.present?
+  end
+
   def time_breakdown_graph_data
     [
       {label: "Database", value: object.db_runtime},

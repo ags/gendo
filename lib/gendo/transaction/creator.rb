@@ -32,9 +32,11 @@ module Gendo
           @view_events.each do |view_event|
             transaction.view_events.create!(view_event)
           end
+
           @sql_events.each do |sql_event|
             transaction.sql_events.create!(sql_event)
           end
+
           transaction
         end
       end

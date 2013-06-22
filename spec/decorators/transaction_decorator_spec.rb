@@ -49,4 +49,42 @@ describe TransactionDecorator do
       expect(decorated.duration).to eq("1.234 ms")
     end
   end
+
+  describe "#collected_timings?" do
+    let(:decorated) { TransactionDecorator.new(transaction) }
+
+    context "with a db_runtime and view_runtime" do
+      let(:transaction) { stub(:transaction, db_runtime: 1, view_runtime: 2) }
+
+      it "is true" do
+        expect(decorated.collected_timings?).to be_true
+      end
+    end
+
+    context "with just a db_runtime" do
+      let(:transaction) { stub(:transaction, db_runtime: 1, view_runtime: nil) }
+
+      it "is false" do
+        expect(decorated.collected_timings?).to be_false
+      end
+    end
+
+    context "with just a view_runtime" do
+      let(:transaction) { stub(:transaction, db_runtime: nil, view_runtime: 2) }
+
+      it "is false" do
+        expect(decorated.collected_timings?).to be_false
+      end
+    end
+
+    context "with neither db_runtime nor view_runtime" do
+      let(:transaction) {
+        stub(:transaction, db_runtime: nil, view_runtime: nil)
+      }
+
+      it "is false" do
+        expect(decorated.collected_timings?).to be_false
+      end
+    end
+  end
 end
