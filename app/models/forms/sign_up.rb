@@ -27,6 +27,8 @@ module Forms
 
       @authenticator.sign_in(user)
 
+      send_welcome_email
+
       true
     end
 
@@ -34,6 +36,10 @@ module Forms
 
     def create_user
       User.create!(email: email, password: password)
+    end
+
+    def send_welcome_email
+      UserWelcomeMailer.welcome(user).deliver
     end
 
     def email_available?

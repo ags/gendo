@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Forms::SignUp do
   let(:session) { {} }
@@ -17,6 +17,12 @@ describe Forms::SignUp do
       form.save!
       expect(session).to eq({user_id: form.user.id})
     end
+
+    it "sends a welcome email to the created user" do
+      expect do
+        form.save!
+      end.to change { ActionMailer::Base.deliveries.size }.by(+1)
+    end
   end
 
   shared_examples_for "does not sign up a User" do
@@ -30,6 +36,12 @@ describe Forms::SignUp do
       expect do
         form.save!
       end.to_not change { session }
+    end
+
+    it "does not send an email" do
+      expect do
+        form.save!
+      end.to_not change { ActionMailer::Base.deliveries.size }
     end
   end
 
