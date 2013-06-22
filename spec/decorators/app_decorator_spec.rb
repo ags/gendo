@@ -65,4 +65,18 @@ describe AppDecorator do
       end
     end
   end
+
+  describe "#internal_server_errors" do
+    it "returns transactions with status 500" do
+      decorated_transactions = stub(:decorated_transactions)
+
+      app.
+        should_receive(:recent_transactions_with_status).
+        with(500, limit: 3).
+        and_return(stub(:transactions, decorate: decorated_transactions))
+
+      expect(decorated.recent_internal_server_errors).to \
+        eq(decorated_transactions)
+    end
+  end
 end

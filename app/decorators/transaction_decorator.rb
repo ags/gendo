@@ -36,4 +36,8 @@ class TransactionDecorator < Draper::Decorator
       {label: "Views", value: object.view_runtime},
     ]
   end
+
+  def fuzzy_timestamp
+    "#{h.distance_of_time_in_words_to_now(created_at)} ago"
+  end
 end

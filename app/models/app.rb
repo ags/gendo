@@ -48,4 +48,11 @@ class App < ActiveRecord::Base
       order("median(transactions.#{field}) DESC").
       limit(limit)
   end
+
+  def recent_transactions_with_status(status, limit: 100)
+    transactions.
+      where(status: status).
+      order("created_at DESC").
+      limit(limit)
+  end
 end

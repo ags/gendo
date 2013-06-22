@@ -24,6 +24,7 @@ group :test do
   gem 'capybara'
   gem 'machinist'
   gem 'simplecov'
+  gem "timecop"
 end
 
 group :test, :development do

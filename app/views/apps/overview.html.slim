@@ -34,3 +34,9 @@ section.content
       - @app.worst_sources_by_view_runtime.each do |source|
         p
           = link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source)
+
+      h4 500s
+      - @app.recent_internal_server_errors.each do |transaction|
+        p
+          = link_to "#{transaction.source.name} #{transaction.fuzzy_timestamp}",
+            app_source_transaction_path(transaction.source.app, transaction.source, transaction)

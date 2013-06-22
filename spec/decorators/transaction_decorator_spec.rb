@@ -1,4 +1,5 @@
 require 'draper'
+require 'timecop'
 require './spec/support/shared_examples_for_decorates_event_timestamps'
 require './app/decorators/decorates_event_timestamps'
 require './app/decorators/transaction_decorator'
@@ -84,6 +85,16 @@ describe TransactionDecorator do
 
       it "is false" do
         expect(decorated.collected_timings?).to be_false
+      end
+    end
+  end
+
+  describe "#fuzzy_timestamp" do
+    it "is a fuzzy timestamp of created_at" do
+      Timecop.freeze(Time.now) do
+        transaction = stub(:transaction, created_at: 30.minutes.ago)
+        decorated = TransactionDecorator.new(transaction)
+        expect(decorated.fuzzy_timestamp).to eq("30 minutes ago")
       end
     end
   end
