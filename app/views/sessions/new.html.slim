@@ -12,11 +12,19 @@
             = f.label :email, class: "inline"
           .small-10.columns
             = f.email_field :email
+            - sign_in_form.errors.messages[:email].each do |error_message|
+              small.error
+                ' Name
+                = error_message
 
         .row
           .small-2.columns
             = f.label :password, class: "inline"
           .small-10.columns
             = f.password_field :password
+            - sign_in_form.errors.messages[:password].each do |error_message|
+              small.error
+                ' Password
+                = error_message
 
         = f.submit "Sign In", class: "button"
