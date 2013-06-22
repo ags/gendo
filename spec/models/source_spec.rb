@@ -31,7 +31,11 @@ describe Source do
   end
 
   def build_transaction(params={})
-    Transaction.make!(params.merge(source: source))
+    Transaction.make!({
+      view_runtime: 1,
+      db_runtime: 2,
+      source: source
+    }.merge(params))
   end
 
   describe "#db" do
