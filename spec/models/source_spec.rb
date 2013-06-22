@@ -24,94 +24,33 @@ describe Source do
   end
 
   describe "#to_param" do
-     it "returns the id hyphentated with name" do
+    it "returns the id hyphentated with name" do
       source = Source.make!
       expect(source.to_param).to eq("#{source.id}-#{source.name}")
-     end
+    end
   end
 
-  def build_transaction(params={})
-    Transaction.make!({
-      view_runtime: 1,
-      db_runtime: 2,
-      source: source
-    }.merge(params))
-  end
-
-  describe "#db" do
+  describe "Gendo::TransactionStats" do
     let(:source) { Source.make! }
 
-    let!(:t1) { build_transaction(db_runtime: 2) }
-    let!(:t2) { build_transaction(db_runtime: 1) }
-    let!(:t3) { build_transaction(db_runtime: 3) }
-
-    describe "#median" do
-      it "returns the median of the source's db_runtimes" do
-        expect(source.db.median).to eq(2)
+    describe "#db" do
+      it "is Gendo::TransactionStats for db_runtime" do
+        expect(source.db).to \
+          eq(Gendo::TransactionStats.new(source.transactions, :db_runtime))
       end
     end
 
-    describe "#min" do
-      it "returns the minimum of the source's db_runtimes" do
-        expect(source.db.min).to eq(t2)
+    describe "#view" do
+      it "is Gendo::TransactionStats for view_runtime" do
+        expect(source.view).to \
+          eq(Gendo::TransactionStats.new(source.transactions, :view_runtime))
       end
     end
 
-    describe "#max" do
-      it "returns the maximum of the source's db_runtimes" do
-        expect(source.db.max).to eq(t3)
-      end
-    end
-  end
-
-  describe "#view" do
-    let(:source) { Source.make! }
-
-    let!(:t1) { build_transaction(view_runtime: 2) }
-    let!(:t2) { build_transaction(view_runtime: 1) }
-    let!(:t3) { build_transaction(view_runtime: 3) }
-
-    describe "#median" do
-      it "returns the median of the source's view_runtimes" do
-        expect(source.view.median).to eq(2)
-      end
-    end
-
-    describe "#min" do
-      it "returns the minimum of the source's view_runtimes" do
-        expect(source.view.min).to eq(t2)
-      end
-    end
-
-    describe "#max" do
-      it "returns the maximum of the source's view_runtimes" do
-        expect(source.view.max).to eq(t3)
-      end
-    end
-  end
-
-  describe "#duration" do
-    let(:source) { Source.make! }
-
-    let!(:t1) { build_transaction(duration: 2) }
-    let!(:t2) { build_transaction(duration: 1) }
-    let!(:t3) { build_transaction(duration: 3) }
-
-    describe "#median" do
-      it "returns the median of the source's durations" do
-        expect(source.duration.median).to eq(2)
-      end
-    end
-
-    describe "#min" do
-      it "returns the minimum of the source's durations" do
-        expect(source.duration.min).to eq(t2)
-      end
-    end
-
-    describe "#max" do
-      it "returns the maximum of the source's durations" do
-        expect(source.duration.max).to eq(t3)
+    describe "#duration" do
+      it "is Gendo::TransactionStats for view_runtime" do
+        expect(source.duration).to \
+          eq(Gendo::TransactionStats.new(source.transactions, :duration))
       end
     end
   end
