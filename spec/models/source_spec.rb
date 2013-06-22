@@ -30,28 +30,4 @@ describe Source do
     end
   end
 
-  describe "Gendo::TransactionStats" do
-    let(:source) { Source.make! }
-
-    describe "#db" do
-      it "is Gendo::TransactionStats for db_runtime" do
-        expect(source.db).to \
-          eq(Gendo::TransactionStats.new(source.transactions, :db_runtime))
-      end
-    end
-
-    describe "#view" do
-      it "is Gendo::TransactionStats for view_runtime" do
-        expect(source.view).to \
-          eq(Gendo::TransactionStats.new(source.transactions, :view_runtime))
-      end
-    end
-
-    describe "#duration" do
-      it "is Gendo::TransactionStats for view_runtime" do
-        expect(source.duration).to \
-          eq(Gendo::TransactionStats.new(source.transactions, :duration))
-      end
-    end
-  end
 end
