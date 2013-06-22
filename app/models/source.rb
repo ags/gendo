@@ -59,11 +59,11 @@ class Source < ActiveRecord::Base
     end
 
     def min
-      @_min ||= transactions.order(attribute).limit(1).first
+      @_min ||= transactions.order(attribute).first
     end
 
     def max
-      @_max ||= transactions.order("#{attribute} DESC").limit(1).first
+      @_max ||= transactions.order("#{attribute} DESC").first
     end
   end
 end
