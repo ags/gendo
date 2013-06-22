@@ -1,11 +1,6 @@
 .row
   .small-6.small-centered.columns
     = form_for(new_app_form, url: apps_url, method: :post) do |f|
-      - if new_app_form.errors.any?
-        ul
-        - new_app_form.errors.full_messages.each do |msg|
-          li= msg
-
       fieldset
         legend New App
 
@@ -14,5 +9,9 @@
             = f.label :name, class: "inline"
           .small-10.columns
             = f.text_field :name, placeholder: "my app name", tabindex: 1
+            - new_app_form.errors.messages[:name].each do |error_message|
+              small.error
+                ' Name
+                = error_message
 
         = f.submit "Create", class: "button", tabindex: 2
