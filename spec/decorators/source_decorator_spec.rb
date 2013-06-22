@@ -9,6 +9,21 @@ class Source; end
 describe SourceDecorator do
   subject(:decorated) { SourceDecorator.new(source) }
 
+  describe "#latest_transactions" do
+    let(:source) { stub(:source, transactions: stub(:transactions)) }
+
+    it "returns transactions reverse sorted by created_at and decorated" do
+      decorated_transactions = stub(:decorated_transactions)
+
+      source.transactions.
+        should_receive(:order).
+        with("created_at DESC").
+        and_return(stub(:ordered, decorate: decorated_transactions))
+
+      expect(decorated.latest_transactions).to eq(decorated_transactions)
+    end
+  end
+
   describe "Gendo::TransactionStats" do
     let(:source) { stub(:source, transactions: stub(:transactions)) }
 
