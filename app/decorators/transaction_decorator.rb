@@ -8,7 +8,7 @@ class TransactionDecorator < Draper::Decorator
   decorates_association :view_events
 
   # delegate_all skips these
-  delegate :method, :source, to: :object
+  delegate :source, to: :object
 
   def events
     (sql_events + view_events).sort_by(&:started_at)
