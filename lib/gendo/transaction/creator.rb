@@ -27,15 +27,12 @@ module Gendo
       def create!
         User.transaction do
           source = @app.sources.where(@source).first_or_create!
+
           transaction = source.transactions.create!(@transaction)
 
-          @view_events.each do |view_event|
-            transaction.view_events.create!(view_event)
-          end
+          transaction.view_events.create!(@view_events)
 
-          @sql_events.each do |sql_event|
-            transaction.sql_events.create!(sql_event)
-          end
+          transaction.sql_events.create!(@sql_events)
 
           transaction
         end
