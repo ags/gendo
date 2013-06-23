@@ -134,6 +134,42 @@ ALTER SEQUENCE apps_id_seq OWNED BY apps.id;
 
 
 --
+-- Name: mailer_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE mailer_events (
+    id integer NOT NULL,
+    transaction_id integer,
+    mailer character varying(255) NOT NULL,
+    message_id character varying(255),
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    duration double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: mailer_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE mailer_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mailer_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE mailer_events_id_seq OWNED BY mailer_events.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -338,6 +374,13 @@ ALTER TABLE ONLY apps ALTER COLUMN id SET DEFAULT nextval('apps_id_seq'::regclas
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY mailer_events ALTER COLUMN id SET DEFAULT nextval('mailer_events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY sources ALTER COLUMN id SET DEFAULT nextval('sources_id_seq'::regclass);
 
 
@@ -375,6 +418,14 @@ ALTER TABLE ONLY view_events ALTER COLUMN id SET DEFAULT nextval('view_events_id
 
 ALTER TABLE ONLY apps
     ADD CONSTRAINT apps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mailer_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY mailer_events
+    ADD CONSTRAINT mailer_events_pkey PRIMARY KEY (id);
 
 
 --
@@ -430,6 +481,13 @@ ALTER TABLE ONLY view_events
 --
 
 CREATE INDEX index_apps_on_user_id ON apps USING btree (user_id);
+
+
+--
+-- Name: index_mailer_events_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mailer_events_on_transaction_id ON mailer_events USING btree (transaction_id);
 
 
 --
@@ -548,3 +606,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130618115306');
 INSERT INTO schema_migrations (version) VALUES ('20130618115452');
 
 INSERT INTO schema_migrations (version) VALUES ('20130621124854');
+
+INSERT INTO schema_migrations (version) VALUES ('20130623094219');

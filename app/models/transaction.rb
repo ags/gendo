@@ -5,6 +5,8 @@ class Transaction < ActiveRecord::Base
 
   has_many :view_events
 
+  has_many :mailer_events
+
   validates :source,
     presence: true
 end
