@@ -43,7 +43,7 @@ describe Gendo::Transaction::Creator do
       expect(transaction.duration).to           eq(1.98)
     end
 
-    context "with nested SqlEvents" do
+    context "with nested sql_events data" do
       let(:params) { {
         source:       source,
         started_at:   1,
@@ -71,7 +71,7 @@ describe Gendo::Transaction::Creator do
       end
     end
 
-    context "with nested ViewEvents" do
+    context "with nested view_events data" do
       let(:params) { {
         source:         source,
         started_at:   1,
@@ -86,7 +86,7 @@ describe Gendo::Transaction::Creator do
         ]
       } }
 
-      it "creates nested viewEvents" do
+      it "creates nested ViewEvents" do
         transaction = creator.create!
 
         expect(transaction.view_events.count).to eq(1)
@@ -96,6 +96,37 @@ describe Gendo::Transaction::Creator do
         expect(view_event.duration).to eq(0.321)
         expect(view_event.started_at.to_f).to eq(1370939786.0706801)
         expect(view_event.ended_at.to_f).to eq(1370939787.0706801)
+      end
+    end
+
+    context "with nested mailer_events data" do
+      let(:params) { {
+        source:         source,
+        started_at:   1,
+        ended_at:     2,
+        mailer_events: [
+          {
+            mailer:     "FooMailer",
+            message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
+            started_at: 1370939786.0706801,
+            ended_at:   1370939787.0706801,
+            duration:   0.321,
+          }
+        ]
+      } }
+
+      it "creates nested MailerEvents" do
+        transaction = creator.create!
+
+        expect(transaction.mailer_events.count).to eq(1)
+
+        mailer_event = transaction.mailer_events.first
+        expect(mailer_event.mailer).to eq("FooMailer")
+        expect(mailer_event.message_id).to \
+          eq("4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail")
+        expect(mailer_event.duration).to eq(0.321)
+        expect(mailer_event.started_at.to_f).to eq(1370939786.0706801)
+        expect(mailer_event.ended_at.to_f).to eq(1370939787.0706801)
       end
     end
 

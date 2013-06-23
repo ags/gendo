@@ -9,11 +9,17 @@ module Gendo
         @app = app
         params = params.deep_symbolize_keys
 
-        @sql_events =   params.fetch(:sql_events) { [] }
-        @view_events =  params.fetch(:view_events) { [] }
-        @source =       params.fetch(:source)
+        @sql_events =     params.fetch(:sql_events) { [] }
+        @view_events =    params.fetch(:view_events) { [] }
+        @mailer_events =  params.fetch(:mailer_events) { [] }
+        @source =         params.fetch(:source)
 
-        @transaction = params.except(:sql_events, :view_events, :source)
+        @transaction = params.except(
+          :sql_events,
+          :view_events,
+          :mailer_events,
+          :source
+        )
 
         @transaction[:started_at] = Time(@transaction.fetch(:started_at))
         @transaction[:ended_at] = Time(@transaction.fetch(:ended_at))
@@ -25,6 +31,8 @@ module Gendo
       end
 
       def create!
+        # TODO this does a whole bunch of inserts, optimize this
+        # TODO more generic event model would be nice
         User.transaction do
           source = @app.sources.where(@source).first_or_create!
 
@@ -34,6 +42,8 @@ module Gendo
 
           transaction.sql_events.create!(@sql_events)
 
+          transaction.mailer_events.create!(@mailer_events)
+
           transaction
         end
       end
@@ -41,7 +51,7 @@ module Gendo
       private
 
       def events
-        [@sql_events, @view_events].flatten
+        [@sql_events, @view_events, @mailer_events].flatten
       end
 
       def Time(timestamp)

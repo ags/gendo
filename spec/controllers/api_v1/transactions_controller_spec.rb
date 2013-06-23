@@ -33,6 +33,15 @@ describe ApiV1::TransactionsController do
           ended_at:     1370939787.0706801,
           duration:     0.321,
         }
+      ],
+      mailer_events: [
+        {
+          mailer:     "FooMailer",
+          message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
+          started_at: 1370939788.0706801,
+          ended_at:   1370939789.0706801,
+          duration:   0.321,
+        }
       ]
     }
   } }
@@ -57,6 +66,10 @@ describe ApiV1::TransactionsController do
 
       it "creates a ViewEvent" do
         expect(create!).to change { ViewEvent.count }.by(+1)
+      end
+
+      it "creates a MailerEvent" do
+        expect(create!).to change { MailerEvent.count }.by(+1)
       end
     end
   end
