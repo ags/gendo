@@ -28,5 +28,11 @@ module Gendo
     config.eager_load_paths += %W( #{config.root}/lib )
 
     config.active_record.schema_format = :sql
+
+    config.action_mailer.default_url_options = {
+      protocol: ENV.fetch("DEFAULT_URL_PROTOCOL", "http"),
+      host:     ENV.fetch("DEFAULT_URL_HOST",     "localhost"),
+      port:     ENV.fetch("DEFAULT_URL_PORT",     "5000")
+    }
   end
 end
