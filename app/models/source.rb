@@ -3,6 +3,15 @@ class Source < ActiveRecord::Base
 
   has_many :transactions
 
+  has_many :sql_events,
+    through: :transactions
+
+  has_many :view_events,
+    through: :transactions
+
+  has_many :mailer_events,
+    through: :transactions
+
   validates :app,
     presence: true
 

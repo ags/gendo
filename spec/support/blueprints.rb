@@ -30,3 +30,12 @@ end
 App.blueprint(:with_access_token) do
   app_access_tokens { [AppAccessToken.make!] }
 end
+
+MailerEvent.blueprint do
+  transaction
+  mailer     { "FooMailer" }
+  message_id { "123456789" }
+  started_at { 1370939786.0706801 }
+  ended_at   { 1370939787.0706801 }
+  duration   { 0.1234 }
+end
