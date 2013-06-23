@@ -1,4 +1,4 @@
-class SqlEventDecorator < Draper::Decorator
+class MailerEventDecorator < Draper::Decorator
   include DecoratesEventTimestamps
   include HasUndecoratedClassName
 

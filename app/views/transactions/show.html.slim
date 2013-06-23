@@ -58,12 +58,7 @@ section.content
             th Duration
         tbody
           - @transaction.events.each do |event|
-            tr
-              td= event.started_at
-              td= event.ended_at
-              td= event.duration
-              td= event.name if event.respond_to?(:name)
-              td= event.respond_to?(:sql) ? event.sql : event.identifier
+            = render "#{event.underscored_class_name}_row", event: event
 
 - content_for :javascript_body do
   javascript:

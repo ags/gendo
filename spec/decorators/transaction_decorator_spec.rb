@@ -17,10 +17,13 @@ describe TransactionDecorator do
     let(:a) { stub(:a, started_at: 1.minute.ago).as_null_object }
     let(:b) { stub(:b, started_at: 2.minutes.ago).as_null_object }
     let(:c) { stub(:c, started_at: 30.seconds.ago).as_null_object }
-    let(:transaction) { stub(sql_events: [a, c], view_events: [b]) }
+    let(:d) { stub(:d, started_at: 15.seconds.ago).as_null_object }
+    let(:transaction) {
+      stub(sql_events: [a, c], view_events: [b], mailer_events: [d])
+    }
 
     it "combines sql and view events ordered by started_at" do
-      expect(decorated.events).to eq([b, a, c])
+      expect(decorated.events).to eq([b, a, c, d])
     end
   end
 
