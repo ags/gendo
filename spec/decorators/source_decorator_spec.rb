@@ -1,4 +1,5 @@
 require 'draper'
+require './lib/gendo/insights'
 require './lib/gendo/transaction_stats'
 require './app/decorators/source_decorator'
 
@@ -46,6 +47,18 @@ describe SourceDecorator do
         expect(decorated.duration).to \
           eq(Gendo::TransactionStats.new(source.transactions, :duration))
       end
+    end
+  end
+
+  describe "#insights" do
+    let(:source) { stub(:source) }
+
+    class FooIns; end
+
+    it "is a list of applicable insight classes" do
+      Gendo::Insights.stub(:applicable_to_source) { [FooIns] }
+
+      expect(decorated.insights).to eq([FooIns])
     end
   end
 end

@@ -17,4 +17,8 @@ class SourceDecorator < Draper::Decorator
   def duration
     Gendo::TransactionStats.new(transactions, :duration)
   end
+
+  def insights
+    Gendo::Insights.applicable_to_source(object)
+  end
 end

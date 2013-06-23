@@ -7,31 +7,38 @@ section.content
 
   .row
     .small-12.large-5.columns
-      h4 Health
+      .row
+        .small-12.large-12.columns
+          h4 Health
 
-      table
-        thead
-          tr
-            th
-            th Median
-            th Worst
-            th Best
-        tbody
-          tr
-            td DB Runtime
-            td= @source.db.median
-            td= link_to @source.db.max.db_runtime, app_source_transaction_path(@source.app, @source, @source.db.max)
-            td= link_to @source.db.min.db_runtime, app_source_transaction_path(@source.app, @source, @source.db.min)
-          tr
-            td View Runtime
-            td= @source.view.median
-            td= link_to @source.view.max.view_runtime, app_source_transaction_path(@source.app, @source, @source.view.max)
-            td= link_to @source.view.min.view_runtime, app_source_transaction_path(@source.app, @source, @source.view.min)
-          tr
-            td Duration
-            td= @source.duration.median
-            td= link_to @source.duration.max.duration, app_source_transaction_path(@source.app, @source, @source.duration.max)
-            td= link_to @source.duration.min.duration, app_source_transaction_path(@source.app, @source, @source.duration.min)
+          table
+            thead
+              tr
+                th
+                th Median
+                th Worst
+                th Best
+            tbody
+              tr
+                td DB Runtime
+                td= @source.db.median
+                td= link_to @source.db.max.db_runtime, app_source_transaction_path(@source.app, @source, @source.db.max)
+                td= link_to @source.db.min.db_runtime, app_source_transaction_path(@source.app, @source, @source.db.min)
+              tr
+                td View Runtime
+                td= @source.view.median
+                td= link_to @source.view.max.view_runtime, app_source_transaction_path(@source.app, @source, @source.view.max)
+                td= link_to @source.view.min.view_runtime, app_source_transaction_path(@source.app, @source, @source.view.min)
+              tr
+                td Duration
+                td= @source.duration.median
+                td= link_to @source.duration.max.duration, app_source_transaction_path(@source.app, @source, @source.duration.max)
+                td= link_to @source.duration.min.duration, app_source_transaction_path(@source.app, @source, @source.duration.min)
+
+        .small-12.large-12.columns
+          h4 Insights
+          - @source.insights.each do |insight|
+            = render "/insights/#{insight.partial_name}"
 
     .small-12.large-7.columns
       h4 Latest Requests

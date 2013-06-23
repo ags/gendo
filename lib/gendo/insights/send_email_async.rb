@@ -1,6 +1,6 @@
 module Gendo
   module Insights
-    class SendEmailAsync
+    class SendEmailAsync < Base
       APPLICABILITY_LIFETIME = 1.day.ago
 
       def self.applicable_to_source?(source)
