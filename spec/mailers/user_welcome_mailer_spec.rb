@@ -16,5 +16,9 @@ describe UserWelcomeMailer do
     it "sets the subject line" do
       expect(mail.subject).to eq("Welcome to Gendo!")
     end
+
+    it "contains a link to the new app page" do
+      expect(mail.body).to match(/#{new_app_url}/)
+    end
   end
 end
