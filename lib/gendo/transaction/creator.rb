@@ -25,6 +25,8 @@ module Gendo
         @transaction[:ended_at] = Time(@transaction.fetch(:ended_at))
 
         events.each do |event|
+          # TODO remove once the deep_symbolize_keys patch is in Rails master.
+          event.deep_symbolize_keys!
           event[:started_at] = Time(event.fetch(:started_at))
           event[:ended_at] = Time(event.fetch(:ended_at))
         end
