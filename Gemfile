@@ -35,3 +35,7 @@ end
 group :development do
   gem 'foreman'
 end
+
+group :production do
+  gem "rails_12factor"
+end
