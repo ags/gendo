@@ -8,7 +8,7 @@ describe Gendo::Transaction::Creator do
     format_type:    "*/*",
     method_name:    "GET",
   } }
-  let(:params) { {
+  let(:default_params) { {
     source:         source,
     shinji_version: "0.0.1",
     framework:      "Rails 5.0.0",
@@ -20,6 +20,8 @@ describe Gendo::Transaction::Creator do
     view_runtime:   0.4567,
     duration:       1.98,
   } }
+  let(:params) { default_params }
+
   subject(:creator) { Gendo::Transaction::Creator.new(app, params) }
 
   describe ".create!" do
@@ -143,6 +145,33 @@ describe Gendo::Transaction::Creator do
         source = Source.make!(params[:source])
         expect { creator.create! }.to change { app.sources.count }.by(+1)
         expect { creator.create! }.to_not change { source.transactions.count }
+      end
+    end
+
+    context "when the given db_runtime is nil" do
+      let(:params) { default_params.merge(db_runtime: nil) }
+
+      it "sets the db_runtime to 0.0" do
+        transaction = creator.create!
+        expect(transaction.db_runtime).to eq(0.0)
+      end
+    end
+
+    context "when the given view_runtime is nil" do
+      let(:params) { default_params.merge(view_runtime: nil) }
+
+      it "sets the view_runtime to 0.0" do
+        transaction = creator.create!
+        expect(transaction.view_runtime).to eq(0.0)
+      end
+    end
+
+    context "when the given duration is nil" do
+      let(:params) { default_params.merge(duration: nil) }
+
+      it "sets the duration to 0.0" do
+        transaction = creator.create!
+        expect(transaction.duration).to eq(0.0)
       end
     end
   end

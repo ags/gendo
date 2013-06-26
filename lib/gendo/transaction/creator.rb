@@ -21,8 +21,11 @@ module Gendo
           :source
         )
 
-        @transaction[:started_at] = Time(@transaction.fetch(:started_at))
-        @transaction[:ended_at] = Time(@transaction.fetch(:ended_at))
+        @transaction[:started_at]   = Time(@transaction.fetch(:started_at))
+        @transaction[:ended_at]     = Time(@transaction.fetch(:ended_at))
+        @transaction[:duration]     = @transaction[:duration].to_f
+        @transaction[:db_runtime]   = @transaction[:db_runtime].to_f
+        @transaction[:view_runtime] = @transaction[:view_runtime].to_f
 
         events.each do |event|
           # TODO remove once the deep_symbolize_keys patch is in Rails master.
