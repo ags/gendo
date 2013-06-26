@@ -10,6 +10,7 @@ gem 'bcrypt-ruby'
 gem 'unicorn'
 gem 'draper'
 gem 'slim'
+gem 'sentry-raven'
 
 group :assets do
   gem 'coffee-rails', '~> 4.0.0'
