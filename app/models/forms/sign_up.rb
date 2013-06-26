@@ -39,7 +39,7 @@ module Forms
     end
 
     def send_welcome_email
-      UserWelcomeMailer.welcome(user).deliver
+      #UserWelcomeMailer.welcome(user).deliver
     end
 
     def email_available?
