@@ -4,7 +4,7 @@
 heroku pgbackups:capture --expire &&
 
 # download the backup
-curl -o tmp/production_db.sql `heroku pgbackups:url` &&
+curl -o tmp/production_db.dump `heroku pgbackups:url` &&
 
 # import backup into db
-pg_restore --verbose --clean --no-acl --no-owner -h localhost -U gendo -d gendo tmp/production_db.sql
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U gendo -d gendo tmp/production_db.dump
