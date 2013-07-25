@@ -36,7 +36,7 @@ describe ApiV1::ApiController, "error handling" do
   end
 end
 
-describe ApiV1::ApiController, "error handling" do
+describe ApiV1::ApiController, "access control" do
   let!(:app) { App.make!(:with_access_token) }
 
   controller(ApiV1::ApiController) do
