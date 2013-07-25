@@ -9,10 +9,10 @@ module Gendo
         @app = app
         params = params.deep_symbolize_keys
 
-        @sql_events =     params.fetch(:sql_events) { [] }
-        @view_events =    params.fetch(:view_events) { [] }
-        @mailer_events =  params.fetch(:mailer_events) { [] }
-        @source =         params.fetch(:source)
+        @sql_events    = params.fetch(:sql_events) { [] }
+        @view_events   = params.fetch(:view_events) { [] }
+        @mailer_events = params.fetch(:mailer_events) { [] }
+        @source        = params.fetch(:source)
 
         @transaction = params.except(
           :sql_events,
