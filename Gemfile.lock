@@ -44,7 +44,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.6.2)
+    coffee-script-source (1.6.3)
     diff-lcs (1.2.4)
     dotenv (0.8.0)
     dotenv-rails (0.8.0)
