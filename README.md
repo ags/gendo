@@ -4,29 +4,12 @@ GENDO
 Setup
 =====
 
-### Environment
+### Bootstrap
+
+You'll need to setup postgres, but the following ought to handle the rest.
 
 ```
-cp sample.env .env
-```
-
-### Gems
-
-```
-bundle
-```
-
-### DB
-
-```
-createuser gendo
-createdb --owner=gendo gendo
-createdb --owner=gendo gendo_test
-```
-
-```
-rake db:migrate
-RAILS_ENV=test rake db:migrate
+./script/bootstrap.sh
 ```
 
 ### Run!
