@@ -14,12 +14,12 @@ describe TransactionDecorator do
   subject(:decorated) { TransactionDecorator.new(transaction) }
 
   describe "#events" do
-    let(:a) { stub(:a, started_at: 1.minute.ago).as_null_object }
-    let(:b) { stub(:b, started_at: 2.minutes.ago).as_null_object }
-    let(:c) { stub(:c, started_at: 30.seconds.ago).as_null_object }
-    let(:d) { stub(:d, started_at: 15.seconds.ago).as_null_object }
+    let(:a) { double(:a, started_at: 1.minute.ago).as_null_object }
+    let(:b) { double(:b, started_at: 2.minutes.ago).as_null_object }
+    let(:c) { double(:c, started_at: 30.seconds.ago).as_null_object }
+    let(:d) { double(:d, started_at: 15.seconds.ago).as_null_object }
     let(:transaction) {
-      stub(sql_events: [a, c], view_events: [b], mailer_events: [d])
+      double(sql_events: [a, c], view_events: [b], mailer_events: [d])
     }
 
     it "combines sql and view events ordered by started_at" do
@@ -28,7 +28,7 @@ describe TransactionDecorator do
   end
 
   describe "#db_runtime" do
-    let(:transaction) { stub(db_runtime: 1.234) }
+    let(:transaction) { double(db_runtime: 1.234) }
 
     it "returns the db runtime and millsecond time unit" do
       expect(decorated.db_runtime).to eq("1.234 ms")
@@ -36,7 +36,7 @@ describe TransactionDecorator do
   end
 
   describe "#view_runtime" do
-    let(:transaction) { stub(view_runtime: 1.234) }
+    let(:transaction) { double(view_runtime: 1.234) }
 
     it "returns the view runtime and millsecond time unit" do
       expect(decorated.view_runtime).to eq("1.234 ms")
@@ -44,7 +44,7 @@ describe TransactionDecorator do
   end
 
   describe "#duration" do
-    let(:transaction) { stub(duration: 1.234) }
+    let(:transaction) { double(duration: 1.234) }
 
     it "returns the view runtime and millsecond time unit" do
       expect(decorated.duration).to eq("1.234 ms")
@@ -54,7 +54,7 @@ describe TransactionDecorator do
   describe "#collected_timings?" do
 
     context "with a db_runtime and view_runtime" do
-      let(:transaction) { stub(:transaction, db_runtime: 1, view_runtime: 2) }
+      let(:transaction) { double(:transaction, db_runtime: 1, view_runtime: 2) }
 
       it "is true" do
         expect(decorated.collected_timings?).to be_true
@@ -62,7 +62,7 @@ describe TransactionDecorator do
     end
 
     context "with just a db_runtime" do
-      let(:transaction) { stub(:transaction, db_runtime: 1, view_runtime: nil) }
+      let(:transaction) { double(:transaction, db_runtime: 1, view_runtime: nil) }
 
       it "is false" do
         expect(decorated.collected_timings?).to be_false
@@ -70,7 +70,7 @@ describe TransactionDecorator do
     end
 
     context "with just a view_runtime" do
-      let(:transaction) { stub(:transaction, db_runtime: nil, view_runtime: 2) }
+      let(:transaction) { double(:transaction, db_runtime: nil, view_runtime: 2) }
 
       it "is false" do
         expect(decorated.collected_timings?).to be_false
@@ -79,7 +79,7 @@ describe TransactionDecorator do
 
     context "with neither db_runtime nor view_runtime" do
       let(:transaction) {
-        stub(:transaction, db_runtime: nil, view_runtime: nil)
+        double(:transaction, db_runtime: nil, view_runtime: nil)
       }
 
       it "is false" do
@@ -89,7 +89,7 @@ describe TransactionDecorator do
   end
 
   describe "#time_breakdown_graph_data" do
-    let(:transaction) { stub(:transaction, db_runtime: 1, view_runtime: 2) }
+    let(:transaction) { double(:transaction, db_runtime: 1, view_runtime: 2) }
 
     it "returns db and view runtimes formatted for morris.js" do
       expect(decorated.time_breakdown_graph_data).to eq([
@@ -102,7 +102,7 @@ describe TransactionDecorator do
   describe "#fuzzy_timestamp" do
     it "is a fuzzy timestamp of created_at" do
       Timecop.freeze(Time.now) do
-        transaction = stub(:transaction, created_at: 30.minutes.ago)
+        transaction = double(:transaction, created_at: 30.minutes.ago)
         decorated = TransactionDecorator.new(transaction)
         expect(decorated.fuzzy_timestamp).to eq("30 minutes ago")
       end

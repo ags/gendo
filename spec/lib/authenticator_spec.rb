@@ -6,7 +6,7 @@ describe Authenticator do
 
   describe "#sign_in" do
     it "sets the session user_id to the given User ID" do
-      user = stub(id: 123)
+      user = double(id: 123)
       authenticator.sign_in(user)
       expect(session[:user_id]).to eq(123)
     end
@@ -16,7 +16,7 @@ describe Authenticator do
     context "when logged in" do
       let(:session) { {user_id: 123} }
       before do
-        authenticator.user_finder = ->(id) { stub(:user) }
+        authenticator.user_finder = ->(id) { double(:user) }
       end
 
       it "is true" do
@@ -34,7 +34,7 @@ describe Authenticator do
   describe "#current_user" do
     context "when logged in" do
       let(:session) { {user_id: 123} }
-      let(:user) { stub(:user) }
+      let(:user) { double(:user) }
 
       before do
         authenticator.user_finder = ->(id) { user }

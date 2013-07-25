@@ -18,7 +18,7 @@ describe Gendo::Insights do
       Gendo::Insights.stub(:all).and_return([FooIns, BarIns])
     end
 
-    let(:source) { stub(:source) }
+    let(:source) { double(:source) }
     subject(:applicable) { Gendo::Insights.applicable_to_source(source) }
 
     it "returns all Insights applicable to the given source" do

@@ -11,22 +11,22 @@ describe SourceDecorator do
   subject(:decorated) { SourceDecorator.new(source) }
 
   describe "#latest_transactions" do
-    let(:source) { stub(:source, transactions: stub(:transactions)) }
+    let(:source) { double(:source, transactions: double(:transactions)) }
 
     it "returns transactions reverse sorted by created_at and decorated" do
-      decorated_transactions = stub(:decorated_transactions)
+      decorated_transactions = double(:decorated_transactions)
 
       source.transactions.
         should_receive(:order).
         with("created_at DESC").
-        and_return(stub(:ordered, decorate: decorated_transactions))
+        and_return(double(:ordered, decorate: decorated_transactions))
 
       expect(decorated.latest_transactions).to eq(decorated_transactions)
     end
   end
 
   describe "Gendo::TransactionStats" do
-    let(:source) { stub(:source, transactions: stub(:transactions)) }
+    let(:source) { double(:source, transactions: double(:transactions)) }
 
     describe "#db" do
       it "is Gendo::TransactionStats for db_runtime" do
@@ -51,7 +51,7 @@ describe SourceDecorator do
   end
 
   describe "#insights" do
-    let(:source) { stub(:source) }
+    let(:source) { double(:source) }
 
     class FooIns; end
 
