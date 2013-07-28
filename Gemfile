@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'rails'
 gem 'sentry-raven'
+gem 'sidekiq'
 gem 'slim'
 gem 'unicorn'
 
