@@ -26,6 +26,7 @@ group :test do
   gem 'machinist'
   gem 'simplecov'
   gem "timecop"
+  gem "database_cleaner"
 end
 
 group :test, :development do
