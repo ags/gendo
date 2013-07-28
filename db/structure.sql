@@ -170,6 +170,38 @@ ALTER SEQUENCE mailer_events_id_seq OWNED BY mailer_events.id;
 
 
 --
+-- Name: n_plus_one_queries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE n_plus_one_queries (
+    id integer NOT NULL,
+    transaction_id integer,
+    culprit_table_name character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: n_plus_one_queries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE n_plus_one_queries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: n_plus_one_queries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE n_plus_one_queries_id_seq OWNED BY n_plus_one_queries.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -381,6 +413,13 @@ ALTER TABLE ONLY mailer_events ALTER COLUMN id SET DEFAULT nextval('mailer_event
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY n_plus_one_queries ALTER COLUMN id SET DEFAULT nextval('n_plus_one_queries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY sources ALTER COLUMN id SET DEFAULT nextval('sources_id_seq'::regclass);
 
 
@@ -426,6 +465,14 @@ ALTER TABLE ONLY apps
 
 ALTER TABLE ONLY mailer_events
     ADD CONSTRAINT mailer_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: n_plus_one_queries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY n_plus_one_queries
+    ADD CONSTRAINT n_plus_one_queries_pkey PRIMARY KEY (id);
 
 
 --
@@ -488,6 +535,13 @@ CREATE INDEX index_apps_on_user_id ON apps USING btree (user_id);
 --
 
 CREATE INDEX index_mailer_events_on_transaction_id ON mailer_events USING btree (transaction_id);
+
+
+--
+-- Name: index_n_plus_one_queries_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_n_plus_one_queries_on_transaction_id ON n_plus_one_queries USING btree (transaction_id);
 
 
 --
@@ -617,3 +671,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130621124854');
 INSERT INTO schema_migrations (version) VALUES ('20130623094219');
 
 INSERT INTO schema_migrations (version) VALUES ('20130728030622');
+
+INSERT INTO schema_migrations (version) VALUES ('20130728131519');

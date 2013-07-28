@@ -7,6 +7,9 @@ class Transaction < ActiveRecord::Base
 
   has_many :mailer_events
 
+  has_many :n_plus_one_queries,
+    dependent: :destroy
+
   validates :source,
     presence: true
 end
