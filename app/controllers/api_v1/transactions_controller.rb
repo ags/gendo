@@ -3,6 +3,8 @@ module ApiV1
     def create
       transaction = Gendo::Transaction::Creator.create!(current_app, transaction_params)
 
+      IdentifyNPlusOneQueriesWorker.in_transaction(transaction)
+
       render json: {}, status: 201
     end
 
