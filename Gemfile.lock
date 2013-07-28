@@ -183,7 +183,7 @@ DEPENDENCIES
   active_attr
   bcrypt-ruby
   capybara
-  coffee-rails (~> 4.0.0)
+  coffee-rails
   database_cleaner
   dotenv-rails
   draper
@@ -195,12 +195,12 @@ DEPENDENCIES
   rails
   rails_12factor
   rspec-rails
-  sass-rails (~> 4.0.0.rc1)
+  sass-rails
   sentry-raven
   simplecov
   slim
   timecop
   turnip
-  uglifier (>= 1.3.0)
+  uglifier
   unicorn
   zurb-foundation

@@ -3,30 +3,30 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'active_attr'
+gem 'bcrypt-ruby'
+gem 'draper'
 gem 'jquery-rails'
 gem 'pg'
 gem 'rails'
-gem 'bcrypt-ruby'
-gem 'unicorn'
-gem 'draper'
-gem 'slim'
 gem 'sentry-raven'
+gem 'slim'
+gem 'unicorn'
 
 group :assets do
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'uglifier', '>= 1.3.0'
-  gem 'sass-rails', '~> 4.0.0.rc1'
+  gem 'coffee-rails'
+  gem 'sass-rails'
+  gem 'uglifier'
   gem "zurb-foundation"
 end
 
 group :test do
-  gem 'rspec-rails'
-  gem 'turnip'
   gem 'capybara'
+  gem "database_cleaner"
   gem 'machinist'
+  gem 'rspec-rails'
   gem 'simplecov'
   gem "timecop"
-  gem "database_cleaner"
+  gem 'turnip'
 end
 
 group :test, :development do
