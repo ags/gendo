@@ -16,16 +16,16 @@ group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'uglifier'
-  gem "zurb-foundation"
+  gem 'zurb-foundation'
 end
 
 group :test do
   gem 'capybara'
-  gem "database_cleaner"
+  gem 'database_cleaner'
   gem 'machinist'
   gem 'rspec-rails'
   gem 'simplecov'
-  gem "timecop"
+  gem 'timecop'
   gem 'turnip'
 end
 
@@ -39,5 +39,5 @@ group :development do
 end
 
 group :production do
-  gem "rails_12factor"
+  gem 'rails_12factor'
 end
