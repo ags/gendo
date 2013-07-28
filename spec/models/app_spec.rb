@@ -165,7 +165,7 @@ describe App do
           and_raise(not_unique_error)
 
         expect do
-          app.create_source!(params.merge(max_attempts: 2))
+          app.create_source!(params)
         end.to raise_error(not_unique_error)
       end
     end
