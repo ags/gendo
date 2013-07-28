@@ -6,4 +6,7 @@ class NPlusOneQuery < ActiveRecord::Base
 
   validates :culprit_table_name,
     presence: true
+
+  has_many :sql_events,
+    through: :n_plus_one_query_sql_events
 end
