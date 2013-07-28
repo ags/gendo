@@ -39,3 +39,8 @@ MailerEvent.blueprint do
   ended_at   { 1370939787.0706801 }
   duration   { 0.1234 }
 end
+
+NPlusOneQuery.blueprint do
+  transaction
+  culprit_table_name { "posts" }
+end

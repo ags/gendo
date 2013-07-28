@@ -9,7 +9,10 @@ module Gendo
       #   select { |klass| Class === klass }.
       #   reject { |klass| klass == Gendo::Insights::Base }
 
-      [Gendo::Insights::SendEmailAsync]
+      [
+        Gendo::Insights::SendEmailAsync,
+        Gendo::Insights::EagerLoadAssociations,
+      ]
     end
 
     def self.applicable_to_source(source)

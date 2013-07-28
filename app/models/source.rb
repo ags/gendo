@@ -12,6 +12,9 @@ class Source < ActiveRecord::Base
   has_many :mailer_events,
     through: :transactions
 
+  has_many :n_plus_one_queries,
+    through: :transactions
+
   validates :app,
     presence: true
 

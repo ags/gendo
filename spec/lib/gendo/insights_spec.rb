@@ -5,7 +5,8 @@ describe Gendo::Insights do
     # NOTE this may be unmaintable and better tested by integration
     it "is a list of all Insights classes" do
       expect(Gendo::Insights.all).to eq([
-        Gendo::Insights::SendEmailAsync
+        Gendo::Insights::SendEmailAsync,
+        Gendo::Insights::EagerLoadAssociations,
       ])
     end
   end
