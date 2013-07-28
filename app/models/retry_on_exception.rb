@@ -3,7 +3,7 @@ module RetryOnException
     attempts = 0
     begin
       yield
-    rescue ActiveRecord::RecordNotUnique => e
+    rescue exception_class => e
       if attempts < max_attempts
         attempts += 1
         retry
