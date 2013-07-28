@@ -40,7 +40,7 @@ class App < ActiveRecord::Base
   end
 
   def find_or_create_source!(params)
-    retry_on_exception(ActiveRecord::RecordNotUnique, max_attempts: 3) do
+    retry_on_exception(ActiveRecord::RecordNotUnique) do
       sources.where(params).first_or_create!
     end
   end
