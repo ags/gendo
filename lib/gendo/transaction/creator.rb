@@ -39,7 +39,7 @@ module Gendo
         # TODO this does a whole bunch of inserts, optimize this
         # TODO more generic event model would be nice
         User.transaction do
-          source = @app.sources.where(@source).first_or_create!
+          source = @app.create_source!(@source)
 
           transaction = source.transactions.create!(@transaction)
 

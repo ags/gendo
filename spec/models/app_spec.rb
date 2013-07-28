@@ -97,4 +97,77 @@ describe App do
         eq([error_b, error_a])
     end
   end
+
+  describe "#create_source!" do
+    let(:params) { {
+      controller: "FooCtrl",
+      action: "bar",
+      method_name: "post",
+      format_type: "json"
+    } }
+    let(:app) { App.make! }
+
+    it "creates an associated source with the given attributes" do
+      source = app.create_source!(params)
+      source = app.create_source!(params)
+
+      expect(app.sources).to eq([source])
+      params.each do |attribute, value|
+        expect(source.send(attribute)).to eq(value)
+      end
+    end
+
+    # TODO this test mocks the AR boundary, which I'd rather not do.
+    # Experiments with threading and forking here weren't reliable.
+    context "handling race conditions" do
+      let(:not_unique_error) { ActiveRecord::RecordNotUnique.new('not unique') }
+
+      it "retries on RecordNotUnique" do
+        relation_a = double(:relation_a)
+        relation_b = double(:relation_b)
+        source = double(:source)
+
+        allow(app.sources).to \
+          receive(:where).
+          with(params).
+          and_return(relation_a, relation_b)
+
+        allow(relation_a).to \
+          receive(:first_or_create!).
+          and_raise(not_unique_error)
+
+        allow(relation_b).to \
+          receive(:first_or_create!).
+          and_return(source)
+
+        app.create_source!(params)
+      end
+
+      it "propogates other exceptions" do
+        allow(app.sources).to \
+          receive(:where).
+          and_raise(RuntimeError)
+
+        expect do
+          app.create_source!(params)
+        end.to raise_error(RuntimeError)
+      end
+
+      it "has a maximum number of attempts" do
+        relation = double(:relation)
+
+        allow(app.sources).to \
+          receive(:where).
+          and_return(relation)
+
+        allow(relation).to \
+          receive(:first_or_create!).
+          and_raise(not_unique_error)
+
+        expect do
+          app.create_source!(params.merge(max_attempts: 2))
+        end.to raise_error(not_unique_error)
+      end
+    end
+  end
 end

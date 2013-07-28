@@ -1,4 +1,6 @@
 class App < ActiveRecord::Base
+  include RetryOnException
+
   belongs_to :user
 
   has_many :app_access_tokens,
@@ -35,6 +37,12 @@ class App < ActiveRecord::Base
   def name=(name)
     super
     self.slug ||= name.parameterize
+  end
+
+  def create_source!(params)
+    retry_on_exception(ActiveRecord::RecordNotUnique, max_attempts: 3) do
+      sources.where(params).first_or_create!
+    end
   end
 
   def current_access_token
