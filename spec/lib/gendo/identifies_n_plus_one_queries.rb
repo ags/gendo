@@ -19,7 +19,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
 
     identified = Gendo::IdentifiesNPlusOneQueries.identify(
       [foo_event, bar_event, baz_event],
-      minimum_query_occurances: 1
+      minimum_query_occurrences: 1
     )
 
     expect(identified).to eq([
@@ -61,7 +61,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
 
     identified = Gendo::IdentifiesNPlusOneQueries.identify(
       [query],
-      minimum_query_occurances: 1
+      minimum_query_occurrences: 1
     )
 
     expect(identified).to eq([
@@ -77,7 +77,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
 
     identified = Gendo::IdentifiesNPlusOneQueries.identify(
       [query],
-      minimum_query_occurances: 1
+      minimum_query_occurrences: 1
     )
 
     expect(identified).to eq([

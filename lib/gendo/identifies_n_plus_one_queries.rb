@@ -6,15 +6,15 @@ module Gendo
 
     def initialize(sql_events, options={})
       @sql_events = sql_events
-      @minimum_query_occurances = options.fetch(
-        :minimum_query_occurances,
-        DEFAULT_MINIMUM_QUERY_OCCURANCES
+      @minimum_query_occurrences = options.fetch(
+        :minimum_query_occurrences,
+        DEFAULT_MINIMUM_QUERY_OCCURRENCES
       )
     end
 
     def identify
       potential_events_by_table.map do |table_name, sql_events|
-        if sql_events.size >= @minimum_query_occurances
+        if sql_events.size >= @minimum_query_occurrences
           PotentialNPlusOneQuery.new(table_name, sql_events)
         end
       end.compact
@@ -34,7 +34,7 @@ module Gendo
       potentials
     end
 
-    DEFAULT_MINIMUM_QUERY_OCCURANCES = 5
+    DEFAULT_MINIMUM_QUERY_OCCURRENCES = 5
 
     POTENTIAL_MATCHER =
       /
