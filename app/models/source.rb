@@ -1,7 +1,8 @@
 class Source < ActiveRecord::Base
   belongs_to :app
 
-  has_many :transactions
+  has_many :transactions,
+    dependent: :destroy
 
   has_many :sql_events,
     through: :transactions
