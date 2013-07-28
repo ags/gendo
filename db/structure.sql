@@ -512,6 +512,13 @@ CREATE INDEX index_sources_on_controller ON sources USING btree (controller);
 
 
 --
+-- Name: index_sources_on_identifying_attributes; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_sources_on_identifying_attributes ON sources USING btree (app_id, controller, action, method_name, format_type);
+
+
+--
 -- Name: index_sources_on_method_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -608,3 +615,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130618115452');
 INSERT INTO schema_migrations (version) VALUES ('20130621124854');
 
 INSERT INTO schema_migrations (version) VALUES ('20130623094219');
+
+INSERT INTO schema_migrations (version) VALUES ('20130728030622');

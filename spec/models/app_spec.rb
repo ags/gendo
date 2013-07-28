@@ -87,8 +87,8 @@ describe App do
   describe "#recent_transactions_with_status" do
     it "returns transactions with the given status" do
       app = App.make!
-      source_a = Source.make!(app: app)
-      source_b = Source.make!(app: app)
+      source_a = Source.make!(app: app, controller: "A")
+      source_b = Source.make!(app: app, controller: "B")
       error_a = Transaction.make!(source: source_a, status: 500)
       Transaction.make!(source: source_a, status: 200)
       error_b = Transaction.make!(source: source_b, status: 500)
