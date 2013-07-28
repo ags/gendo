@@ -60,7 +60,7 @@ class App < ActiveRecord::Base
   def recent_transactions_with_status(status, limit: 100)
     transactions.
       where(status: status).
-      order("created_at DESC").
+      order(created_at: :desc).
       limit(limit)
   end
 end
