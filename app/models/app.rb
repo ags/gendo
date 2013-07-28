@@ -39,7 +39,7 @@ class App < ActiveRecord::Base
     self.slug ||= name.parameterize
   end
 
-  def create_source!(params)
+  def find_or_create_source!(params)
     retry_on_exception(ActiveRecord::RecordNotUnique, max_attempts: 3) do
       sources.where(params).first_or_create!
     end

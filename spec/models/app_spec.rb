@@ -98,7 +98,7 @@ describe App do
     end
   end
 
-  describe "#create_source!" do
+  describe "#find_or_create_source!" do
     let(:params) { {
       controller: "FooCtrl",
       action: "bar",
@@ -108,8 +108,8 @@ describe App do
     let(:app) { App.make! }
 
     it "creates an associated source with the given attributes" do
-      source = app.create_source!(params)
-      source = app.create_source!(params)
+      source = app.find_or_create_source!(params)
+      source = app.find_or_create_source!(params)
 
       expect(app.sources).to eq([source])
       params.each do |attribute, value|
@@ -140,7 +140,7 @@ describe App do
           receive(:first_or_create!).
           and_return(source)
 
-        app.create_source!(params)
+        app.find_or_create_source!(params)
       end
 
       it "propogates other exceptions" do
@@ -149,7 +149,7 @@ describe App do
           and_raise(RuntimeError)
 
         expect do
-          app.create_source!(params)
+          app.find_or_create_source!(params)
         end.to raise_error(RuntimeError)
       end
 
@@ -165,7 +165,7 @@ describe App do
           and_raise(not_unique_error)
 
         expect do
-          app.create_source!(params)
+          app.find_or_create_source!(params)
         end.to raise_error(not_unique_error)
       end
     end
