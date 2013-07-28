@@ -14,21 +14,17 @@ describe Gendo::Insights::SendEmailAsync do
     end
 
     context "when the source only has MailerEvents older than a day" do
-      before do
-        MailerEvent.make!(transaction: transaction, created_at: 2.days.ago)
-      end
-
       it "is false" do
+        MailerEvent.make!(transaction: transaction, created_at: 2.days.ago)
+
         expect(applicable?).to be_false
       end
     end
 
     context "when the source has MailerEvents from the past day" do
-      before do
-        MailerEvent.make!(transaction: transaction)
-      end
-
       it "is true" do
+        MailerEvent.make!(transaction: transaction)
+
         expect(applicable?).to be_true
       end
     end
