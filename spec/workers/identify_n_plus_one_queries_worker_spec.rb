@@ -29,7 +29,7 @@ describe IdentifyNPlusOneQueriesWorker do
       query = transaction.n_plus_one_queries.last
       expect(transaction.n_plus_one_queries).to eq([query])
       expect(query.culprit_table_name).to eq("posts")
-      expect(query.n_plus_one_query_sql_events.last.sql_event).to eq(sql_event)
+      expect(query.sql_events).to eq([sql_event])
     end
   end
 end
