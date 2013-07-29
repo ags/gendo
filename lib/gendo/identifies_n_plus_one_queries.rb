@@ -13,11 +13,9 @@ module Gendo
     end
 
     def identify
-      potential_events_by_table.map do |table_name, sql_events|
-        if sql_events.size >= @minimum_query_occurrences
-          PotentialNPlusOneQuery.new(table_name, sql_events)
-        end
-      end.compact
+      potential_events_by_table.select do |_, sql_events|
+        sql_events.size >= @minimum_query_occurrences
+      end
     end
 
     private
@@ -51,7 +49,4 @@ module Gendo
       LIMIT \W* 1
       /x
   end
-end
-
-class PotentialNPlusOneQuery < Struct.new(:table_name, :events)
 end

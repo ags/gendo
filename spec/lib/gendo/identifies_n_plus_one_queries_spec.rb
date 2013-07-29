@@ -22,10 +22,10 @@ describe Gendo::IdentifiesNPlusOneQueries do
       minimum_query_occurrences: 1
     )
 
-    expect(identified).to eq([
-      PotentialNPlusOneQuery.new("foos", [foo_event]),
-      PotentialNPlusOneQuery.new("bars", [bar_event]),
-    ])
+    expect(identified).to eq({
+      "foos" => [foo_event],
+      "bars" => [bar_event],
+    })
   end
 
   it "by default requires there to be 5 or more potential queries on a table" do
@@ -48,9 +48,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
 
     identified = Gendo::IdentifiesNPlusOneQueries.identify(queries)
 
-    expect(identified).to eq([
-      PotentialNPlusOneQuery.new("foos", n_plus_one_events)
-    ])
+    expect(identified).to eq({"foos" => n_plus_one_events})
   end
 
   it "correctly identifies parameterized queries" do
@@ -64,9 +62,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
       minimum_query_occurrences: 1
     )
 
-    expect(identified).to eq([
-      PotentialNPlusOneQuery.new("bars", [query])
-    ])
+    expect(identified).to eq({"bars" => [query]})
   end
 
   it "ignores whitespace between statements" do
@@ -80,8 +76,6 @@ describe Gendo::IdentifiesNPlusOneQueries do
       minimum_query_occurrences: 1
     )
 
-    expect(identified).to eq([
-      PotentialNPlusOneQuery.new("bars", [query])
-    ])
+    expect(identified).to eq({"bars" => [query]})
   end
 end
