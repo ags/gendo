@@ -1,16 +1,15 @@
 require "spec_helper"
 
 describe Gendo::Insights::EagerLoadAssociations do
-  describe "#applicable_to_source?" do
-    let(:transaction) { Transaction.make! }
-    let(:applicable?) {
-      Gendo::Insights::EagerLoadAssociations.
-        applicable_to_source?(transaction.source)
-    }
+  let(:transaction) { Transaction.make! }
+  let(:insight) {
+    Gendo::Insights::EagerLoadAssociations.new(transaction.source)
+  }
 
+  describe "#applicable?" do
     context "when no associated transactions include NPlusOneQueries" do
       it "is false" do
-        expect(applicable?).to be_false
+        expect(insight.applicable?).to be_false
       end
     end
 
@@ -18,7 +17,7 @@ describe Gendo::Insights::EagerLoadAssociations do
       it "is false" do
         NPlusOneQuery.make!(transaction: transaction, created_at: 2.days.ago)
 
-        expect(applicable?).to be_false
+        expect(insight.applicable?).to be_false
       end
     end
 
@@ -26,7 +25,7 @@ describe Gendo::Insights::EagerLoadAssociations do
       it "is true" do
         NPlusOneQuery.make!(transaction: transaction)
 
-        expect(applicable?).to be_true
+        expect(insight.applicable?).to be_true
       end
     end
   end

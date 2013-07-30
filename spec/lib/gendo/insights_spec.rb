@@ -12,18 +12,23 @@ describe Gendo::Insights do
   end
 
   describe "#applicable_to_source" do
-    class FooIns; def self.applicable_to_source?(*); true; end; end
-    class BarIns; def self.applicable_to_source?(*); false; end; end
+    class ApplicableIns < Gendo::Insights::Base
+      def applicable?; true; end
+    end
+    class UnapplicableIns < Gendo::Insights::Base
+      def applicable?; false; end
+    end
 
     before do
-      Gendo::Insights.stub(:all).and_return([FooIns, BarIns])
+      Gendo::Insights.stub(:all).and_return([ApplicableIns, UnapplicableIns])
     end
 
     let(:source) { double(:source) }
     subject(:applicable) { Gendo::Insights.applicable_to_source(source) }
 
     it "returns all Insights applicable to the given source" do
-      expect(applicable).to eq([FooIns])
+      expect(applicable.size).to eq(1)
+      expect(applicable.first).to be_a(ApplicableIns)
     end
   end
 end

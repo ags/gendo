@@ -16,7 +16,7 @@ module Gendo
     end
 
     def self.applicable_to_source(source)
-      all.select { |insight| insight.applicable_to_source?(source) }
+      all.map { |insight| insight.new(source) }.select(&:applicable?)
     end
   end
 end

@@ -1,15 +1,15 @@
 require "spec_helper"
 
 describe Gendo::Insights::SendEmailAsync do
-  describe "#applicable_to_source?" do
+  describe "#applicable?" do
     let(:transaction) { Transaction.make! }
-    let(:applicable?) {
-      Gendo::Insights::SendEmailAsync.applicable_to_source?(transaction.source)
+    let(:insight) {
+      Gendo::Insights::SendEmailAsync.new(transaction.source)
     }
 
     context "when no associated transactions include MailerEvents" do
       it "is false" do
-        expect(applicable?).to be_false
+        expect(insight.applicable?).to be_false
       end
     end
 
@@ -17,7 +17,7 @@ describe Gendo::Insights::SendEmailAsync do
       it "is false" do
         MailerEvent.make!(transaction: transaction, created_at: 2.days.ago)
 
-        expect(applicable?).to be_false
+        expect(insight.applicable?).to be_false
       end
     end
 
@@ -25,7 +25,7 @@ describe Gendo::Insights::SendEmailAsync do
       it "is true" do
         MailerEvent.make!(transaction: transaction)
 
-        expect(applicable?).to be_true
+        expect(insight.applicable?).to be_true
       end
     end
   end

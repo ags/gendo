@@ -6,7 +6,7 @@ describe Gendo::Insights::Base do
   end; end
 
   describe ".partial_name" do
-    let(:insight) { Gendo::Dog::NeedsMore }
+    let(:insight) { Gendo::Dog::NeedsMore.new(double(:source)) }
 
     it "is the underscored class name" do
       expect(insight.partial_name).to eq("needs_more")
