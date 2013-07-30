@@ -5,7 +5,7 @@ section.content
         h3
           ' Detected
           = @n_plus_one_query.sql_events.count
-          |  related queries of the '#{@n_plus_one_query.culprit_table_name}' table!
+          |  related queries on the '#{@n_plus_one_query.culprit_table_name}' table!
 
         p
           | This may be an n+1 query. You can load all of the requested objects

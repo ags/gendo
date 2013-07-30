@@ -29,4 +29,14 @@ describe Gendo::Insights::EagerLoadAssociations do
       end
     end
   end
+
+  describe "#latest_n_plus_one_query" do
+    it "returns the most recently detected associated NPlusOneQuery" do
+      a = NPlusOneQuery.make!(transaction: transaction, created_at: 3.days.ago)
+      b = NPlusOneQuery.make!(transaction: transaction, created_at: 1.days.ago)
+      c = NPlusOneQuery.make!(transaction: transaction, created_at: 2.days.ago)
+
+      expect(insight.latest_n_plus_one_query).to eq(b)
+    end
+  end
 end

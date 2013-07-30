@@ -8,6 +8,10 @@ module Gendo
           where("n_plus_one_queries.created_at > ?", APPLICABILITY_LIFETIME.ago).
           any?
       end
+
+      def latest_n_plus_one_query
+        source.n_plus_one_queries.order(:created_at).last
+      end
     end
   end
 end
