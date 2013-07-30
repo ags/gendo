@@ -40,4 +40,8 @@ class Source < ActiveRecord::Base
   def name
     "#{controller}##{action}"
   end
+
+  def latest_transactions
+    transactions.order(created_at: :desc)
+  end
 end

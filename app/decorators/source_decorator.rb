@@ -2,8 +2,7 @@ class SourceDecorator < Draper::Decorator
   delegate_all
 
   def latest_transactions
-    # consider moving this to model
-    transactions.order("created_at DESC").decorate
+    source.latest_transactions.decorate
   end
 
   def db
