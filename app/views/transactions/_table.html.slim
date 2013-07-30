@@ -12,7 +12,7 @@ table.table.table-striped
   tbody
     - transactions.each do |transaction|
       tr
-        td= link_to transaction.id, app_transaction_path(transaction.source.app, transaction)
+        td= link_to transaction.id, app_transaction_path(transaction.app, transaction)
         td= transaction.path
         td= transaction.status
         td= transaction.started_at
