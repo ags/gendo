@@ -1,0 +1,24 @@
+section.content
+  .row
+    .small-12.columns
+      .panel
+        h3
+          ' Detected
+          = @n_plus_one_query.sql_events.count
+          |  related queries of the '#{@n_plus_one_query.culprit_table_name}' table!
+
+        p
+          | This may be an n+1 query. You can load all of the requested objects
+          '  in a single query using ActiveRecord
+          = link_to "eager loading.",
+            "http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations"
+
+      table
+        thead
+          tr
+            th Started At
+            th Ended At
+            th Duration
+        tbody
+          - @n_plus_one_query.sql_events.each do |event|
+            = render "transactions/sql_event_row", event: event

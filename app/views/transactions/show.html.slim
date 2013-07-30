@@ -50,6 +50,13 @@ section.content
                   td Status
                   td= @transaction.status
 
+      - if @transaction.detected_n_plus_one_query?
+        .panel
+          h3 Alerts
+          - @transaction.n_plus_one_queries.each do |query|
+            a(href=app_n_plus_one_query_path(query.app, query))
+              | Possible n+1 query on the '#{query.culprit_table_name}' table
+
       table
         thead
           tr

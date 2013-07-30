@@ -1,6 +1,9 @@
 class NPlusOneQuery < ActiveRecord::Base
   belongs_to :transaction
 
+  has_one :app,
+    through: :transaction
+
   validates :transaction,
     presence: true
 

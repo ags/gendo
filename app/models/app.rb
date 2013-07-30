@@ -10,8 +10,10 @@ class App < ActiveRecord::Base
     dependent: :destroy
 
   has_many :transactions,
-    through: :sources,
-    dependent: :destroy
+    through: :sources
+
+  has_many :n_plus_one_queries,
+    through: :transactions
 
   validates :user,
     presence: true
