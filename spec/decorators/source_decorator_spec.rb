@@ -16,10 +16,9 @@ describe SourceDecorator do
     it "returns transactions reverse sorted by created_at and decorated" do
       decorated_transactions = double(:decorated_transactions)
 
-      source.transactions.
-        should_receive(:order).
-        with("created_at DESC").
-        and_return(double(:ordered, decorate: decorated_transactions))
+      expect(source).to \
+        receive(:latest_transactions).
+        and_return(double(:latest, decorate: decorated_transactions))
 
       expect(decorated.latest_transactions).to eq(decorated_transactions)
     end

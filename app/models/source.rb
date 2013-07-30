@@ -1,7 +1,8 @@
 class Source < ActiveRecord::Base
   belongs_to :app
 
-  has_many :transactions
+  has_many :transactions,
+    dependent: :destroy
 
   has_many :sql_events,
     through: :transactions
@@ -41,5 +42,9 @@ class Source < ActiveRecord::Base
 
   def name
     "#{controller}##{action}"
+  end
+
+  def latest_transactions
+    transactions.order(created_at: :desc)
   end
 end

@@ -9,7 +9,7 @@ class TransactionDecorator < Draper::Decorator
 
   decorates_association :mailer_events
 
-  # delegate_all skips these
+  # source is an alias for object, so delegate_all skips it
   delegate :source, to: :object
 
   def events

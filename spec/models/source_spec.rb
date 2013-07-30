@@ -29,4 +29,15 @@ describe Source do
       expect(source.to_param).to eq("#{source.id}-#{source.name}")
     end
   end
+
+  describe "#latest_transactions" do
+    it "returns associated transaction sorted by most recently created" do
+      source = Source.make!
+      a = Transaction.make!(source: source, created_at: 3.days.ago)
+      b = Transaction.make!(source: source, created_at: 1.days.ago)
+      c = Transaction.make!(source: source, created_at: 2.days.ago)
+
+      expect(source.latest_transactions).to eq([b, c, a])
+    end
+  end
 end

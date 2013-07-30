@@ -1,11 +1,17 @@
 class Transaction < ActiveRecord::Base
   belongs_to :source
 
-  has_many :sql_events
+  has_one :app,
+    through: :source
 
-  has_many :view_events
+  has_many :sql_events,
+    dependent: :destroy
 
-  has_many :mailer_events
+  has_many :view_events,
+    dependent: :destroy
+
+  has_many :mailer_events,
+    dependent: :destroy
 
   has_many :n_plus_one_queries,
     inverse_of: :transaction,
