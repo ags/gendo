@@ -24,6 +24,25 @@ describe SourceDecorator do
     end
   end
 
+  describe "#has_transactions?" do
+    let(:source) { double(:source, transactions: transactions) }
+    context "with associated transactions" do
+      let(:transactions) { [double(:transaction)] }
+
+      it "is true" do
+        expect(decorated.has_transactions?).to be_true
+      end
+    end
+
+    context "without associated transactions" do
+      let(:transactions) { [] }
+
+      it "is false" do
+        expect(decorated.has_transactions?).to be_false
+      end
+    end
+  end
+
   describe "Gendo::TransactionStats" do
     let(:source) { double(:source, transactions: double(:transactions)) }
 

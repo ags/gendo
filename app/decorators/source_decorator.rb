@@ -5,6 +5,10 @@ class SourceDecorator < Draper::Decorator
     source.latest_transactions.decorate
   end
 
+  def has_transactions?
+    transactions.any?
+  end
+
   def db
     Gendo::TransactionStats.new(transactions, :db_runtime)
   end
