@@ -1,4 +1,5 @@
 require "spec_helper"
+require "sidekiq/testing"
 
 describe ApiV1::TransactionsController do
   let(:params) { {
@@ -70,6 +71,12 @@ describe ApiV1::TransactionsController do
 
       it "creates a MailerEvent" do
         expect(create!).to change { MailerEvent.count }.by(+1)
+      end
+
+      it "queues an IdentifyNPlusOneQueriesJob for the transaction" do
+        expect(create!).to change {
+          IdentifyNPlusOneQueriesWorker.jobs.size
+        }.by(1)
       end
     end
   end

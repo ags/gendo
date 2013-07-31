@@ -13,7 +13,7 @@ describe SourceDecorator do
   describe "#latest_transactions" do
     let(:source) { double(:source, transactions: double(:transactions)) }
 
-    it "returns transactions reverse sorted by created_at and decorated" do
+    it "returns decorated transactions" do
       decorated_transactions = double(:decorated_transactions)
 
       expect(source).to \
@@ -21,6 +21,25 @@ describe SourceDecorator do
         and_return(double(:latest, decorate: decorated_transactions))
 
       expect(decorated.latest_transactions).to eq(decorated_transactions)
+    end
+  end
+
+  describe "#has_transactions?" do
+    let(:source) { double(:source, transactions: transactions) }
+    context "with associated transactions" do
+      let(:transactions) { [double(:transaction)] }
+
+      it "is true" do
+        expect(decorated.has_transactions?).to be_true
+      end
+    end
+
+    context "without associated transactions" do
+      let(:transactions) { [] }
+
+      it "is false" do
+        expect(decorated.has_transactions?).to be_false
+      end
     end
   end
 

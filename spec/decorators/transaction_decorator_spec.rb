@@ -88,6 +88,26 @@ describe TransactionDecorator do
     end
   end
 
+  describe "#detected_n_plus_one_query?" do
+    let(:transaction) { double(:transaction, n_plus_one_queries: queries) }
+
+    context "with associated n+1 queries" do
+      let(:queries) { [double(:query)] }
+
+      it "is true" do
+        expect(decorated.detected_n_plus_one_query?).to be_true
+      end
+    end
+
+    context "without associated n+1 queries" do
+      let(:queries) { [] }
+
+      it "is false" do
+        expect(decorated.detected_n_plus_one_query?).to be_false
+      end
+    end
+  end
+
   describe "#time_breakdown_graph_data" do
     let(:transaction) { double(:transaction, db_runtime: 1, view_runtime: 2) }
 

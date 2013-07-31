@@ -1,8 +1,12 @@
 require "machinist/active_record"
 
-User.blueprint do
-  email    { "user#{sn}@blargh.com" }
-  password { "password" }
+App.blueprint do
+  user
+  name { "Shinji Ikari" }
+end
+
+App.blueprint(:with_access_token) do
+  app_access_tokens { [AppAccessToken.make!] }
 end
 
 AppAccessToken.blueprint do
@@ -10,8 +14,18 @@ AppAccessToken.blueprint do
   token { sn }
 end
 
-Transaction.blueprint do
-  source
+MailerEvent.blueprint do
+  transaction
+  mailer     { "FooMailer" }
+  message_id { "123456789" }
+  started_at { 1370939786.0706801 }
+  ended_at   { 1370939787.0706801 }
+  duration   { 0.1234 }
+end
+
+NPlusOneQuery.blueprint do
+  transaction
+  culprit_table_name { "posts" }
 end
 
 Source.blueprint do
@@ -22,20 +36,19 @@ Source.blueprint do
   format_type   { "*/*" }
 end
 
-App.blueprint do
-  user
-  name { "Shinji Ikari" }
+Transaction.blueprint do
+  source
 end
 
-App.blueprint(:with_access_token) do
-  app_access_tokens { [AppAccessToken.make!] }
+Transaction.blueprint(:with_zero_runtime) do
+  db_runtime   { 0 }
+  view_runtime { 0 }
+  duration     { 0 }
+  started_at   { Time.now }
+  ended_at     { Time.now }
 end
 
-MailerEvent.blueprint do
-  transaction
-  mailer     { "FooMailer" }
-  message_id { "123456789" }
-  started_at { 1370939786.0706801 }
-  ended_at   { 1370939787.0706801 }
-  duration   { 0.1234 }
+User.blueprint do
+  email    { "user#{sn}@blargh.com" }
+  password { "password" }
 end

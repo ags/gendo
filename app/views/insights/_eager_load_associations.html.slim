@@ -1,0 +1,7 @@
+h6 Eager Load Associations
+
+- query = insight.latest_n_plus_one_query
+p
+  | You may have a problem with eager loading on #{query.culprit_table_name}.
+p
+  = link_to "Learn more.", app_n_plus_one_query_path(query.app, query)
