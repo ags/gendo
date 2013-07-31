@@ -1,4 +1,8 @@
+require "sidekiq/web"
+
 Gendo::Application.routes.draw do
+  mount Sidekiq::Web => "/sidekiq"
+
   root "home#index"
 
   namespace :api_v1, path: 'api/v1', defaults: {format: 'json'} do
