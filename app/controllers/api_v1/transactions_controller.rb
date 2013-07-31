@@ -1,16 +1,17 @@
 module ApiV1
   class TransactionsController < ApiController
     def create
-      transaction = Gendo::Transaction::Creator.create!(current_app, transaction_params)
+      ProcessTransactionPayloadWorker.process_for_app(
+        current_app,
+        transaction_payload.to_h
+      )
 
-      IdentifyNPlusOneQueriesWorker.in_transaction(transaction)
-
-      render json: {}, status: 201
+      render json: {}
     end
 
     private
 
-    def transaction_params
+    def transaction_payload
       params.require(:transaction).permit(
         :path,
         :status,

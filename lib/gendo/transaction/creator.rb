@@ -1,20 +1,20 @@
 module Gendo
   module Transaction
     class Creator
-      def self.create!(app, params)
-        new(app, params).create!
+      def self.create!(app, payload)
+        new(app, payload).create!
       end
 
-      def initialize(app, params)
+      def initialize(app, payload)
         @app = app
-        params = params.deep_symbolize_keys
+        payload = payload.deep_symbolize_keys
 
-        @sql_events    = params.fetch(:sql_events) { [] }
-        @view_events   = params.fetch(:view_events) { [] }
-        @mailer_events = params.fetch(:mailer_events) { [] }
-        @source        = params.fetch(:source)
+        @sql_events    = payload.fetch(:sql_events) { [] }
+        @view_events   = payload.fetch(:view_events) { [] }
+        @mailer_events = payload.fetch(:mailer_events) { [] }
+        @source        = payload.fetch(:source)
 
-        @transaction = params.except(
+        @transaction = payload.except(
           :sql_events,
           :view_events,
           :mailer_events,

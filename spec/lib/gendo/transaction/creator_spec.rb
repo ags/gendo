@@ -8,7 +8,7 @@ describe Gendo::Transaction::Creator do
     format_type:    "*/*",
     method_name:    "GET",
   } }
-  let(:default_params) { {
+  let(:default_payload) { {
     source:         source,
     shinji_version: "0.0.1",
     framework:      "Rails 5.0.0",
@@ -20,9 +20,9 @@ describe Gendo::Transaction::Creator do
     view_runtime:   0.4567,
     duration:       1.98,
   } }
-  let(:params) { default_params }
+  let(:payload) { default_payload }
 
-  subject(:creator) { Gendo::Transaction::Creator.new(app, params) }
+  subject(:creator) { Gendo::Transaction::Creator.new(app, payload) }
 
   describe ".create!" do
     it "creates a Transaction from the given parameters" do
@@ -46,7 +46,7 @@ describe Gendo::Transaction::Creator do
     end
 
     context "with nested sql_events data" do
-      let(:params) { {
+      let(:payload) { {
         source:       source,
         started_at:   1,
         ended_at:     2,
@@ -74,7 +74,7 @@ describe Gendo::Transaction::Creator do
     end
 
     context "with nested view_events data" do
-      let(:params) { {
+      let(:payload) { {
         source:         source,
         started_at:   1,
         ended_at:     2,
@@ -102,7 +102,7 @@ describe Gendo::Transaction::Creator do
     end
 
     context "with nested mailer_events data" do
-      let(:params) { {
+      let(:payload) { {
         source:         source,
         started_at:   1,
         ended_at:     2,
@@ -134,7 +134,7 @@ describe Gendo::Transaction::Creator do
 
     context "when the given source already exists" do
       it "uses the existing source" do
-        source = Source.make!(params[:source].merge(app: app))
+        source = Source.make!(payload[:source].merge(app: app))
         expect { creator.create! }.to_not change { Source.count }
         expect { creator.create! }.to change { source.transactions.count }.by(1)
       end
@@ -142,14 +142,14 @@ describe Gendo::Transaction::Creator do
 
     context "when a Source with the same attributes, but different App exists" do
       it "creates a new source" do
-        source = Source.make!(params[:source])
+        source = Source.make!(payload[:source])
         expect { creator.create! }.to change { app.sources.count }.by(+1)
         expect { creator.create! }.to_not change { source.transactions.count }
       end
     end
 
     context "when the given db_runtime is nil" do
-      let(:params) { default_params.merge(db_runtime: nil) }
+      let(:payload) { default_payload.merge(db_runtime: nil) }
 
       it "sets the db_runtime to 0.0" do
         transaction = creator.create!
@@ -158,7 +158,7 @@ describe Gendo::Transaction::Creator do
     end
 
     context "when the given view_runtime is nil" do
-      let(:params) { default_params.merge(view_runtime: nil) }
+      let(:payload) { default_payload.merge(view_runtime: nil) }
 
       it "sets the view_runtime to 0.0" do
         transaction = creator.create!
@@ -167,7 +167,7 @@ describe Gendo::Transaction::Creator do
     end
 
     context "when the given duration is nil" do
-      let(:params) { default_params.merge(duration: nil) }
+      let(:payload) { default_payload.merge(duration: nil) }
 
       it "sets the duration to 0.0" do
         transaction = creator.create!
