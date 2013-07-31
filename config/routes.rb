@@ -1,8 +1,4 @@
-require "sidekiq/web"
-
 Gendo::Application.routes.draw do
-  mount Sidekiq::Web => "/sidekiq"
-
   root "home#index"
 
   namespace :api_v1, path: "api/v1", defaults: {format: "json"} do
@@ -26,6 +22,15 @@ Gendo::Application.routes.draw do
 
   get "/sign-in", to: "sessions#new", as: :sign_in
   post "/sign-in", to: "sessions#create"
+
+  ## Engines
+
+  unless Rails.env.test?
+    require "sidekiq/web"
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
+  ## Test helpers
 
   if Rails.env.test?
     get "/bypass", to: "sessions#bypass", as: :bypass

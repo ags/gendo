@@ -10,8 +10,6 @@ gem 'pg'
 gem 'rails'
 gem 'sentry-raven'
 gem 'sidekiq'
-# if you require 'sinatra' you get the DSL extended to Object
-gem 'sinatra', '>= 1.3.0', require: nil
 gem 'slim'
 gem 'unicorn'
 
@@ -35,6 +33,11 @@ end
 group :test, :development do
   gem 'dotenv-rails'
   gem 'quiet_assets'
+end
+
+group :development, :production do
+  # if you require 'sinatra' you get the DSL extended to Object
+  gem 'sinatra', '>= 1.3.0', require: nil
 end
 
 group :development do
