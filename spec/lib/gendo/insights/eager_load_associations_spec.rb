@@ -1,37 +1,42 @@
 require "spec_helper"
 
 describe Gendo::Insights::EagerLoadAssociations do
-  let(:transaction) { Transaction.make! }
-  let(:insight) {
-    Gendo::Insights::EagerLoadAssociations.new(transaction.source)
-  }
-
   describe "#applicable?" do
-    context "when no associated transactions include NPlusOneQueries" do
-      it "is false" do
-        expect(insight.applicable?).to be_false
-      end
-    end
+    let(:source) { Source.make! }
+    let(:insight) { Gendo::Insights::EagerLoadAssociations.new(source) }
 
-    context "when the source only has NPlusOneQueries older than a day" do
-      it "is false" do
-        NPlusOneQuery.make!(transaction: transaction, created_at: 2.days.ago)
-
-        expect(insight.applicable?).to be_false
-      end
-    end
-
-    context "when there are NPlusOneQueries in the past day" do
+    context "when one or more of the 10 most recent associated transactions has an n+1 query" do
       it "is true" do
-        NPlusOneQuery.make!(transaction: transaction)
+        transactions = 10.times.map { Transaction.create!(source: source) }
+        NPlusOneQuery.make!(transaction: transactions[0])
 
         expect(insight.applicable?).to be_true
+      end
+    end
+
+    context "when none of the 10 most recent associated transactions has an n+1 query" do
+      it "is false" do
+        transactions = 11.times.map { Transaction.create!(source: source) }
+        NPlusOneQuery.make!(transaction: transactions[0])
+
+        expect(insight.applicable?).to be_false
+      end
+    end
+
+    context "when no associated transactions include NPlusOneQueries" do
+      it "is false" do
+        Transaction.make!(source: source)
+
+        expect(insight.applicable?).to be_false
       end
     end
   end
 
   describe "#latest_n_plus_one_query" do
     it "returns the most recently detected associated NPlusOneQuery" do
+      transaction = Transaction.make!
+      insight = Gendo::Insights::EagerLoadAssociations.new(transaction.source)
+
       a = NPlusOneQuery.make!(transaction: transaction, created_at: 3.days.ago)
       b = NPlusOneQuery.make!(transaction: transaction, created_at: 1.days.ago)
       c = NPlusOneQuery.make!(transaction: transaction, created_at: 2.days.ago)
