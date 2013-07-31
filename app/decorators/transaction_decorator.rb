@@ -32,6 +32,10 @@ class TransactionDecorator < Draper::Decorator
     object.db_runtime.present? && object.view_runtime.present?
   end
 
+  def detected_n_plus_one_query?
+    n_plus_one_queries.any?
+  end
+
   def time_breakdown_graph_data
     [
       {label: "Database", value: object.db_runtime},

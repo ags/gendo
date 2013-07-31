@@ -13,6 +13,9 @@ class Source < ActiveRecord::Base
   has_many :mailer_events,
     through: :transactions
 
+  has_many :n_plus_one_queries,
+    through: :transactions
+
   validates :app,
     presence: true
 
@@ -41,7 +44,7 @@ class Source < ActiveRecord::Base
     "#{controller}##{action}"
   end
 
-  def latest_transactions
-    transactions.order(created_at: :desc)
+  def latest_transactions(limit: nil)
+    transactions.order(created_at: :desc).limit(limit)
   end
 end

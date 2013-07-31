@@ -11,6 +11,8 @@ Gendo::Application.routes.draw do
     resources :sources, only: [:show]
 
     resources :transactions, only: [:show]
+
+    resources :n_plus_one_queries, only: [:show]
   end
 
   resources :users, only: [:create]
