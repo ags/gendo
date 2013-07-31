@@ -5,7 +5,7 @@ Gendo::Application.routes.draw do
 
   root "home#index"
 
-  namespace :api_v1, path: 'api/v1', defaults: {format: 'json'} do
+  namespace :api_v1, path: "api/v1", defaults: {format: "json"} do
     resource :transactions, only: [:create]
   end
 
