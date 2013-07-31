@@ -40,6 +40,14 @@ Transaction.blueprint do
   source
 end
 
+Transaction.blueprint(:with_zero_runtime) do
+  db_runtime   { 0 }
+  view_runtime { 0 }
+  duration     { 0 }
+  started_at   { Time.now }
+  ended_at     { Time.now }
+end
+
 User.blueprint do
   email    { "user#{sn}@blargh.com" }
   password { "password" }
