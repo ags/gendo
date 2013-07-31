@@ -6,9 +6,9 @@ describe ApiV1::TransactionsController do
 
   describe "#create" do
     context "when authenticated" do
-      let(:create!) { ->{ post :create, params } }
-
       include_context "App authentication"
+
+      let(:create!) { ->{ post :create, params } }
 
       it "queues a ProcessTransactionPayloadWorker" do
         expect(create!).to change {
