@@ -13,7 +13,7 @@ describe SourceDecorator do
   describe "#latest_transactions" do
     let(:source) { double(:source, transactions: double(:transactions)) }
 
-    it "returns transactions reverse sorted by created_at and decorated" do
+    it "returns decorated transactions" do
       decorated_transactions = double(:decorated_transactions)
 
       expect(source).to \

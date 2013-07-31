@@ -1,8 +1,8 @@
 class SourceDecorator < Draper::Decorator
   delegate_all
 
-  def latest_transactions
-    source.latest_transactions.decorate
+  def latest_transactions(limit: nil)
+    source.latest_transactions(limit: limit).decorate
   end
 
   def has_transactions?

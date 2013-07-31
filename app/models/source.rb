@@ -44,7 +44,7 @@ class Source < ActiveRecord::Base
     "#{controller}##{action}"
   end
 
-  def latest_transactions
-    transactions.order(created_at: :desc)
+  def latest_transactions(limit: nil)
+    transactions.order(created_at: :desc).limit(limit)
   end
 end
