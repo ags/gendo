@@ -1,15 +1,18 @@
 class User < ActiveRecord::Base
   include SecurePasswordWithoutValidation
 
+  MINIMUM_PASSWORD_LENGTH = 6
+
   has_many :apps,
     dependent: :destroy
 
   validates :email,
     presence: true,
-    uniqueness: true
+    uniqueness: true,
+    format: {with: Formats::EMAIL, allow_blank: true}
 
   validates_length_of :password,
-    minimum: 6,
+    minimum: MINIMUM_PASSWORD_LENGTH,
     if: :password
 
   validates :password,

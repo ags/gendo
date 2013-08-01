@@ -4,10 +4,10 @@ module Forms
     attribute :password
 
     validates :password,
-      length: {minimum: 6}
+      length: {minimum: User::MINIMUM_PASSWORD_LENGTH}
 
     validates :email, format: {
-      with: %r{\A.+@.+\..+\z}, # ___@___.___
+      with: Formats::EMAIL,
       message: "doesn't look right"
     }
 
@@ -39,6 +39,7 @@ module Forms
     end
 
     def send_welcome_email
+      # TODO send with sidekiq
       UserWelcomeMailer.welcome(user).deliver
     end
 
