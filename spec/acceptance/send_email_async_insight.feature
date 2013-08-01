@@ -9,4 +9,4 @@ Feature: Send email asynchronously insight
 
   Scenario: Viewing the transaction that sent an email
     When I view the transaction that sent an email
-    Then I should see "sending emails"
+    Then I should see "Send email asynchronously"
