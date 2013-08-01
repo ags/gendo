@@ -27,7 +27,7 @@ module Forms
 
       @authenticator.sign_in(user)
 
-      send_welcome_email
+      queue_welcome_email
 
       true
     end
@@ -38,7 +38,7 @@ module Forms
       User.create!(email: email, password: password)
     end
 
-    def send_welcome_email
+    def queue_welcome_email
       UserWelcomeMailer.delay.welcome(user)
     end
 
