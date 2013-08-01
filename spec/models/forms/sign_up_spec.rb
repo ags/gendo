@@ -1,4 +1,5 @@
 require "spec_helper"
+require "sidekiq/testing"
 
 describe Forms::SignUp do
   let(:session) { {} }
@@ -18,10 +19,10 @@ describe Forms::SignUp do
       expect(session).to eq({user_id: form.user.id})
     end
 
-    it "sends a welcome email to the created user" do
+    it "queues a welcome email to the created user" do
       expect do
         form.save!
-      end.to change { ActionMailer::Base.deliveries.size }.by(+1)
+      end.to change { Sidekiq::Extensions::DelayedMailer.jobs.size }.by(+1)
     end
   end
 

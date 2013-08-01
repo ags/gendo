@@ -39,8 +39,7 @@ module Forms
     end
 
     def send_welcome_email
-      # TODO send with sidekiq
-      UserWelcomeMailer.welcome(user).deliver
+      UserWelcomeMailer.delay.welcome(user)
     end
 
     def email_available?
