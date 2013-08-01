@@ -18,7 +18,7 @@ describe IdentifyNPlusOneQueriesWorker do
       transaction = Transaction.make!
       sql_event = SqlEvent.create!(transaction: transaction)
 
-      expect(Gendo::IdentifiesNPlusOneQueries).to \
+      expect(IdentifiesNPlusOneQueries).to \
         receive(:identify).
         with([sql_event]).
         and_return({"posts" => [sql_event]})

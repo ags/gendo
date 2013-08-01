@@ -1,6 +1,6 @@
-require_relative "../../../lib/gendo/identifies_n_plus_one_queries"
+require_relative "../../app/gendo/identifies_n_plus_one_queries"
 
-describe Gendo::IdentifiesNPlusOneQueries do
+describe IdentifiesNPlusOneQueries do
   it "returns the format of queries" do
     foo_event = double(
       "n+1 foo event",
@@ -17,7 +17,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
       sql: "INSERT INTO `bars` (`col`) VALUES (123)"
     )
 
-    identified = Gendo::IdentifiesNPlusOneQueries.identify(
+    identified = IdentifiesNPlusOneQueries.identify(
       [foo_event, bar_event, baz_event],
       minimum_query_occurrences: 1
     )
@@ -46,7 +46,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
       )
     end
 
-    identified = Gendo::IdentifiesNPlusOneQueries.identify(queries)
+    identified = IdentifiesNPlusOneQueries.identify(queries)
 
     expect(identified).to eq({"foos" => n_plus_one_events})
   end
@@ -57,7 +57,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
       sql: "SELECT `bars`.* FROM `bars` WHERE `bars.`id` = $1 LIMIT 1"
     )
 
-    identified = Gendo::IdentifiesNPlusOneQueries.identify(
+    identified = IdentifiesNPlusOneQueries.identify(
       [query],
       minimum_query_occurrences: 1
     )
@@ -71,7 +71,7 @@ describe Gendo::IdentifiesNPlusOneQueries do
       sql: "SELECT   `bars`.*   FROM   `bars`   WHERE `bars.`id` = 27   LIMIT 1"
     )
 
-    identified = Gendo::IdentifiesNPlusOneQueries.identify(
+    identified = IdentifiesNPlusOneQueries.identify(
       [query],
       minimum_query_occurrences: 1
     )
