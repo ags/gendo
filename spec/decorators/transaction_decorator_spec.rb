@@ -1,6 +1,7 @@
 require 'draper'
 require 'timecop'
 require './spec/support/shared_examples_for_decorates_event_timestamps'
+require './app/gendo/insights/transaction'
 require './app/decorators/decorates_event_timestamps'
 require './app/decorators/transaction_decorator'
 
@@ -88,26 +89,6 @@ describe TransactionDecorator do
     end
   end
 
-  describe "#detected_n_plus_one_query?" do
-    let(:transaction) { double(:transaction, n_plus_one_queries: queries) }
-
-    context "with associated n+1 queries" do
-      let(:queries) { [double(:query)] }
-
-      it "is true" do
-        expect(decorated.detected_n_plus_one_query?).to be_true
-      end
-    end
-
-    context "without associated n+1 queries" do
-      let(:queries) { [] }
-
-      it "is false" do
-        expect(decorated.detected_n_plus_one_query?).to be_false
-      end
-    end
-  end
-
   describe "#time_breakdown_graph_data" do
     let(:transaction) { double(:transaction, db_runtime: 1, view_runtime: 2) }
 
@@ -126,6 +107,18 @@ describe TransactionDecorator do
         decorated = TransactionDecorator.new(transaction)
         expect(decorated.fuzzy_timestamp).to eq("30 minutes ago")
       end
+    end
+  end
+
+  describe "#insights" do
+    let(:transaction) { double(:transaction) }
+
+    it "is a list of applicable insight classes" do
+      applicable_insight = double(:applicable_insight)
+
+      Insights::Transaction.stub(:applicable_to) { [applicable_insight] }
+
+      expect(decorated.insights).to eq([applicable_insight])
     end
   end
 end

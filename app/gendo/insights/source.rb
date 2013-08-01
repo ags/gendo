@@ -2,8 +2,8 @@ module Insights
   module Source
     def self.all
       [
-        Insights::Source::SendEmailAsync,
-        Insights::Source::EagerLoadAssociations,
+        SendEmailAsync,
+        EagerLoadAssociations,
       ]
     end
 

@@ -36,10 +36,11 @@ section.content
                   td= link_to @source.duration.max.duration, app_transaction_path(@source.app, @source.duration.max)
                   td= link_to @source.duration.min.duration, app_transaction_path(@source.app, @source.duration.min)
 
-        .small-12.large-12.columns
-          h4 Insights
-          - @source.insights.each do |insight|
-            = render insight.partial_name, insight: insight
+        - if @source.insights.any?
+          .small-12.large-12.columns
+            h4 Insights
+            - @source.insights.each do |insight|
+              = render insight.partial_name, insight: insight, source: @source
 
     .small-12.large-7.columns
       h4 Latest Requests
