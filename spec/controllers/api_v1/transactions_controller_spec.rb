@@ -1,5 +1,4 @@
 require "spec_helper"
-require "sidekiq/testing"
 
 describe ApiV1::TransactionsController do
   let(:params) { {transaction: transaction_payload_hash} }

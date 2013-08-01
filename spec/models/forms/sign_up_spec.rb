@@ -1,5 +1,4 @@
 require "spec_helper"
-require "sidekiq/testing"
 
 describe Forms::SignUp do
   let(:session) { {} }
