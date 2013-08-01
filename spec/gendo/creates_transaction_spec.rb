@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Gendo::Transaction::Creator do
+describe CreatesTransaction do
   let(:app) { App.make! }
   let(:source) { {
     controller:     "PostsController",
@@ -22,7 +22,7 @@ describe Gendo::Transaction::Creator do
   } }
   let(:payload) { default_payload }
 
-  subject(:creator) { Gendo::Transaction::Creator.new(app, payload) }
+  subject(:creator) { CreatesTransaction.new(app, payload) }
 
   describe ".create!" do
     it "creates a Transaction from the given parameters" do

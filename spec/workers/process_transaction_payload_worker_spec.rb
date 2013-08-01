@@ -1,6 +1,7 @@
 require "spec_helper"
 require "sidekiq/testing"
 
+# NOTE do I want to isolate here? don't feel compelled to integrate.
 describe ProcessTransactionPayloadWorker do
   describe "#process_for_app" do
     it "queues the worker with the given app id and payload" do
