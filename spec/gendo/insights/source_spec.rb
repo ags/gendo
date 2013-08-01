@@ -1,30 +1,30 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Gendo::Insights do
+describe Insights::Source do
   describe ".all" do
     # NOTE this may be unmaintable and better tested by integration
     it "is a list of all Insights classes" do
-      expect(Gendo::Insights.all).to eq([
-        Gendo::Insights::SendEmailAsync,
-        Gendo::Insights::EagerLoadAssociations,
+      expect(Insights::Source.all).to eq([
+        Insights::Source::SendEmailAsync,
+        Insights::Source::EagerLoadAssociations,
       ])
     end
   end
 
-  describe "#applicable_to_source" do
-    class ApplicableIns < Gendo::Insights::Base
+  describe "#applicable_to" do
+    class ApplicableIns < Insights::Source::Base
       def applicable?; true; end
     end
-    class UnapplicableIns < Gendo::Insights::Base
+    class UnapplicableIns < Insights::Source::Base
       def applicable?; false; end
     end
 
     before do
-      Gendo::Insights.stub(:all).and_return([ApplicableIns, UnapplicableIns])
+      Insights::Source.stub(:all).and_return([ApplicableIns, UnapplicableIns])
     end
 
     let(:source) { double(:source) }
-    subject(:applicable) { Gendo::Insights.applicable_to_source(source) }
+    subject(:applicable) { Insights::Source.applicable_to(source) }
 
     it "returns all Insights applicable to the given source" do
       expect(applicable.size).to eq(1)

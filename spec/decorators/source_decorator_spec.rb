@@ -1,5 +1,5 @@
 require 'draper'
-require './lib/gendo/insights'
+require './app/gendo/insights/source'
 require './lib/gendo/transaction_stats'
 require './app/decorators/source_decorator'
 
@@ -74,7 +74,7 @@ describe SourceDecorator do
     class FooIns; end
 
     it "is a list of applicable insight classes" do
-      Gendo::Insights.stub(:applicable_to_source) { [FooIns] }
+      Insights::Source.stub(:applicable_to) { [FooIns] }
 
       expect(decorated.insights).to eq([FooIns])
     end

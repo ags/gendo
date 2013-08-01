@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Gendo::Insights::SendEmailAsync do
+describe Insights::Source::SendEmailAsync do
   describe "#applicable?" do
     let(:transaction) { Transaction.make! }
     let(:insight) {
-      Gendo::Insights::SendEmailAsync.new(transaction.source)
+      Insights::Source::SendEmailAsync.new(transaction.source)
     }
 
     context "when no associated transactions include MailerEvents" do

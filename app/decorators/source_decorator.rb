@@ -22,6 +22,6 @@ class SourceDecorator < Draper::Decorator
   end
 
   def insights
-    Gendo::Insights.applicable_to_source(object)
+    Insights::Source.applicable_to(object)
   end
 end

@@ -1,5 +1,5 @@
-module Gendo
-  module Insights
+module Insights
+  module Source
     class Base
       attr_reader :source
 
@@ -8,7 +8,7 @@ module Gendo
       end
 
       def partial_name
-        self.class.name.underscore.split("/").last
+        "/#{self.class.name.underscore}"
       end
     end
   end

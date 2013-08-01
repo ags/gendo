@@ -1,5 +1,5 @@
-module Gendo
-  module Insights
+module Insights
+  module Source
     class SendEmailAsync < Base
       APPLICABILITY_LIFETIME = 1.day
 

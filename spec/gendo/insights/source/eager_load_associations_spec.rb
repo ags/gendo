@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe Gendo::Insights::EagerLoadAssociations do
+describe Insights::Source::EagerLoadAssociations do
   describe "#applicable?" do
     let(:source) { Source.make! }
-    let(:insight) { Gendo::Insights::EagerLoadAssociations.new(source) }
+    let(:insight) { Insights::Source::EagerLoadAssociations.new(source) }
 
     context "when one or more of the 10 most recent associated transactions has an n+1 query" do
       it "is true" do
@@ -35,7 +35,7 @@ describe Gendo::Insights::EagerLoadAssociations do
   describe "#latest_n_plus_one_query" do
     it "returns the most recently detected associated NPlusOneQuery" do
       transaction = Transaction.make!
-      insight = Gendo::Insights::EagerLoadAssociations.new(transaction.source)
+      insight = Insights::Source::EagerLoadAssociations.new(transaction.source)
 
       a = NPlusOneQuery.make!(transaction: transaction, created_at: 3.days.ago)
       b = NPlusOneQuery.make!(transaction: transaction, created_at: 1.days.ago)

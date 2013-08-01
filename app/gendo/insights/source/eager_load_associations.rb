@@ -1,5 +1,5 @@
-module Gendo
-  module Insights
+module Insights
+  module Source
     class EagerLoadAssociations < Base
       TRANSACTIONS_CHECKED_COUNT = 10
 

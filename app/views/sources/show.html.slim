@@ -39,7 +39,7 @@ section.content
         .small-12.large-12.columns
           h4 Insights
           - @source.insights.each do |insight|
-            = render "/insights/#{insight.partial_name}", insight: insight
+            = render insight.partial_name, insight: insight
 
     .small-12.large-7.columns
       h4 Latest Requests

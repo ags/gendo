@@ -18,8 +18,8 @@ MailerEvent.blueprint do
   transaction
   mailer     { "FooMailer" }
   message_id { "123456789" }
-  started_at { 1370939786.0706801 }
-  ended_at   { 1370939787.0706801 }
+  started_at { Time.now }
+  ended_at   { Time.now }
   duration   { 0.1234 }
 end
 
