@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Gendo::TransactionStats do
+describe TransactionStats do
   def build_transaction(params={})
     Transaction.make!({
       view_runtime: 1,
@@ -14,7 +14,7 @@ describe Gendo::TransactionStats do
   let!(:t3) { build_transaction(db_runtime: 3) }
 
   subject(:stats) {
-    Gendo::TransactionStats.new(source.transactions, :db_runtime)
+    TransactionStats.new(source.transactions, :db_runtime)
   }
 
   describe "#median" do

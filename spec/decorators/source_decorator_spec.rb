@@ -1,6 +1,6 @@
 require 'draper'
 require './app/gendo/insights/source'
-require './lib/gendo/transaction_stats'
+require './app/gendo/transaction_stats'
 require './app/decorators/source_decorator'
 
 Draper::ViewContext.test_strategy :fast
@@ -43,27 +43,27 @@ describe SourceDecorator do
     end
   end
 
-  describe "Gendo::TransactionStats" do
+  describe "TransactionStats" do
     let(:source) { double(:source, transactions: double(:transactions)) }
 
     describe "#db" do
-      it "is Gendo::TransactionStats for db_runtime" do
+      it "is TransactionStats for db_runtime" do
         expect(decorated.db).to \
-          eq(Gendo::TransactionStats.new(source.transactions, :db_runtime))
+          eq(TransactionStats.new(source.transactions, :db_runtime))
       end
     end
 
     describe "#view" do
-      it "is Gendo::TransactionStats for view_runtime" do
+      it "is TransactionStats for view_runtime" do
         expect(decorated.view).to \
-          eq(Gendo::TransactionStats.new(source.transactions, :view_runtime))
+          eq(TransactionStats.new(source.transactions, :view_runtime))
       end
     end
 
     describe "#duration" do
-      it "is Gendo::TransactionStats for view_runtime" do
+      it "is TransactionStats for view_runtime" do
         expect(decorated.duration).to \
-          eq(Gendo::TransactionStats.new(source.transactions, :duration))
+          eq(TransactionStats.new(source.transactions, :duration))
       end
     end
   end

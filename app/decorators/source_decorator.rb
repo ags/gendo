@@ -10,15 +10,15 @@ class SourceDecorator < Draper::Decorator
   end
 
   def db
-    Gendo::TransactionStats.new(transactions, :db_runtime)
+    TransactionStats.new(transactions, :db_runtime)
   end
 
   def view
-    Gendo::TransactionStats.new(transactions, :view_runtime)
+    TransactionStats.new(transactions, :view_runtime)
   end
 
   def duration
-    Gendo::TransactionStats.new(transactions, :duration)
+    TransactionStats.new(transactions, :duration)
   end
 
   def insights
