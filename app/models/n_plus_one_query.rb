@@ -15,4 +15,8 @@ class NPlusOneQuery < ActiveRecord::Base
 
   has_many :sql_events,
     through: :n_plus_one_query_sql_events
+
+  def duration
+    sql_events.sum(:duration)
+  end
 end

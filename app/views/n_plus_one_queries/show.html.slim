@@ -2,16 +2,41 @@ section.content
   .row
     .small-12.columns
       .panel
+
         h3
           ' Detected
           = @n_plus_one_query.sql_events.count
           |  related queries on the '#{@n_plus_one_query.culprit_table_name}' table!
 
         p
-          | This may be an n+1 query. You can load all of the requested objects
+          | This may be an n+1 query - you can load all of the requested objects
           '  in a single query using ActiveRecord
           = link_to "eager loading.",
             "http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations"
+
+          div.progress.large-12
+            span.meter(style="width: #{@n_plus_one_query.percentage_of_db_runtime}%")
+
+        p
+          strong= @n_plus_one_query.request_db_runtime
+          '  was spent doing database processing during this request,
+          strong= @n_plus_one_query.duration
+          |  of which (
+          strong
+            = @n_plus_one_query.percentage_of_db_runtime
+            | %
+          ' ) was the detected queries.
+          div.progress.large-12
+            span.meter(style="width: #{@n_plus_one_query.percentage_of_request_duration}%")
+
+        p
+          ' That's also
+          strong
+            = @n_plus_one_query.percentage_of_request_duration
+            | %
+          |  of the total request time (
+          strong= @n_plus_one_query.request_duration
+          | )!
 
       table
         thead

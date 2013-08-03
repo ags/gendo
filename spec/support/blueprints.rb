@@ -36,6 +36,14 @@ Source.blueprint do
   format_type   { "*/*" }
 end
 
+SqlEvent.blueprint do
+  request
+  sql        { "SELECT * FROM posts" }
+  started_at { Time.now }
+  ended_at   { Time.now }
+  duration   { 0.1234 }
+end
+
 Request.blueprint do
   source
 end
