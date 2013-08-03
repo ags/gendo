@@ -10,7 +10,7 @@ describe Insights::Source do
         receive(:all).
         and_return([applicable, unapplicable])
 
-      applicable_to = Insights::Source.applicable_to(double(:transaction))
+      applicable_to = Insights::Source.applicable_to(double(:request))
 
       expect(applicable_to).to eq([applicable])
     end

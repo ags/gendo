@@ -12,6 +12,6 @@ section.content
             .app.panel
               h4= link_to app.name, app_path(app)
               p
-                = app.transactions.count
-                |  transactions
+                = app.requests.count
+                |  requests
               p= link_to "settings", app_settings_path(app)

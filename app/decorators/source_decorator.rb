@@ -1,24 +1,24 @@
 class SourceDecorator < Draper::Decorator
   delegate_all
 
-  def latest_transactions(limit: nil)
-    source.latest_transactions(limit: limit).decorate
+  def latest_requests(limit: nil)
+    source.latest_requests(limit: limit).decorate
   end
 
-  def has_transactions?
-    transactions.any?
+  def has_requests?
+    requests.any?
   end
 
   def db
-    TransactionStats.new(transactions, :db_runtime)
+    RequestStats.new(requests, :db_runtime)
   end
 
   def view
-    TransactionStats.new(transactions, :view_runtime)
+    RequestStats.new(requests, :view_runtime)
   end
 
   def duration
-    TransactionStats.new(transactions, :duration)
+    RequestStats.new(requests, :duration)
   end
 
   def insights

@@ -1,9 +1,9 @@
 module ApiV1
-  class TransactionsController < ApiController
+  class RequestsController < ApiController
     def create
-      ProcessTransactionPayloadWorker.process_for_app(
+      ProcessRequestPayloadWorker.process_for_app(
         current_app,
-        transaction_payload.to_h
+        request_payload.to_h
       )
 
       render json: {}
@@ -11,8 +11,8 @@ module ApiV1
 
     private
 
-    def transaction_payload
-      params.require(:transaction).permit(
+    def request_payload
+      params.require(:request).permit(
         :path,
         :status,
         :db_runtime,

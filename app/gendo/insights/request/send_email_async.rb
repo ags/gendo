@@ -1,8 +1,8 @@
 module Insights
-  module Transaction
+  module Request
     class SendEmailAsync < Base
       def applicable?
-        transaction.mailer_events.any?
+        request.mailer_events.any?
       end
     end
   end

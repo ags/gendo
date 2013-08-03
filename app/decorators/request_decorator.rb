@@ -1,4 +1,4 @@
-class TransactionDecorator < Draper::Decorator
+class RequestDecorator < Draper::Decorator
   include DecoratesEventTimestamps
 
   delegate_all
@@ -44,6 +44,6 @@ class TransactionDecorator < Draper::Decorator
   end
 
   def insights
-    @_insights ||= Insights::Transaction.applicable_to(object)
+    @_insights ||= Insights::Request.applicable_to(object)
   end
 end

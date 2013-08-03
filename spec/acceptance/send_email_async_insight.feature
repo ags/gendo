@@ -7,6 +7,6 @@ Feature: Send email asynchronously insight
     When I view the the source of the request that sent the email
     Then I should see "Looks like you're sending emails in your requests"
 
-  Scenario: Viewing the transaction that sent an email
-    When I view the transaction that sent an email
+  Scenario: Viewing the request that sent an email
+    When I view the request that sent an email
     Then I should see "Send email asynchronously"

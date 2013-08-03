@@ -15,7 +15,7 @@ AppAccessToken.blueprint do
 end
 
 MailerEvent.blueprint do
-  transaction
+  request
   mailer     { "FooMailer" }
   message_id { "123456789" }
   started_at { Time.now }
@@ -24,7 +24,7 @@ MailerEvent.blueprint do
 end
 
 NPlusOneQuery.blueprint do
-  transaction
+  request
   culprit_table_name { "posts" }
 end
 
@@ -36,11 +36,11 @@ Source.blueprint do
   format_type   { "*/*" }
 end
 
-Transaction.blueprint do
+Request.blueprint do
   source
 end
 
-Transaction.blueprint(:with_zero_runtime) do
+Request.blueprint(:with_zero_runtime) do
   db_runtime   { 0 }
   view_runtime { 0 }
   duration     { 0 }
@@ -53,7 +53,7 @@ User.blueprint do
   password { "password" }
 end
 
-def transaction_payload_hash
+def request_payload_hash
   {
     path:           '/posts/new',
     status:         200,

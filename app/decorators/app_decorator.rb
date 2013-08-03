@@ -1,7 +1,7 @@
 class AppDecorator < Draper::Decorator
   delegate_all
 
-  decorates_association :transactions
+  decorates_association :requests
 
   def alphabetized_sources
     sources.order(:controller, :action).decorate
@@ -20,6 +20,6 @@ class AppDecorator < Draper::Decorator
   end
 
   def recent_internal_server_errors(limit: 3)
-    recent_transactions_with_status(500, limit: limit).decorate
+    recent_requests_with_status(500, limit: limit).decorate
   end
 end

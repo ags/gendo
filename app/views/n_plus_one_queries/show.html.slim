@@ -21,4 +21,4 @@ section.content
             th Duration
         tbody
           - @n_plus_one_query.sql_events.each do |event|
-            = render "transactions/sql_event_row", event: event
+            = render "requests/sql_event_row", event: event
