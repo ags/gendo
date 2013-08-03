@@ -53,6 +53,14 @@ describe RequestDecorator do
     end
   end
 
+  describe "#source_name" do
+    let(:request) { double(:request, source: double(:source, name: "foobar")) }
+
+    it "delegates to the associated source" do
+      expect(decorated.source_name).to eq("foobar")
+    end
+  end
+
   describe "#collected_timings?" do
 
     context "with a db_runtime and view_runtime" do

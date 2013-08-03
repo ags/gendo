@@ -12,6 +12,8 @@ class RequestDecorator < Draper::Decorator
   # source is an alias for object, so delegate_all skips it
   delegate :source, to: :object
 
+  delegate :name, to: :source, prefix: true
+
   def events
     (sql_events + view_events + mailer_events).sort_by(&:started_at)
   end

@@ -4,7 +4,7 @@ section.content
       .panel
         h3
           ' Summary of
-          = link_to @request.source.name, app_source_path(@request.source.app, @request.source)
+          = link_to @request.source_name, app_source_path(@request.app, @request.source)
 
         .row
           .small-12.large-4.columns
