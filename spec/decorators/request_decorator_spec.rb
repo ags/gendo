@@ -1,5 +1,4 @@
 require 'draper'
-require 'timecop'
 require './spec/support/shared_examples_for_decorates_event_timestamps'
 require './app/gendo/insights/request'
 require './app/decorators/decorates_event_timestamps'
@@ -109,11 +108,9 @@ describe RequestDecorator do
 
   describe "#fuzzy_timestamp" do
     it "is a fuzzy timestamp of created_at" do
-      Timecop.freeze(Time.now) do
-        request = double(:request, created_at: 30.minutes.ago)
-        decorated = RequestDecorator.new(request)
-        expect(decorated.fuzzy_timestamp).to eq("30 minutes ago")
-      end
+      request = double(:request, created_at: 57.minutes.ago)
+      decorated = RequestDecorator.new(request)
+      expect(decorated.fuzzy_timestamp).to eq("about 1 hour ago")
     end
   end
 

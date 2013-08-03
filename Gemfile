@@ -26,7 +26,6 @@ group :test do
   gem 'machinist'
   gem 'rspec-rails'
   gem 'simplecov'
-  gem 'timecop'
   gem 'turnip'
 end
 
