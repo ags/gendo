@@ -138,7 +138,7 @@ ALTER SEQUENCE apps_id_seq OWNED BY apps.id;
 --
 
 CREATE TABLE mailer_events (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     transaction_id integer,
     mailer character varying(255) NOT NULL,
     message_id character varying(255),
@@ -282,7 +282,7 @@ ALTER SEQUENCE sources_id_seq OWNED BY sources.id;
 --
 
 CREATE TABLE sql_events (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     transaction_id integer,
     sql text,
     started_at timestamp without time zone,
@@ -318,7 +318,7 @@ ALTER SEQUENCE sql_events_id_seq OWNED BY sql_events.id;
 --
 
 CREATE TABLE transactions (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     path character varying(255),
     status integer,
     started_at timestamp without time zone,
@@ -390,7 +390,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 --
 
 CREATE TABLE view_events (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     transaction_id integer,
     identifier character varying(255) NOT NULL,
     started_at timestamp without time zone,
@@ -729,3 +729,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130728030622');
 INSERT INTO schema_migrations (version) VALUES ('20130728131519');
 
 INSERT INTO schema_migrations (version) VALUES ('20130728141323');
+
+INSERT INTO schema_migrations (version) VALUES ('20130803042630');
