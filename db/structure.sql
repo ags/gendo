@@ -208,7 +208,7 @@ ALTER SEQUENCE n_plus_one_queries_id_seq OWNED BY n_plus_one_queries.id;
 CREATE TABLE n_plus_one_query_sql_events (
     id integer NOT NULL,
     n_plus_one_query_id integer NOT NULL,
-    sql_event_id integer NOT NULL,
+    sql_event_id bigint NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -735,3 +735,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130803042630');
 INSERT INTO schema_migrations (version) VALUES ('20130803052040');
 
 INSERT INTO schema_migrations (version) VALUES ('20130803062221');
+
+INSERT INTO schema_migrations (version) VALUES ('20130803062609');
