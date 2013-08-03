@@ -2,7 +2,7 @@ Gendo::Application.routes.draw do
   root "home#index"
 
   namespace :api_v1, path: "api/v1", defaults: {format: "json"} do
-    resource :transactions, only: [:create]
+    resource :requests, only: [:create]
   end
 
   resources :apps, only: [:index, :new, :create, :show] do
@@ -10,7 +10,7 @@ Gendo::Application.routes.draw do
 
     resources :sources, only: [:show]
 
-    resources :transactions, only: [:show]
+    resources :requests, only: [:show]
 
     resources :n_plus_one_queries, only: [:show]
   end

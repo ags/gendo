@@ -1,11 +1,11 @@
-require_relative "../../../../app/gendo/insights/transaction/base"
-require_relative "../../../../app/gendo/insights/transaction/send_email_async"
+require_relative "../../../../app/gendo/insights/request/base"
+require_relative "../../../../app/gendo/insights/request/send_email_async"
 
-describe Insights::Transaction::SendEmailAsync do
+describe Insights::Request::SendEmailAsync do
   describe "#applicable?" do
-    let(:transaction) { double(:transaction, mailer_events: queries) }
+    let(:request) { double(:request, mailer_events: queries) }
     let(:insight) {
-      Insights::Transaction::SendEmailAsync.new(transaction)
+      Insights::Request::SendEmailAsync.new(request)
     }
 
     context "with associated mailer events" do

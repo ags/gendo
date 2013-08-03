@@ -1,11 +1,11 @@
-require_relative "../../../../app/gendo/insights/transaction/base"
-require_relative "../../../../app/gendo/insights/transaction/eager_load_associations"
+require_relative "../../../../app/gendo/insights/request/base"
+require_relative "../../../../app/gendo/insights/request/eager_load_associations"
 
-describe Insights::Transaction::EagerLoadAssociations do
+describe Insights::Request::EagerLoadAssociations do
   describe "#applicable?" do
-    let(:transaction) { double(:transaction, n_plus_one_queries: queries) }
+    let(:request) { double(:request, n_plus_one_queries: queries) }
     let(:insight) {
-      Insights::Transaction::EagerLoadAssociations.new(transaction)
+      Insights::Request::EagerLoadAssociations.new(request)
     }
 
     context "with associated n+1 queries" do

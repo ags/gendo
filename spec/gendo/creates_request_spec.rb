@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CreatesTransaction do
+describe CreatesRequest do
   let(:app) { App.make! }
   let(:source) { {
     controller:     "PostsController",
@@ -22,27 +22,27 @@ describe CreatesTransaction do
   } }
   let(:payload) { default_payload }
 
-  subject(:creator) { CreatesTransaction.new(app, payload) }
+  subject(:creator) { CreatesRequest.new(app, payload) }
 
   describe ".create!" do
-    it "creates a Transaction from the given parameters" do
-      transaction = creator.create!
+    it "creates a Request from the given parameters" do
+      request = creator.create!
 
-      expect(transaction.source.app).to         eq(app)
-      expect(transaction.source.controller).to  eq("PostsController")
-      expect(transaction.source.action).to      eq("new")
-      expect(transaction.source.method_name).to eq("GET")
-      expect(transaction.source.format_type).to eq("*/*")
+      expect(request.source.app).to         eq(app)
+      expect(request.source.controller).to  eq("PostsController")
+      expect(request.source.action).to      eq("new")
+      expect(request.source.method_name).to eq("GET")
+      expect(request.source.format_type).to eq("*/*")
 
-      expect(transaction.shinji_version).to     eq("0.0.1")
-      expect(transaction.framework).to          eq("Rails 5.0.0")
-      expect(transaction.path).to               eq("/posts/new")
-      expect(transaction.status).to             eq(200)
-      expect(transaction.started_at.to_f).to    eq(1370939786.0706801)
-      expect(transaction.ended_at.to_f).to      eq(1370939787.0706801)
-      expect(transaction.db_runtime).to         eq(0.1234)
-      expect(transaction.view_runtime).to       eq(0.4567)
-      expect(transaction.duration).to           eq(1.98)
+      expect(request.shinji_version).to     eq("0.0.1")
+      expect(request.framework).to          eq("Rails 5.0.0")
+      expect(request.path).to               eq("/posts/new")
+      expect(request.status).to             eq(200)
+      expect(request.started_at.to_f).to    eq(1370939786.0706801)
+      expect(request.ended_at.to_f).to      eq(1370939787.0706801)
+      expect(request.db_runtime).to         eq(0.1234)
+      expect(request.view_runtime).to       eq(0.4567)
+      expect(request.duration).to           eq(1.98)
     end
 
     context "with nested sql_events data" do
@@ -61,11 +61,11 @@ describe CreatesTransaction do
       } }
 
       it "creates nested SqlEvents" do
-        transaction = creator.create!
+        request = creator.create!
 
-        expect(transaction.sql_events.count).to eq(1)
+        expect(request.sql_events.count).to eq(1)
 
-        sql_event = transaction.sql_events.first
+        sql_event = request.sql_events.first
         expect(sql_event.sql).to eq("SELECT * FROM users WHERE id = '1'")
         expect(sql_event.duration).to eq(0.321)
         expect(sql_event.started_at.to_f).to eq(1370939786.0706801)
@@ -89,11 +89,11 @@ describe CreatesTransaction do
       } }
 
       it "creates nested ViewEvents" do
-        transaction = creator.create!
+        request = creator.create!
 
-        expect(transaction.view_events.count).to eq(1)
+        expect(request.view_events.count).to eq(1)
 
-        view_event = transaction.view_events.first
+        view_event = request.view_events.first
         expect(view_event.identifier).to eq("/app/views/posts/new.html.erb")
         expect(view_event.duration).to eq(0.321)
         expect(view_event.started_at.to_f).to eq(1370939786.0706801)
@@ -118,11 +118,11 @@ describe CreatesTransaction do
       } }
 
       it "creates nested MailerEvents" do
-        transaction = creator.create!
+        request = creator.create!
 
-        expect(transaction.mailer_events.count).to eq(1)
+        expect(request.mailer_events.count).to eq(1)
 
-        mailer_event = transaction.mailer_events.first
+        mailer_event = request.mailer_events.first
         expect(mailer_event.mailer).to eq("FooMailer")
         expect(mailer_event.message_id).to \
           eq("4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail")
@@ -136,7 +136,7 @@ describe CreatesTransaction do
       it "uses the existing source" do
         source = Source.make!(payload[:source].merge(app: app))
         expect { creator.create! }.to_not change { Source.count }
-        expect { creator.create! }.to change { source.transactions.count }.by(1)
+        expect { creator.create! }.to change { source.requests.count }.by(1)
       end
     end
 
@@ -144,7 +144,7 @@ describe CreatesTransaction do
       it "creates a new source" do
         source = Source.make!(payload[:source])
         expect { creator.create! }.to change { app.sources.count }.by(+1)
-        expect { creator.create! }.to_not change { source.transactions.count }
+        expect { creator.create! }.to_not change { source.requests.count }
       end
     end
 
@@ -152,8 +152,8 @@ describe CreatesTransaction do
       let(:payload) { default_payload.merge(db_runtime: nil) }
 
       it "sets the db_runtime to 0.0" do
-        transaction = creator.create!
-        expect(transaction.db_runtime).to eq(0.0)
+        request = creator.create!
+        expect(request.db_runtime).to eq(0.0)
       end
     end
 
@@ -161,8 +161,8 @@ describe CreatesTransaction do
       let(:payload) { default_payload.merge(view_runtime: nil) }
 
       it "sets the view_runtime to 0.0" do
-        transaction = creator.create!
-        expect(transaction.view_runtime).to eq(0.0)
+        request = creator.create!
+        expect(request.view_runtime).to eq(0.0)
       end
     end
 
@@ -170,8 +170,8 @@ describe CreatesTransaction do
       let(:payload) { default_payload.merge(duration: nil) }
 
       it "sets the duration to 0.0" do
-        transaction = creator.create!
-        expect(transaction.duration).to eq(0.0)
+        request = creator.create!
+        expect(request.duration).to eq(0.0)
       end
     end
   end

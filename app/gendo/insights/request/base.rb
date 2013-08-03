@@ -1,10 +1,10 @@
 module Insights
-  module Transaction
+  module Request
     class Base
-      attr_reader :transaction
+      attr_reader :request
 
-      def initialize(transaction)
-        @transaction = transaction
+      def initialize(request)
+        @request = request
       end
 
       def partial_name

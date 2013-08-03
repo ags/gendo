@@ -11,7 +11,7 @@ section.content
         .small-12.large-12.columns
           h4 Health
 
-          - if @source.has_transactions?
+          - if @source.has_requests?
             table
               thead
                 tr
@@ -23,18 +23,18 @@ section.content
                 tr
                   td DB Runtime
                   td= @source.db.median
-                  td= link_to @source.db.max.db_runtime, app_transaction_path(@source.app, @source.db.max)
-                  td= link_to @source.db.min.db_runtime, app_transaction_path(@source.app, @source.db.min)
+                  td= link_to @source.db.max.db_runtime, app_request_path(@source.app, @source.db.max)
+                  td= link_to @source.db.min.db_runtime, app_request_path(@source.app, @source.db.min)
                 tr
                   td View Runtime
                   td= @source.view.median
-                  td= link_to @source.view.max.view_runtime, app_transaction_path(@source.app, @source.view.max)
-                  td= link_to @source.view.min.view_runtime, app_transaction_path(@source.app, @source.view.min)
+                  td= link_to @source.view.max.view_runtime, app_request_path(@source.app, @source.view.max)
+                  td= link_to @source.view.min.view_runtime, app_request_path(@source.app, @source.view.min)
                 tr
                   td Duration
                   td= @source.duration.median
-                  td= link_to @source.duration.max.duration, app_transaction_path(@source.app, @source.duration.max)
-                  td= link_to @source.duration.min.duration, app_transaction_path(@source.app, @source.duration.min)
+                  td= link_to @source.duration.max.duration, app_request_path(@source.app, @source.duration.max)
+                  td= link_to @source.duration.min.duration, app_request_path(@source.app, @source.duration.min)
 
         - if @source.insights.any?
           .small-12.large-12.columns
@@ -44,4 +44,4 @@ section.content
 
     .small-12.large-7.columns
       h4 Latest Requests
-      = render "/transactions/table", transactions: @source.latest_transactions
+      = render "/requests/table", requests: @source.latest_requests

@@ -1,4 +1,4 @@
-class Transaction < ActiveRecord::Base
+class Request < ActiveRecord::Base
   belongs_to :source
 
   has_one :app,
@@ -14,7 +14,7 @@ class Transaction < ActiveRecord::Base
     dependent: :destroy
 
   has_many :n_plus_one_queries,
-    inverse_of: :transaction,
+    inverse_of: :request,
     dependent: :destroy
 
   validates :source,

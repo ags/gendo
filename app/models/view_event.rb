@@ -1,7 +1,7 @@
 class ViewEvent < ActiveRecord::Base
-  belongs_to :transaction
+  belongs_to :request
 
-  validates :transaction, presence: true
+  validates :request, presence: true
 
   validates :identifier, presence: true
 end

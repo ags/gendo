@@ -1,14 +1,14 @@
 require "spec_helper"
 
-describe TransactionsController do
+describe RequestsController do
   describe "#show" do
     let(:action!) {
       get :show,
         app_id: app.to_param,
         source_id: source.to_param,
-        id: transaction.id
+        id: request.id
     }
-    let(:transaction) { Transaction.make!(source: source) }
+    let(:request) { Request.make!(source: source) }
     let(:source) { Source.make!(app: app) }
     let(:app) { App.make! }
 

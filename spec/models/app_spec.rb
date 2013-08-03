@@ -71,11 +71,11 @@ describe App do
       source_b_1 = Source.make!(app: app, controller: "B", action: "a")
       source_b_2 = Source.make!(app: app, controller: "B", action: "b")
 
-      Transaction.make!(source: source_a_1, db_runtime: 1)
-      Transaction.make!(source: source_a_2, db_runtime: 2)
-      Transaction.make!(source: source_b_1, db_runtime: 0)
-      Transaction.make!(source: source_b_2, db_runtime: 9)
-      Transaction.make!(source: source_b_2, db_runtime: 4)
+      Request.make!(source: source_a_1, db_runtime: 1)
+      Request.make!(source: source_a_2, db_runtime: 2)
+      Request.make!(source: source_b_1, db_runtime: 0)
+      Request.make!(source: source_b_2, db_runtime: 9)
+      Request.make!(source: source_b_2, db_runtime: 4)
 
       expect(app.sources_by_median_desc(:db_runtime, limit: 2)).to eq([
         source_b_2,
@@ -84,16 +84,16 @@ describe App do
     end
   end
 
-  describe "#recent_transactions_with_status" do
-    it "returns transactions with the given status" do
+  describe "#recent_requests_with_status" do
+    it "returns requests with the given status" do
       app = App.make!
       source_a = Source.make!(app: app, controller: "A")
       source_b = Source.make!(app: app, controller: "B")
-      error_a = Transaction.make!(source: source_a, status: 500)
-      Transaction.make!(source: source_a, status: 200)
-      error_b = Transaction.make!(source: source_b, status: 500)
+      error_a = Request.make!(source: source_a, status: 500)
+      Request.make!(source: source_a, status: 200)
+      error_b = Request.make!(source: source_b, status: 500)
 
-      expect(app.recent_transactions_with_status(500)).to \
+      expect(app.recent_requests_with_status(500)).to \
         eq([error_b, error_a])
     end
   end

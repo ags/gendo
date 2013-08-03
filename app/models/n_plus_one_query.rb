@@ -1,10 +1,10 @@
 class NPlusOneQuery < ActiveRecord::Base
-  belongs_to :transaction
+  belongs_to :request
 
   has_one :app,
-    through: :transaction
+    through: :request
 
-  validates :transaction,
+  validates :request,
     presence: true
 
   validates :culprit_table_name,

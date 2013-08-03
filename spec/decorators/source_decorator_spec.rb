@@ -1,6 +1,6 @@
 require 'draper'
 require './app/gendo/insights/source'
-require './app/gendo/transaction_stats'
+require './app/gendo/request_stats'
 require './app/decorators/source_decorator'
 
 Draper::ViewContext.test_strategy :fast
@@ -10,60 +10,60 @@ class Source; end
 describe SourceDecorator do
   subject(:decorated) { SourceDecorator.new(source) }
 
-  describe "#latest_transactions" do
-    let(:source) { double(:source, transactions: double(:transactions)) }
+  describe "#latest_requests" do
+    let(:source) { double(:source, requests: double(:requests)) }
 
-    it "returns decorated transactions" do
-      decorated_transactions = double(:decorated_transactions)
+    it "returns decorated requests" do
+      decorated_requests = double(:decorated_requests)
 
       expect(source).to \
-        receive(:latest_transactions).
-        and_return(double(:latest, decorate: decorated_transactions))
+        receive(:latest_requests).
+        and_return(double(:latest, decorate: decorated_requests))
 
-      expect(decorated.latest_transactions).to eq(decorated_transactions)
+      expect(decorated.latest_requests).to eq(decorated_requests)
     end
   end
 
-  describe "#has_transactions?" do
-    let(:source) { double(:source, transactions: transactions) }
-    context "with associated transactions" do
-      let(:transactions) { [double(:transaction)] }
+  describe "#has_requests?" do
+    let(:source) { double(:source, requests: requests) }
+    context "with associated requests" do
+      let(:requests) { [double(:request)] }
 
       it "is true" do
-        expect(decorated.has_transactions?).to be_true
+        expect(decorated.has_requests?).to be_true
       end
     end
 
-    context "without associated transactions" do
-      let(:transactions) { [] }
+    context "without associated requests" do
+      let(:requests) { [] }
 
       it "is false" do
-        expect(decorated.has_transactions?).to be_false
+        expect(decorated.has_requests?).to be_false
       end
     end
   end
 
-  describe "TransactionStats" do
-    let(:source) { double(:source, transactions: double(:transactions)) }
+  describe "RequestStats" do
+    let(:source) { double(:source, requests: double(:requests)) }
 
     describe "#db" do
-      it "is TransactionStats for db_runtime" do
+      it "is RequestStats for db_runtime" do
         expect(decorated.db).to \
-          eq(TransactionStats.new(source.transactions, :db_runtime))
+          eq(RequestStats.new(source.requests, :db_runtime))
       end
     end
 
     describe "#view" do
-      it "is TransactionStats for view_runtime" do
+      it "is RequestStats for view_runtime" do
         expect(decorated.view).to \
-          eq(TransactionStats.new(source.transactions, :view_runtime))
+          eq(RequestStats.new(source.requests, :view_runtime))
       end
     end
 
     describe "#duration" do
-      it "is TransactionStats for view_runtime" do
+      it "is RequestStats for view_runtime" do
         expect(decorated.duration).to \
-          eq(TransactionStats.new(source.transactions, :duration))
+          eq(RequestStats.new(source.requests, :duration))
       end
     end
   end
