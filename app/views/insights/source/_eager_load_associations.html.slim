@@ -1,7 +1,10 @@
+- query = insight.latest_n_plus_one_query
+
 h6 Eager Load Associations
 
-- query = insight.latest_n_plus_one_query
 p
-  | You may have a problem with eager loading on #{query.culprit_table_name}.
-p
-  = link_to "Learn more.", app_n_plus_one_query_path(query.app, query)
+  ' Recent requests querying the '#{query.culprit_table_name}' table
+  ' have the pattern of an
+  = link_to "n+1 query problem", app_n_plus_one_query_path(query.app, query)
+  '  - you may be able to significantly
+  = link_to "reduce them using eager loading.", app_n_plus_one_query_path(query.app, query)
