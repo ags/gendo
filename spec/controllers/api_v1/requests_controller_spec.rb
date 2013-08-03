@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe ApiV1::TransactionsController do
-  let(:params) { {transaction: transaction_payload_hash} }
+describe ApiV1::RequestsController do
+  let(:params) { {request: request_payload_hash} }
 
   describe "#create" do
     context "when authenticated" do
@@ -9,9 +9,9 @@ describe ApiV1::TransactionsController do
 
       let(:create!) { ->{ post :create, params } }
 
-      it "queues a ProcessTransactionPayloadWorker" do
+      it "queues a ProcessRequestPayloadWorker" do
         expect(create!).to change {
-          ProcessTransactionPayloadWorker.jobs.size
+          ProcessRequestPayloadWorker.jobs.size
         }.by(1)
       end
     end

@@ -4,12 +4,12 @@ section.content
       .panel
         h3
           ' Summary of
-          = link_to @transaction.source.name, app_source_path(@transaction.source.app, @transaction.source)
+          = link_to @request.source.name, app_source_path(@request.source.app, @request.source)
 
         .row
           .small-12.large-4.columns
-            - if @transaction.collected_timings?
-              #time-breakdown(data-breakdown="#{@transaction.time_breakdown_graph_data.to_json}")
+            - if @request.collected_timings?
+              #time-breakdown(data-breakdown="#{@request.time_breakdown_graph_data.to_json}")
             - else
               h4 Timing data incomplete.
 
@@ -19,13 +19,13 @@ section.content
               tbody
                 tr
                   td Total Duration
-                  td= @transaction.duration
+                  td= @request.duration
                 tr
                   td Database
-                  td= @transaction.db_runtime
+                  td= @request.db_runtime
                 tr
                   td Views
-                  td= @transaction.view_runtime
+                  td= @request.view_runtime
 
           .small-12.large-4.columns
             h4 Request
@@ -33,30 +33,29 @@ section.content
               tbody
                 tr
                   td Started
-                  td= @transaction.started_at
+                  td= @request.started_at
                 tr
                   td Ended
-                  td= @transaction.ended_at
+                  td= @request.ended_at
                 tr
                   td Path
-                  td= @transaction.path
+                  td= @request.path
                 tr
                   td Method
-                  td= @transaction.source.method_name
+                  td= @request.source.method_name
                 tr
                   td Format
-                  td= @transaction.source.format_type
+                  td= @request.source.format_type
                 tr
                   td Status
-                  td= @transaction.status
+                  td= @request.status
 
-      - if @transaction.insights.any?
+      - if @request.insights.any?
         .panel
           h3 Insights
-          - @transaction.insights.each do |insight|
+          - @request.insights.each do |insight|
             hr
-            = render insight.partial_name,
-              insight: insight, transaction: @transaction
+            = render insight.partial_name, insight: insight, request: @request
 
       table
         thead
@@ -65,7 +64,7 @@ section.content
             th Ended At
             th Duration
         tbody
-          - @transaction.events.each do |event|
+          - @request.events.each do |event|
             = render "#{event.underscored_class_name}_row", event: event
 
 - content_for :javascript_body do

@@ -1,4 +1,4 @@
-class CreatesTransaction
+class CreatesRequest
   def self.create!(app, payload)
     new(app, payload).create!
   end
@@ -12,18 +12,18 @@ class CreatesTransaction
     @mailer_events = payload.fetch(:mailer_events) { [] }
     @source        = payload.fetch(:source)
 
-    @transaction = payload.except(
+    @request = payload.except(
       :sql_events,
       :view_events,
       :mailer_events,
       :source
     )
 
-    @transaction[:started_at]   = Time(@transaction.fetch(:started_at))
-    @transaction[:ended_at]     = Time(@transaction.fetch(:ended_at))
-    @transaction[:duration]     = @transaction[:duration].to_f
-    @transaction[:db_runtime]   = @transaction[:db_runtime].to_f
-    @transaction[:view_runtime] = @transaction[:view_runtime].to_f
+    @request[:started_at]   = Time(@request.fetch(:started_at))
+    @request[:ended_at]     = Time(@request.fetch(:ended_at))
+    @request[:duration]     = @request[:duration].to_f
+    @request[:db_runtime]   = @request[:db_runtime].to_f
+    @request[:view_runtime] = @request[:view_runtime].to_f
 
     events.each do |event|
       # TODO remove once the deep_symbolize_keys patch is in Rails master.
@@ -34,18 +34,18 @@ class CreatesTransaction
   end
 
   def create!
-    User.transaction do
+    @app.transaction do
       source = @app.find_or_create_source!(@source)
 
-      transaction = source.transactions.create!(@transaction)
+      request = source.requests.create!(@request)
 
-      transaction.view_events.create!(@view_events)
+      request.view_events.create!(@view_events)
 
-      transaction.sql_events.create!(@sql_events)
+      request.sql_events.create!(@sql_events)
 
-      transaction.mailer_events.create!(@mailer_events)
+      request.mailer_events.create!(@mailer_events)
 
-      transaction
+      request
     end
   end
 

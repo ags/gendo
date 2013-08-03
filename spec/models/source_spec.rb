@@ -30,18 +30,18 @@ describe Source do
     end
   end
 
-  describe "#latest_transactions" do
+  describe "#latest_requests" do
     let(:source) { Source.make! }
-    let!(:a) { Transaction.make!(source: source, created_at: 3.days.ago) }
-    let!(:b) { Transaction.make!(source: source, created_at: 1.days.ago) }
-    let!(:c) { Transaction.make!(source: source, created_at: 2.days.ago) }
+    let!(:a) { Request.make!(source: source, created_at: 3.days.ago) }
+    let!(:b) { Request.make!(source: source, created_at: 1.days.ago) }
+    let!(:c) { Request.make!(source: source, created_at: 2.days.ago) }
 
-    it "returns associated transaction sorted by most recently created" do
-      expect(source.latest_transactions).to eq([b, c, a])
+    it "returns associated request sorted by most recently created" do
+      expect(source.latest_requests).to eq([b, c, a])
     end
 
     it "can be limited to a subset of results" do
-      expect(source.latest_transactions(limit: 1)).to eq([b])
+      expect(source.latest_requests(limit: 1)).to eq([b])
     end
   end
 end

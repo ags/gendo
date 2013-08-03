@@ -1,21 +1,21 @@
-class TransactionStats < Struct.new(:transactions, :attribute)
+class RequestStats < Struct.new(:requests, :attribute)
   def median
     # using #first here attempts to do a LIMIT
-    @_median ||= transactions.
+    @_median ||= requests.
       select("median(#{attribute}) AS median")[0].median
   end
 
   def min
-    @_min ||= transactions.order(attribute).first
+    @_min ||= requests.order(attribute).first
   end
 
   def max
-    @_max ||= transactions.order("#{attribute} DESC").first
+    @_max ||= requests.order("#{attribute} DESC").first
   end
 
   private
 
-  def transactions
+  def requests
     super.where("#{attribute} IS NOT NULL")
   end
 end

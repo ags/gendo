@@ -138,8 +138,8 @@ ALTER SEQUENCE apps_id_seq OWNED BY apps.id;
 --
 
 CREATE TABLE mailer_events (
-    id integer NOT NULL,
-    transaction_id integer,
+    id bigint NOT NULL,
+    request_id integer,
     mailer character varying(255) NOT NULL,
     message_id character varying(255),
     started_at timestamp without time zone,
@@ -175,7 +175,7 @@ ALTER SEQUENCE mailer_events_id_seq OWNED BY mailer_events.id;
 
 CREATE TABLE n_plus_one_queries (
     id integer NOT NULL,
-    transaction_id integer,
+    request_id integer,
     culprit_table_name character varying(255) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -234,6 +234,46 @@ ALTER SEQUENCE n_plus_one_query_sql_events_id_seq OWNED BY n_plus_one_query_sql_
 
 
 --
+-- Name: requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE requests (
+    id bigint NOT NULL,
+    path character varying(255),
+    status integer,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    db_runtime double precision,
+    view_runtime double precision,
+    duration double precision,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    source_id integer NOT NULL,
+    shinji_version character varying(255),
+    framework character varying(255)
+);
+
+
+--
+-- Name: requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE requests_id_seq OWNED BY requests.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -282,8 +322,8 @@ ALTER SEQUENCE sources_id_seq OWNED BY sources.id;
 --
 
 CREATE TABLE sql_events (
-    id integer NOT NULL,
-    transaction_id integer,
+    id bigint NOT NULL,
+    request_id integer,
     sql text,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
@@ -311,46 +351,6 @@ CREATE SEQUENCE sql_events_id_seq
 --
 
 ALTER SEQUENCE sql_events_id_seq OWNED BY sql_events.id;
-
-
---
--- Name: transactions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE transactions (
-    id integer NOT NULL,
-    path character varying(255),
-    status integer,
-    started_at timestamp without time zone,
-    ended_at timestamp without time zone,
-    db_runtime double precision,
-    view_runtime double precision,
-    duration double precision,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    source_id integer NOT NULL,
-    shinji_version character varying(255),
-    framework character varying(255)
-);
-
-
---
--- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE transactions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE transactions_id_seq OWNED BY transactions.id;
 
 
 --
@@ -390,8 +390,8 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 --
 
 CREATE TABLE view_events (
-    id integer NOT NULL,
-    transaction_id integer,
+    id bigint NOT NULL,
+    request_id integer,
     identifier character varying(255) NOT NULL,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
@@ -459,6 +459,13 @@ ALTER TABLE ONLY n_plus_one_query_sql_events ALTER COLUMN id SET DEFAULT nextval
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('requests_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY sources ALTER COLUMN id SET DEFAULT nextval('sources_id_seq'::regclass);
 
 
@@ -467,13 +474,6 @@ ALTER TABLE ONLY sources ALTER COLUMN id SET DEFAULT nextval('sources_id_seq'::r
 --
 
 ALTER TABLE ONLY sql_events ALTER COLUMN id SET DEFAULT nextval('sql_events_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY transactions ALTER COLUMN id SET DEFAULT nextval('transactions_id_seq'::regclass);
 
 
 --
@@ -542,7 +542,7 @@ ALTER TABLE ONLY sql_events
 -- Name: transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY transactions
+ALTER TABLE ONLY requests
     ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);
 
 
@@ -578,17 +578,17 @@ CREATE INDEX index_apps_on_user_id ON apps USING btree (user_id);
 
 
 --
--- Name: index_mailer_events_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_mailer_events_on_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_mailer_events_on_transaction_id ON mailer_events USING btree (transaction_id);
+CREATE INDEX index_mailer_events_on_request_id ON mailer_events USING btree (request_id);
 
 
 --
--- Name: index_n_plus_one_queries_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_n_plus_one_queries_on_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_n_plus_one_queries_on_transaction_id ON n_plus_one_queries USING btree (transaction_id);
+CREATE INDEX index_n_plus_one_queries_on_request_id ON n_plus_one_queries USING btree (request_id);
 
 
 --
@@ -596,6 +596,34 @@ CREATE INDEX index_n_plus_one_queries_on_transaction_id ON n_plus_one_queries US
 --
 
 CREATE INDEX index_n_plus_one_query_sql_events_on_n_plus_one_query_id ON n_plus_one_query_sql_events USING btree (n_plus_one_query_id);
+
+
+--
+-- Name: index_requests_on_db_runtime; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_requests_on_db_runtime ON requests USING btree (db_runtime);
+
+
+--
+-- Name: index_requests_on_duration; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_requests_on_duration ON requests USING btree (duration);
+
+
+--
+-- Name: index_requests_on_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_requests_on_source_id ON requests USING btree (source_id);
+
+
+--
+-- Name: index_requests_on_view_runtime; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_requests_on_view_runtime ON requests USING btree (view_runtime);
 
 
 --
@@ -634,45 +662,17 @@ CREATE INDEX index_sources_on_method_name ON sources USING btree (method_name);
 
 
 --
--- Name: index_sql_events_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_sql_events_on_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_sql_events_on_transaction_id ON sql_events USING btree (transaction_id);
-
-
---
--- Name: index_transactions_on_db_runtime; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_transactions_on_db_runtime ON transactions USING btree (db_runtime);
+CREATE INDEX index_sql_events_on_request_id ON sql_events USING btree (request_id);
 
 
 --
--- Name: index_transactions_on_duration; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_view_events_on_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_transactions_on_duration ON transactions USING btree (duration);
-
-
---
--- Name: index_transactions_on_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_transactions_on_source_id ON transactions USING btree (source_id);
-
-
---
--- Name: index_transactions_on_view_runtime; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_transactions_on_view_runtime ON transactions USING btree (view_runtime);
-
-
---
--- Name: index_view_events_on_transaction_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_view_events_on_transaction_id ON view_events USING btree (transaction_id);
+CREATE INDEX index_view_events_on_request_id ON view_events USING btree (request_id);
 
 
 --
@@ -729,3 +729,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130728030622');
 INSERT INTO schema_migrations (version) VALUES ('20130728131519');
 
 INSERT INTO schema_migrations (version) VALUES ('20130728141323');
+
+INSERT INTO schema_migrations (version) VALUES ('20130803042630');
+
+INSERT INTO schema_migrations (version) VALUES ('20130803052040');

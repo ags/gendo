@@ -9,11 +9,11 @@ class App < ActiveRecord::Base
   has_many :sources,
     dependent: :destroy
 
-  has_many :transactions,
+  has_many :requests,
     through: :sources
 
   has_many :n_plus_one_queries,
-    through: :transactions
+    through: :requests
 
   validates :user,
     presence: true
@@ -53,14 +53,14 @@ class App < ActiveRecord::Base
 
   def sources_by_median_desc(field, limit: 3)
     sources.
-      joins(:transactions).
+      joins(:requests).
       group("sources.id").
-      order("median(transactions.#{field}) DESC").
+      order("median(requests.#{field}) DESC").
       limit(limit)
   end
 
-  def recent_transactions_with_status(status, limit: 100)
-    transactions.
+  def recent_requests_with_status(status, limit: 100)
+    requests.
       where(status: status).
       order(created_at: :desc).
       limit(limit)

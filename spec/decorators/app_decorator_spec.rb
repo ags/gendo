@@ -72,16 +72,16 @@ describe AppDecorator do
   end
 
   describe "#internal_server_errors" do
-    it "returns transactions with status 500" do
-      decorated_transactions = double(:decorated_transactions)
+    it "returns requests with status 500" do
+      decorated_requests = double(:decorated_requests)
 
       app.
-        should_receive(:recent_transactions_with_status).
+        should_receive(:recent_requests_with_status).
         with(500, limit: 3).
-        and_return(double(:transactions, decorate: decorated_transactions))
+        and_return(double(:requests, decorate: decorated_requests))
 
       expect(decorated.recent_internal_server_errors).to \
-        eq(decorated_transactions)
+        eq(decorated_requests)
     end
   end
 end

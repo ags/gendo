@@ -1,0 +1,22 @@
+table.table.table-striped
+  thead
+    tr
+      th ID
+      th Path
+      th Status
+      th Started At
+      th Ended At
+      th DB Runtime
+      th View Runtime
+      th Duration
+  tbody
+    - requests.each do |request|
+      tr
+        td= link_to request.id, app_request_path(request.app, request)
+        td= request.path
+        td= request.status
+        td= request.started_at
+        td= request.ended_at
+        td= request.db_runtime
+        td= request.view_runtime
+        td= request.duration

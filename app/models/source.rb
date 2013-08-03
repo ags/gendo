@@ -1,20 +1,20 @@
 class Source < ActiveRecord::Base
   belongs_to :app
 
-  has_many :transactions,
+  has_many :requests,
     dependent: :destroy
 
   has_many :sql_events,
-    through: :transactions
+    through: :requests
 
   has_many :view_events,
-    through: :transactions
+    through: :requests
 
   has_many :mailer_events,
-    through: :transactions
+    through: :requests
 
   has_many :n_plus_one_queries,
-    through: :transactions
+    through: :requests
 
   validates :app,
     presence: true
@@ -44,7 +44,7 @@ class Source < ActiveRecord::Base
     "#{controller}##{action}"
   end
 
-  def latest_transactions(limit: nil)
-    transactions.order(created_at: :desc).limit(limit)
+  def latest_requests(limit: nil)
+    requests.order(created_at: :desc).limit(limit)
   end
 end
