@@ -1,4 +1,4 @@
-worker_processes (ENV['RAILS_ENV'] == "production" ? 10 : 3)
+worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 preload_app true
 port = ENV["PORT"].to_i
 listen port, tcp_nopush: false
