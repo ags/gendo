@@ -139,7 +139,7 @@ ALTER SEQUENCE apps_id_seq OWNED BY apps.id;
 
 CREATE TABLE mailer_events (
     id bigint NOT NULL,
-    request_id integer,
+    request_id bigint,
     mailer character varying(255) NOT NULL,
     message_id character varying(255),
     started_at timestamp without time zone,
@@ -175,7 +175,7 @@ ALTER SEQUENCE mailer_events_id_seq OWNED BY mailer_events.id;
 
 CREATE TABLE n_plus_one_queries (
     id integer NOT NULL,
-    request_id integer,
+    request_id bigint,
     culprit_table_name character varying(255) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -323,7 +323,7 @@ ALTER SEQUENCE sources_id_seq OWNED BY sources.id;
 
 CREATE TABLE sql_events (
     id bigint NOT NULL,
-    request_id integer,
+    request_id bigint,
     sql text,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
@@ -391,7 +391,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 CREATE TABLE view_events (
     id bigint NOT NULL,
-    request_id integer,
+    request_id bigint,
     identifier character varying(255) NOT NULL,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
@@ -733,3 +733,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130728141323');
 INSERT INTO schema_migrations (version) VALUES ('20130803042630');
 
 INSERT INTO schema_migrations (version) VALUES ('20130803052040');
+
+INSERT INTO schema_migrations (version) VALUES ('20130803062221');
