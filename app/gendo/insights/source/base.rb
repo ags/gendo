@@ -6,10 +6,6 @@ module Insights
       def initialize(source)
         @source = source
       end
-
-      def partial_name
-        "/#{self.class.name.underscore}"
-      end
     end
   end
 end

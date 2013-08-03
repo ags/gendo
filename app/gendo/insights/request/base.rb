@@ -6,10 +6,6 @@ module Insights
       def initialize(request)
         @request = request
       end
-
-      def partial_name
-        "/#{self.class.name.underscore}"
-      end
     end
   end
 end

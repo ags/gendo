@@ -44,6 +44,8 @@ class RequestDecorator < Draper::Decorator
   end
 
   def insights
-    @_insights ||= Insights::Request.applicable_to(object)
+    @_insights ||= InsightDecorator.decorate_collection(
+      Insights::Request.applicable_to(object)
+    )
   end
 end

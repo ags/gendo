@@ -3,6 +3,7 @@ require 'timecop'
 require './spec/support/shared_examples_for_decorates_event_timestamps'
 require './app/gendo/insights/request'
 require './app/decorators/decorates_event_timestamps'
+require './app/decorators/insight_decorator'
 require './app/decorators/request_decorator'
 
 Draper::ViewContext.test_strategy :fast
@@ -113,10 +114,16 @@ describe RequestDecorator do
 
     it "is a list of applicable insight classes" do
       applicable_insight = double(:applicable_insight)
+      decorated_insights = double(:decorated_insights)
+
+      expect(InsightDecorator).to \
+        receive(:decorate_collection).
+        with([applicable_insight]).
+        and_return(decorated_insights)
 
       Insights::Request.stub(:applicable_to) { [applicable_insight] }
 
-      expect(decorated.insights).to eq([applicable_insight])
+      expect(decorated.insights).to eq(decorated_insights)
     end
   end
 end

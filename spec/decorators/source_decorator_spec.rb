@@ -1,6 +1,7 @@
 require 'draper'
 require './app/gendo/insights/source'
 require './app/gendo/request_stats'
+require './app/decorators/insight_decorator'
 require './app/decorators/source_decorator'
 
 Draper::ViewContext.test_strategy :fast
@@ -71,12 +72,18 @@ describe SourceDecorator do
   describe "#insights" do
     let(:source) { double(:source) }
 
-    class FooIns; end
-
     it "is a list of applicable insight classes" do
-      Insights::Source.stub(:applicable_to) { [FooIns] }
+      applicable_insight = double(:applicable_insight)
+      decorated_insights = double(:decorated_insights)
 
-      expect(decorated.insights).to eq([FooIns])
+      expect(InsightDecorator).to \
+        receive(:decorate_collection).
+        with([applicable_insight]).
+        and_return(decorated_insights)
+
+      Insights::Source.stub(:applicable_to) { [applicable_insight] }
+
+      expect(decorated.insights).to eq(decorated_insights)
     end
   end
 end

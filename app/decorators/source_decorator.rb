@@ -22,6 +22,8 @@ class SourceDecorator < Draper::Decorator
   end
 
   def insights
-    @_insights ||= Insights::Source.applicable_to(object)
+    @_insights ||= InsightDecorator.decorate_collection(
+      Insights::Source.applicable_to(object)
+    )
   end
 end
