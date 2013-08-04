@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "../../../app/gendo/insights/request"
 
 describe Insights::Request do
   describe "#applicable_to" do
