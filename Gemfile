@@ -4,6 +4,7 @@ ruby '2.0.0'
 
 gem 'active_attr'
 gem 'bcrypt-ruby'
+gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
 gem 'pg'

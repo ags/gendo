@@ -48,6 +48,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     connection_pool (1.1.0)
+    crummy (1.7.2)
     database_cleaner (1.0.1)
     diff-lcs (1.2.4)
     dotenv (0.8.0)
@@ -203,6 +204,7 @@ DEPENDENCIES
   bcrypt-ruby
   capybara
   coffee-rails
+  crummy
   database_cleaner
   dotenv-rails
   draper
