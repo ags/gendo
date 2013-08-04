@@ -4,8 +4,7 @@ describe NPlusOneQueriesController do
   describe "GET #show" do
     let(:action!) {
       get :show,
-        app_id: app.to_param,
-        source_id: source.to_param,
+        app_id: request.app.to_param,
         request_id: request.to_param,
         id: n_plus_one_query.to_param
     }
