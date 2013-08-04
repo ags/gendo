@@ -1,7 +1,9 @@
 require 'draper'
+require './spec/support/shared_examples_for_decorates_duration'
 require './spec/support/shared_examples_for_decorates_event_timestamps'
 require './app/gendo/insights/request'
 require './app/decorators/decorates_event_timestamps'
+require './app/decorators/decorates_duration'
 require './app/decorators/insight_decorator'
 require './app/decorators/request_decorator'
 
@@ -11,6 +13,7 @@ class Request; end
 
 describe RequestDecorator do
   it_behaves_like "an object with decorated event timestamps"
+  it_behaves_like "an object with a decorated duration"
 
   subject(:decorated) { RequestDecorator.new(request) }
 
@@ -41,14 +44,6 @@ describe RequestDecorator do
 
     it "returns the view runtime and millsecond time unit" do
       expect(decorated.view_runtime).to eq("1.234 ms")
-    end
-  end
-
-  describe "#duration" do
-    let(:request) { double(duration: 1.234) }
-
-    it "returns the view runtime and millsecond time unit" do
-      expect(decorated.duration).to eq("1.234 ms")
     end
   end
 

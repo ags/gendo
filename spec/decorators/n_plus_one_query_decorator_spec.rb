@@ -1,9 +1,13 @@
 require "draper"
+require_relative "../support/shared_examples_for_decorates_duration"
+require_relative "../../app/decorators/decorates_duration"
 require_relative "../../app/decorators/n_plus_one_query_decorator"
 
 class NPlusOneQuery; end
 
 describe NPlusOneQueryDecorator do
+  it_behaves_like "an object with a decorated duration"
+
   describe "#source_name" do
     it "delegates to the associated request" do
       decorated = NPlusOneQueryDecorator.new(double(:query))
@@ -13,15 +17,6 @@ describe NPlusOneQueryDecorator do
         and_return(double(:request, source_name: "saucy request"))
 
       expect(decorated.source_name).to eq("saucy request")
-    end
-  end
-
-  describe "#duration" do
-    it "returns the view runtime and millsecond time unit" do
-      query = double(duration: 1.234)
-      decorated = NPlusOneQueryDecorator.new(query)
-
-      expect(decorated.duration).to eq("1.234 ms")
     end
   end
 

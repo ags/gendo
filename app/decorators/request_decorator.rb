@@ -1,5 +1,6 @@
 class RequestDecorator < Draper::Decorator
   include DecoratesEventTimestamps
+  include DecoratesDuration
 
   delegate_all
 
@@ -24,10 +25,6 @@ class RequestDecorator < Draper::Decorator
 
   def view_runtime
     "#{object.view_runtime} ms"
-  end
-
-  def duration
-    "#{object.duration} ms"
   end
 
   def collected_timings?
