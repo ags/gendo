@@ -12,7 +12,6 @@ module BreadcrumbHelper
   end
 
   def add_request_breadcrumb(object)
-    add_crumb object.request_name,
-      app_request_path(object.app, object.request)
+    add_crumb object.request_name, app_request_path(object.app, object.request)
   end
 end

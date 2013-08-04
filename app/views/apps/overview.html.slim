@@ -44,8 +44,8 @@
         = link_to "#{source.name} (#{source.view.median})",
             app_source_path(source.app, source)
 
-      h4 500s
-      - @app.recent_internal_server_errors.each do |request|
-        p
-          = link_to "#{request.source.name} #{request.fuzzy_timestamp}",
-            app_source_request_path(request.source.app, request.source, request)
+    h4 500s
+    - @app.recent_internal_server_errors.each do |request|
+      p
+        = link_to "#{request.source.name} #{request.fuzzy_timestamp}",
+            app_request_path(request.app, request)
