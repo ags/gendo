@@ -9,14 +9,38 @@ describe NPlusOneQueryDecorator do
   it_behaves_like "an object with a decorated duration"
 
   describe "#source_name" do
+    it "delegates to the associated source" do
+      decorated = NPlusOneQueryDecorator.new(double(:query))
+
+      allow(decorated).to \
+        receive(:source).
+        and_return(double(:source, name: "sauce name"))
+
+      expect(decorated.source_name).to eq("sauce name")
+    end
+  end
+
+  describe "#app_name" do
+    it "delegates to the associated app" do
+      decorated = NPlusOneQueryDecorator.new(double(:query))
+
+      allow(decorated).to \
+        receive(:app).
+        and_return(double(:app, name: "mah app"))
+
+      expect(decorated.app_name).to eq("mah app")
+    end
+  end
+
+  describe "#request_name" do
     it "delegates to the associated request" do
       decorated = NPlusOneQueryDecorator.new(double(:query))
 
       allow(decorated).to \
         receive(:request).
-        and_return(double(:request, source_name: "saucy request"))
+        and_return(double(:request, name: "dat request"))
 
-      expect(decorated.source_name).to eq("saucy request")
+      expect(decorated.request_name).to eq("dat request")
     end
   end
 

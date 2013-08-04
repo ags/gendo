@@ -1,17 +1,30 @@
 class NPlusOneQueryDecorator < Draper::Decorator
   include DecoratesDuration
 
+  decorates_association :app
+
+  decorates_association :source
+
   decorates_association :request
 
   decorates_association :sql_events
 
   delegate_all
 
-  delegate :source_name, to: :request
+  delegate :name,
+    to: :app,
+    prefix: true
 
-  delegate :duration, to: :request, prefix: true
+  delegate :name,
+    to: :source,
+    prefix: true
 
-  delegate :db_runtime, to: :request, prefix: true
+  delegate \
+      :name,
+      :duration,
+      :db_runtime,
+    to: :request,
+    prefix: true
 
   def percentage_of_db_runtime
     percentage(object.duration, request_db_runtime)

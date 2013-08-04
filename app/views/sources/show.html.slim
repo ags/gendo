@@ -1,47 +1,56 @@
-section.content
-  .row
-    .small-12.large-12.columns
-      h3
-        = @source.name
-        small= " (#{@source.method_name}, #{@source.format_type})"
+- add_app_index_breadcrumb
+- add_app_breadcrumb(@source)
+- add_crumb @source.name, app_source_path(@source.app, @source)
 
-  .row
-    .small-12.large-5.columns
-      .row
+.row
+  .small-12.large-12.columns
+    h3
+      = @source.name
+      small= " (#{@source.method_name}, #{@source.format_type})"
+
+.row
+  .small-12.large-5.columns
+    .row
+      .small-12.large-12.columns
+        h4 Health
+
+        - if @source.has_requests?
+          table
+            thead
+              tr
+                th
+                th Median
+                th Worst
+                th Best
+            tbody
+              tr
+                td DB Runtime
+                td= @source.db.median
+                td= link_to @source.db.max.db_runtime,
+                  app_request_path(@source.app, @source.db.max)
+                td= link_to @source.db.min.db_runtime,
+                  app_request_path(@source.app, @source.db.min)
+              tr
+                td View Runtime
+                td= @source.view.median
+                td= link_to @source.view.max.view_runtime,
+                  app_request_path(@source.app, @source.view.max)
+                td= link_to @source.view.min.view_runtime,
+                  app_request_path(@source.app, @source.view.min)
+              tr
+                td Duration
+                td= @source.duration.median
+                td= link_to @source.duration.max.duration,
+                  app_request_path(@source.app, @source.duration.max)
+                td= link_to @source.duration.min.duration,
+                  app_request_path(@source.app, @source.duration.min)
+
+      - if @source.insights.any?
         .small-12.large-12.columns
-          h4 Health
+          h4 Insights
+          - @source.insights.each do |insight|
+            = render insight.partial_name, insight: insight, source: @source
 
-          - if @source.has_requests?
-            table
-              thead
-                tr
-                  th
-                  th Median
-                  th Worst
-                  th Best
-              tbody
-                tr
-                  td DB Runtime
-                  td= @source.db.median
-                  td= link_to @source.db.max.db_runtime, app_request_path(@source.app, @source.db.max)
-                  td= link_to @source.db.min.db_runtime, app_request_path(@source.app, @source.db.min)
-                tr
-                  td View Runtime
-                  td= @source.view.median
-                  td= link_to @source.view.max.view_runtime, app_request_path(@source.app, @source.view.max)
-                  td= link_to @source.view.min.view_runtime, app_request_path(@source.app, @source.view.min)
-                tr
-                  td Duration
-                  td= @source.duration.median
-                  td= link_to @source.duration.max.duration, app_request_path(@source.app, @source.duration.max)
-                  td= link_to @source.duration.min.duration, app_request_path(@source.app, @source.duration.min)
-
-        - if @source.insights.any?
-          .small-12.large-12.columns
-            h4 Insights
-            - @source.insights.each do |insight|
-              = render insight.partial_name, insight: insight, source: @source
-
-    .small-12.large-7.columns
-      h4 Latest Requests
-      = render "/requests/table", requests: @source.latest_requests
+  .small-12.large-7.columns
+    h4 Latest Requests
+    = render "/requests/table", requests: @source.latest_requests

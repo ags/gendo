@@ -1,22 +1,24 @@
-section.content
-  .row
-    .small-12.columns
-      h3= @app.name
+- add_app_index_breadcrumb
+- add_crumb @app.name, app_path(@app)
 
-      .instructions.panel
-        p Almost there!
+.row
+  .small-12.columns
+    h3= @app.name
 
-        p Add the shinji gem to your Gemfile:
+    .instructions.panel
+      p Almost there!
 
-        pre
-          | gem "shinji"
+      p Add the shinji gem to your Gemfile:
 
-        p Add an initializer with the following:
+      pre
+        | gem "shinji"
 
-        pre
-          | 
-            Shinji.configure do |config|
-              config.app_key = "#{@app.current_access_token.token}"
-            end
+      p Add an initializer with the following:
 
-        p For more info, check out the gem documentation.
+      pre
+        |
+          Shinji.configure do |config|
+            config.app_key = "#{@app.current_access_token.token}"
+          end
+
+      p For more info, check out the gem documentation.

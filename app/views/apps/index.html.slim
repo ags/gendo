@@ -1,17 +1,16 @@
-section.content
-  .row
-    .small-3.columns
-      h3 Apps
-      a.button(href="#{new_app_path}") New App
+.row
+  .small-3.columns
+    h3 Apps
+    a.button(href="#{new_app_path}") New App
 
-  .row
-    .small-12.columns
-      ul.small.block-grid-2
-        - current_user.apps.each do |app|
-          li
-            .app.panel
-              h4= link_to app.name, app_path(app)
-              p
-                = app.requests.count
-                |  requests
-              p= link_to "settings", app_settings_path(app)
+.row
+  .small-12.columns
+    ul.small.block-grid-2
+      - current_user.apps.each do |app|
+        li
+          .app.panel
+            h4= link_to app.name, app_path(app)
+            p
+              = app.requests.count
+              |  requests
+            p= link_to "settings", app_settings_path(app)

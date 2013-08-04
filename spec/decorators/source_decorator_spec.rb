@@ -11,6 +11,15 @@ class Source; end
 describe SourceDecorator do
   subject(:decorated) { SourceDecorator.new(source) }
 
+  describe "#app_name" do
+    let(:app) { double(:app, name: "mah app") }
+    let(:source) { double(:source, app: app) }
+
+    it "delegates to the associated app" do
+      expect(decorated.app_name).to eq("mah app")
+    end
+  end
+
   describe "#latest_requests" do
     let(:source) { double(:source, requests: double(:requests)) }
 

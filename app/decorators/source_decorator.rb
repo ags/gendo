@@ -1,6 +1,10 @@
 class SourceDecorator < Draper::Decorator
   delegate_all
 
+  delegate :name,
+    to: :app,
+    prefix: true
+
   def latest_requests(limit: nil)
     source.latest_requests(limit: limit).decorate
   end

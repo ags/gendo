@@ -1,44 +1,48 @@
-section.content
-  .row
-    .large-9.small-12.columns
-      .row
-        .small-3.columns
-          h3= @app.name
+- add_app_index_breadcrumb
+- add_crumb @app.name, app_path(@app)
 
-      table
-        thead
+.row
+  .large-9.small-12.columns
+    .row
+      .small-3.columns
+        h3= @app.name
+
+    table
+      thead
+        tr
+          th Source
+          th
+            span(data-tooltip class="has-tip" title="Total action duration (ms)")
+              | Duration
+          th
+            span(data-tooltip class="has-tip" title="Database runtime (ms)")
+              | Database
+          th
+            span(data-tooltip class="has-tip" title="View runtime (ms)")
+              | Views
+
+      tbody
+        - @app.alphabetized_sources.each do |source|
           tr
-            th Source
-            th
-              span(data-tooltip class="has-tip" title="Total action duration (ms)")
-                | Duration
-            th
-              span(data-tooltip class="has-tip" title="Database runtime (ms)")
-                | Database
-            th
-              span(data-tooltip class="has-tip" title="View runtime (ms)")
-                | Views
+            td= link_to source.name, app_source_path(source.app, source)
+            td= source.duration.median
+            td= source.db.median
+            td= source.view.median
 
-        tbody
-          - @app.alphabetized_sources.each do |source|
-            tr
-              td= link_to source.name, app_source_path(source.app, source)
-              td= source.duration.median
-              td= source.db.median
-              td= source.view.median
+  .large-3.small-12.columns
+    h4 Stragglers
 
-    .large-3.small-12.columns
-      h4 Stragglers
+    h5 Database
+    - @app.worst_sources_by_db_runtime.each do |source|
+      p
+        = link_to "#{source.name} (#{source.db.median})",
+            app_source_path(source.app, source)
 
-      h5 Database
-      - @app.worst_sources_by_db_runtime.each do |source|
-        p
-          = link_to "#{source.name} (#{source.db.median})", app_source_path(source.app, source)
-
-      h5 Views
-      - @app.worst_sources_by_view_runtime.each do |source|
-        p
-          = link_to "#{source.name} (#{source.view.median})", app_source_path(source.app, source)
+    h5 Views
+    - @app.worst_sources_by_view_runtime.each do |source|
+      p
+        = link_to "#{source.name} (#{source.view.median})",
+            app_source_path(source.app, source)
 
       h4 500s
       - @app.recent_internal_server_errors.each do |request|

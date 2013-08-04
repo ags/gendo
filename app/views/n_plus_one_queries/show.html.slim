@@ -1,49 +1,55 @@
-section.content
-  .row
-    .small-12.columns
-      .panel
+- add_app_index_breadcrumb
+- add_app_breadcrumb(@n_plus_one_query)
+- add_source_breadcrumb(@n_plus_one_query)
+- add_request_breadcrumb(@n_plus_one_query)
+- add_crumb "n+1 query",
+    app_n_plus_one_query_path(@n_plus_one_query.app, @n_plus_one_query)
 
-        h3
-          ' Detected
-          = @n_plus_one_query.sql_events.count
-          |  related queries on the '#{@n_plus_one_query.culprit_table_name}' table!
+.row
+  .small-12.columns
+    .panel
 
-        p
-          | This may be an n+1 query - you can load all of the requested objects
-          '  in a single query using ActiveRecord
-          = link_to "eager loading.",
-            "http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations"
+      h3
+        ' Detected
+        = @n_plus_one_query.sql_events.count
+        |  related queries on the '#{@n_plus_one_query.culprit_table_name}' table!
 
-          div.progress.large-12
-            span.meter(style="width: #{@n_plus_one_query.percentage_of_db_runtime}%")
+      p
+        | This may be an n+1 query - you can load all of the requested objects
+        '  in a single query using ActiveRecord
+        = link_to "eager loading.",
+          "http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations"
 
-        p
-          strong= @n_plus_one_query.request_db_runtime
-          '  was spent doing database processing during this request,
-          strong= @n_plus_one_query.duration
-          |  of which (
-          strong
-            = @n_plus_one_query.percentage_of_db_runtime
-            | %
-          ' ) was the detected queries.
-          div.progress.large-12
-            span.meter(style="width: #{@n_plus_one_query.percentage_of_request_duration}%")
+        div.progress.large-12
+          span.meter(style="width: #{@n_plus_one_query.percentage_of_db_runtime}%")
 
-        p
-          ' That's also
-          strong
-            = @n_plus_one_query.percentage_of_request_duration
-            | %
-          |  of the total request time (
-          strong= @n_plus_one_query.request_duration
-          | )!
+      p
+        strong= @n_plus_one_query.request_db_runtime
+        '  was spent doing database processing during this request,
+        strong= @n_plus_one_query.duration
+        |  of which (
+        strong
+          = @n_plus_one_query.percentage_of_db_runtime
+          | %
+        ' ) was the detected queries.
+        div.progress.large-12
+          span.meter(style="width: #{@n_plus_one_query.percentage_of_request_duration}%")
 
-      table
-        thead
-          tr
-            th Started At
-            th Ended At
-            th Duration
-        tbody
-          - @n_plus_one_query.sql_events.each do |event|
-            = render "requests/sql_event_row", event: event
+      p
+        ' That's also
+        strong
+          = @n_plus_one_query.percentage_of_request_duration
+          | %
+        |  of the total request time (
+        strong= @n_plus_one_query.request_duration
+        | )!
+
+    table
+      thead
+        tr
+          th Started At
+          th Ended At
+          th Duration
+      tbody
+        - @n_plus_one_query.sql_events.each do |event|
+          = render "requests/sql_event_row", event: event

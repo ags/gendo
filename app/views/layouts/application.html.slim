@@ -16,19 +16,19 @@ head
   = javascript_include_tag "vendor/custom.modernizr"
   = csrf_meta_tags
 
-body class="antialiased"
+body.antialiased
   .row
     .small-12
-      nav class="top-bar"
-        ul class="title-area"
-          li class="name"
+      nav.top-bar
+        ul.title-area
+          li.name
             h1
               a href=root_url Gendo
-          li class="toggle-topbar menu-icon"
+          li.toggle-topbar.menu-icon
             a href="#"
 
-        section class="top-bar-section"
-          ul class="right"
+        section.top-bar-section
+          ul.right
             - if logged_in?
               li= link_to "Apps", apps_path
               li= link_to "Sign Out", sign_out_path
@@ -39,7 +39,13 @@ body class="antialiased"
                 a href="#" Pricing
               li= link_to "Sign In", sign_in_path
 
-  = yield
+  section.content
+    - if crumbs.any?
+      .row.crumbs
+        .small-12.columns
+          = render_crumbs
+
+    = yield
 
   = javascript_include_tag "application"
 

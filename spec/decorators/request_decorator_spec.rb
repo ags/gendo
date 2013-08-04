@@ -47,11 +47,27 @@ describe RequestDecorator do
     end
   end
 
+  describe "#name" do
+    let(:request) { double(:request, id: 123) }
+
+    it "is the request id" do
+      expect(decorated.name).to eq("Request 123")
+    end
+  end
+
   describe "#source_name" do
     let(:request) { double(:request, source: double(:source, name: "foobar")) }
 
     it "delegates to the associated source" do
       expect(decorated.source_name).to eq("foobar")
+    end
+  end
+
+  describe "#app_name" do
+    let(:request) { double(:request, app: double(:app, name: "barfoo")) }
+
+    it "delegates to the associated app" do
+      expect(decorated.app_name).to eq("barfoo")
     end
   end
 

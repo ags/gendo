@@ -1,36 +1,42 @@
-section.content
-  .row
-    .small-12.columns
-      .panel
-        p
-          ' Sending emails in HTTP requests can be time consuming - for
-          = link_to "this request",
-            app_request_path(@mailer_event.app, @mailer_event.request)
-          ' , sending
-          = @mailer_event.mailer
-          '  took
-          strong= @mailer_event.duration
-          '  of the total
-          strong= @mailer_event.request_duration
-          | . You also chance requests totally failing if an unhandled
-            exception is raised in your mailer!
+- add_app_index_breadcrumb
+- add_app_breadcrumb(@mailer_event)
+- add_source_breadcrumb(@mailer_event)
+- add_request_breadcrumb(@mailer_event)
+- add_crumb @mailer_event.mailer,
+    app_mailer_event_path(@mailer_event.app, @mailer_event)
 
-        p
-          | Instead, you could push your emails into a background queue,
-            process and deliver them totally outside the request. Many
-            queueing systems have a convienient way to do this already.
+.row
+  .small-12.columns
+    .panel
+      p
+        ' Sending emails in HTTP requests can be time consuming - for
+        = link_to "this request",
+          app_request_path(@mailer_event.app, @mailer_event.request)
+        ' , sending
+        = @mailer_event.mailer
+        '  took
+        strong= @mailer_event.duration
+        '  of the total
+        strong= @mailer_event.request_duration
+        | . You also chance requests totally failing if an unhandled
+          exception is raised in your mailer!
 
-        table
-          thead
-            tr
-              th Queue
-              th Async Mechanism
-          tbody
-            tr
-              td= link_to "Sidekiq", "https://github.com/mperham/sidekiq"
-              td= link_to "Built in extensions for ActionMailer",
-                "https://github.com/mperham/sidekiq/wiki/Delayed-Extensions"
-            tr
-              td= link_to "Resque", "https://github.com/resque/resque"
-              td= link_to "Resque Mailer gem",
-                "https://github.com/zapnap/resque_mailer"
+      p
+        | Instead, you could push your emails into a background queue,
+          process and deliver them totally outside the request. Many
+          queueing systems have a convienient way to do this already.
+
+      table
+        thead
+          tr
+            th Queue
+            th Async Mechanism
+        tbody
+          tr
+            td= link_to "Sidekiq", "https://github.com/mperham/sidekiq"
+            td= link_to "Built in extensions for ActionMailer",
+              "https://github.com/mperham/sidekiq/wiki/Delayed-Extensions"
+          tr
+            td= link_to "Resque", "https://github.com/resque/resque"
+            td= link_to "Resque Mailer gem",
+              "https://github.com/zapnap/resque_mailer"
