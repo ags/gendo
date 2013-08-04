@@ -5,7 +5,6 @@ describe MailerEventsController do
     let(:action!) {
       get :show,
         app_id: app.to_param,
-        source_id: source.to_param,
         request_id: request.to_param,
         id: mailer_event.to_param
     }
