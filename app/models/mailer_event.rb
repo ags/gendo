@@ -1,5 +1,9 @@
 class MailerEvent < ActiveRecord::Base
   belongs_to :request
 
-  validates :request, presence: true
+  has_one :app,
+    through: :request
+
+  validates :request,
+    presence: true
 end

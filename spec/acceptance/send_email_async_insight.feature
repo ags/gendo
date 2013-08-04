@@ -9,4 +9,4 @@ Feature: Send email asynchronously insight
 
   Scenario: Viewing the request that sent an email
     When I view the request that sent an email
-    Then I should see "Send email asynchronously"
+    Then I should see "Send FooMailer asynchronously"

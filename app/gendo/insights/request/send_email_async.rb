@@ -1,8 +1,10 @@
 module Insights
   module Request
     class SendEmailAsync < Base
+      delegate :mailer_events, to: :request
+
       def applicable?
-        request.mailer_events.any?
+        mailer_events.any?
       end
     end
   end

@@ -8,6 +8,10 @@ module Insights
           where("mailer_events.created_at > ?", APPLICABILITY_LIFETIME.ago).
           any?
       end
+
+      def latest_mailer_event
+        source.mailer_events.order(:created_at).last
+      end
     end
   end
 end

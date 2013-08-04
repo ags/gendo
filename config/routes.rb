@@ -13,6 +13,8 @@ Gendo::Application.routes.draw do
     resources :requests, only: [:show]
 
     resources :n_plus_one_queries, only: [:show]
+
+    resources :mailer_events, only: [:show]
   end
 
   resources :users, only: [:create]

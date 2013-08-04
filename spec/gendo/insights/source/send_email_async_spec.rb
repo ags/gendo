@@ -29,4 +29,17 @@ describe Insights::Source::SendEmailAsync do
       end
     end
   end
+
+  describe "#latest_mailer_event" do
+    it "returns the most recently detected associated MailerEvent" do
+      request = Request.make!
+      insight = Insights::Source::SendEmailAsync.new(request.source)
+
+      a = MailerEvent.make!(request: request, created_at: 3.days.ago)
+      b = MailerEvent.make!(request: request, created_at: 1.days.ago)
+      c = MailerEvent.make!(request: request, created_at: 2.days.ago)
+
+      expect(insight.latest_mailer_event).to eq(b)
+    end
+  end
 end

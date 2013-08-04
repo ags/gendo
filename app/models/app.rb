@@ -15,6 +15,9 @@ class App < ActiveRecord::Base
   has_many :n_plus_one_queries,
     through: :requests
 
+  has_many :mailer_events,
+    through: :requests
+
   validates :user,
     presence: true
 

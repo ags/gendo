@@ -1,3 +1,4 @@
+require "active_support/core_ext/module/delegation"
 require_relative "../../../../app/gendo/insights/request/base"
 require_relative "../../../../app/gendo/insights/request/send_email_async"
 
