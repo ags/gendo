@@ -32,18 +32,18 @@ describe RequestDecorator do
   end
 
   describe "#db_runtime" do
-    let(:request) { double(db_runtime: 1.234) }
+    let(:request) { double(db_runtime: 1.2345) }
 
-    it "returns the db runtime and millsecond time unit" do
-      expect(decorated.db_runtime).to eq("1.234 ms")
+    it "returns the db runtime rounded to two decimal places as ms" do
+      expect(decorated.db_runtime).to eq("1.23 ms")
     end
   end
 
   describe "#view_runtime" do
-    let(:request) { double(view_runtime: 1.234) }
+    let(:request) { double(view_runtime: 1.2345) }
 
-    it "returns the view runtime and millsecond time unit" do
-      expect(decorated.view_runtime).to eq("1.234 ms")
+    it "returns the view runtime rounded to two decimal places as ms" do
+      expect(decorated.view_runtime).to eq("1.23 ms")
     end
   end
 

@@ -26,11 +26,11 @@ class RequestDecorator < Draper::Decorator
   end
 
   def db_runtime
-    "#{object.db_runtime} ms"
+    "#{object.db_runtime.round(2)} ms"
   end
 
   def view_runtime
-    "#{object.view_runtime} ms"
+    "#{object.view_runtime.round(2)} ms"
   end
 
   def name
