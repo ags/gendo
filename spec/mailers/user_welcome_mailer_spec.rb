@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe UserWelcomeMailer do
   describe "#welcome" do
-    let(:user) { User.make! }
+    let(:user) { double(:user, email: "bob@example.com") }
     subject(:mail) { UserWelcomeMailer.welcome(user) }
 
     it "sets the receipient address to the given user's email" do
