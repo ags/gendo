@@ -1,4 +1,8 @@
-require "spec_helper"
+require "sidekiq"
+require_relative "../../app/workers/identify_n_plus_one_queries_worker"
+
+class Request; end
+class IdentifiesNPlusOneQueries; end
 
 describe IdentifyNPlusOneQueriesWorker do
   describe "#from_request" do
@@ -15,21 +19,25 @@ describe IdentifyNPlusOneQueriesWorker do
 
   describe "#perform" do
     it "persists n+1 queries identified in the given request" do
-      request = Request.make!
-      sql_event = SqlEvent.create!(request: request)
+      sql_event = double(:sql_event)
+      request = double(:request, id: 123, sql_events: [sql_event])
+
+      expect(Request).to \
+        receive(:find).
+        with(request.id).
+        and_return(request)
 
       expect(IdentifiesNPlusOneQueries).to \
         receive(:identify).
         with([sql_event]).
         and_return({"posts" => [sql_event]})
 
+      expect(request).to \
+        receive(:create_n_plus_one_query!).
+        with("posts", [sql_event])
+
       worker = IdentifyNPlusOneQueriesWorker.new
       worker.perform(request.id)
-
-      query = request.n_plus_one_queries.last
-      expect(request.n_plus_one_queries).to eq([query])
-      expect(query.culprit_table_name).to eq("posts")
-      expect(query.sql_events).to eq([sql_event])
     end
   end
 end
