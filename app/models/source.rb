@@ -47,4 +47,8 @@ class Source < ActiveRecord::Base
   def latest_requests(limit: nil)
     requests.order(created_at: :desc).limit(limit)
   end
+
+  def latest_n_plus_one_query
+    n_plus_one_queries.order(:created_at).last
+  end
 end

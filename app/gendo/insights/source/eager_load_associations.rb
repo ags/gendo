@@ -3,12 +3,10 @@ module Insights
     class EagerLoadAssociations < Base
       REQUESTS_CHECKED_COUNT = 10
 
+      delegate :latest_n_plus_one_query, to: :source
+
       def applicable?
         NPlusOneQuery.exists?(request_id: checkable_requests)
-      end
-
-      def latest_n_plus_one_query
-        source.n_plus_one_queries.order(:created_at).last
       end
 
       private

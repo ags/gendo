@@ -44,4 +44,15 @@ describe Source do
       expect(source.latest_requests(limit: 1)).to eq([b])
     end
   end
+
+  describe "#latest_n_plus_one_query" do
+    it "returns the most recently detected associated NPlusOneQuery" do
+      request = Request.make!
+      a = NPlusOneQuery.make!(request: request, created_at: 3.days.ago)
+      b = NPlusOneQuery.make!(request: request, created_at: 1.days.ago)
+      c = NPlusOneQuery.make!(request: request, created_at: 2.days.ago)
+
+      expect(request.source.latest_n_plus_one_query).to eq(b)
+    end
+  end
 end

@@ -31,17 +31,4 @@ describe Insights::Source::EagerLoadAssociations do
       end
     end
   end
-
-  describe "#latest_n_plus_one_query" do
-    it "returns the most recently detected associated NPlusOneQuery" do
-      request = Request.make!
-      insight = Insights::Source::EagerLoadAssociations.new(request.source)
-
-      a = NPlusOneQuery.make!(request: request, created_at: 3.days.ago)
-      b = NPlusOneQuery.make!(request: request, created_at: 1.days.ago)
-      c = NPlusOneQuery.make!(request: request, created_at: 2.days.ago)
-
-      expect(insight.latest_n_plus_one_query).to eq(b)
-    end
-  end
 end
