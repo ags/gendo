@@ -1,6 +1,6 @@
 require 'draper'
-require './spec/support/shared_examples_for_decorates_duration'
-require './spec/support/shared_examples_for_decorates_event_timestamps'
+require './spec/support/shared/decorates_duration'
+require './spec/support/shared/decorates_event_timestamps'
 require './app/gendo/insights/request'
 require './app/decorators/decorates_event_timestamps'
 require './app/decorators/decorates_duration'

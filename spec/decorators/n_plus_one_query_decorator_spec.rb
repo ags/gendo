@@ -1,5 +1,5 @@
 require "draper"
-require_relative "../support/shared_examples_for_decorates_duration"
+require_relative "../support/shared/decorates_duration"
 require_relative "../../app/decorators/decorates_duration"
 require_relative "../../app/decorators/n_plus_one_query_decorator"
 
