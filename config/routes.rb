@@ -1,4 +1,8 @@
 Gendo::Application.routes.draw do
+  constraints LoggedInConstraint.new do
+    # Rails doesn't allow duplicate root names
+    root "apps#index", as: :_authenticated_root
+  end
   root "home#index"
 
   namespace :api_v1, path: "api/v1", defaults: {format: "json"} do
