@@ -21,7 +21,7 @@ class IdentifiesNPlusOneQueries
 
   def potential_events_by_table
     potentials = {}
-    @sql_events.each do |event|
+    uncached_events.each do |event|
       if matches = POTENTIAL_MATCHER.match(event.sql)
         table_name = matches[:table_name]
         potentials[table_name] ||= []
@@ -29,6 +29,10 @@ class IdentifiesNPlusOneQueries
       end
     end
     potentials
+  end
+
+  def uncached_events
+    @sql_events.reject(&:cached?)
   end
 
   DEFAULT_MINIMUM_QUERY_OCCURRENCES = 5

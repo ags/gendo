@@ -4,16 +4,19 @@ describe IdentifiesNPlusOneQueries do
   it "returns the format of queries" do
     foo_event = double(
       "n+1 foo event",
+      cached?: false,
       sql: "SELECT `foos`.* FROM `foos` WHERE `foos`.`id` = 13 LIMIT 1"
     )
 
     bar_event = double(
       "n+1 bar event",
+      cached?: false,
       sql: "SELECT `bars`.* FROM `bars` WHERE `bars`.`id` = 27 LIMIT 1"
     )
 
     baz_event = double(
       "baz event",
+      cached?: false,
       sql: "INSERT INTO `bars` (`col`) VALUES (123)"
     )
 
@@ -33,6 +36,7 @@ describe IdentifiesNPlusOneQueries do
     n_plus_one_events = 5.times.map do |id|
       event = double(
         "n+1 event #{id}",
+        cached?: false,
         sql: "SELECT `foos`.* FROM `foos` WHERE `foos`.`id` = #{id} LIMIT 1"
       )
       queries << event
@@ -42,6 +46,7 @@ describe IdentifiesNPlusOneQueries do
     4.times do
       queries << double(
         "n+1 format, lone event for different table",
+        cached?: false,
         sql: "SELECT `bars`.* FROM `bars` WHERE `bars.`id` = 27 LIMIT 1"
       )
     end
@@ -54,6 +59,7 @@ describe IdentifiesNPlusOneQueries do
   it "correctly identifies parameterized queries" do
     query = double(
       "parameterized query",
+      cached?: false,
       sql: "SELECT `bars`.* FROM `bars` WHERE `bars.`id` = $1 LIMIT 1"
     )
 
@@ -68,6 +74,7 @@ describe IdentifiesNPlusOneQueries do
   it "ignores whitespace between statements" do
     query = double(
       "parameterized query",
+      cached?: false,
       sql: "SELECT   `bars`.*   FROM   `bars`   WHERE `bars.`id` = 27   LIMIT 1"
     )
 
@@ -77,5 +84,19 @@ describe IdentifiesNPlusOneQueries do
     )
 
     expect(identified).to eq({"bars" => [query]})
+  end
+
+  it "ignores CACHE events" do
+    sql_events = 5.times.map do |id|
+      double(
+        "cache event #{id}",
+        cached?: true,
+        sql: "SELECT `foos`.* FROM `foos` WHERE `foos`.`id` = #{id} LIMIT 1"
+      )
+    end
+
+    identified = IdentifiesNPlusOneQueries.identify(sql_events)
+
+    expect(identified).to be_empty
   end
 end
