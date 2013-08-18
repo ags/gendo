@@ -86,7 +86,7 @@ describe IdentifiesNPlusOneQueries do
     expect(identified).to eq({"bars" => [query]})
   end
 
-  it "ignores CACHE events" do
+  it "ignores cached events" do
     sql_events = 5.times.map do |id|
       double(
         "cache event #{id}",
