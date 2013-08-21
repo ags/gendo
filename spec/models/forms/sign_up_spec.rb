@@ -1,88 +1,123 @@
-require "spec_helper"
+unless defined?(User::MINIMUM_PASSWORD_LENGTH)
+  class User; MINIMUM_PASSWORD_LENGTH = 6; end
+end
+class MailUserWelcomeWorker; end
+
+require_relative "../../../lib/formats"
+require_relative "../../../app/models/forms/base"
+require_relative "../../../app/models/forms/sign_up"
 
 describe Forms::SignUp do
-  let(:session) { {} }
-  let(:authenticator) { Authenticator.new(session) }
+  let(:authenticator) { double(:authenticator) }
   subject(:form) { Forms::SignUp.new(authenticator, parameters) }
 
   context "with valid details" do
     let(:parameters) { {email: "foo@example.com", password: "foobar"} }
+    let(:user) { double(:user) }
+    let(:user_creator) { ->(email, password) { user } }
+
+    before do
+      form.user_creator = user_creator
+      allow(User).to receive(:email_available?).and_return(true)
+      allow(authenticator).to receive(:sign_in)
+      allow(MailUserWelcomeWorker).to receive(:welcome)
+    end
 
     it "creates a user" do
-      expect(form.save!).to be_true
-      expect(form.user.email).to eq("foo@example.com")
+      form.save!
+
+      expect(form.user).to eq(user)
     end
 
     it "authenticates as the created user" do
+      expect(authenticator).to receive(:sign_in).with(user)
+
       form.save!
-      expect(session).to eq({user_id: form.user.id})
     end
 
     it "queues a welcome email to the created user" do
-      expect do
-        form.save!
-      end.to change { MailUserWelcomeWorker.jobs.size }.by(+1)
+      expect(MailUserWelcomeWorker).to receive(:welcome).with(user)
+
+      form.save!
+    end
+
+    it "returns true when saved" do
+      expect(form.save!).to be_true
     end
   end
 
   shared_examples_for "does not sign up a User" do
     it "does not create a user" do
-      expect do
-        form.save!
-      end.to_not change { User.count }
+      form.save!
+
+      expect(form.user).to be_nil
     end
 
     it "does not authenticate as a user" do
-      expect do
-        form.save!
-      end.to_not change { session }
+      expect(authenticator).to_not receive(:sign_in)
+
+      form.save!
     end
 
     it "does not send an email" do
-      expect do
-        form.save!
-      end.to_not change { ActionMailer::Base.deliveries.size }
+      expect(MailUserWelcomeWorker).to_not receive(:welcome)
+
+      form.save!
+    end
+
+    it "returns false when saved" do
+      expect(form.save!).to be_false
     end
   end
 
-  context "with an invalid password" do
-    context "too short" do
-      let(:parameters) { {email: "foo@example.com", password: "foo"} }
+  context "with a password that is too short" do
+    let(:parameters) { {email: "foo@example.com", password: "foo"} }
 
-      it "sets an error message" do
-        expect(form.save!).to be_false
-        expect(form.errors.messages).to \
-          eq({password: ["is too short (minimum is 6 characters)"]})
-      end
-
-      include_examples "does not sign up a User"
+    before do
+      allow(User).to receive(:email_available?).and_return(true)
     end
+
+    it "sets an error message" do
+      form.save!
+
+      expect(form.errors.messages).to \
+        eq({password: ["is too short (minimum is 6 characters)"]})
+    end
+
+    include_examples "does not sign up a User"
   end
 
-  context "with an invalid email" do
-    context "wrong format" do
-      let(:parameters) { {email: "foobar", password: "foobar"} }
+  context "with an email in an invalid format" do
+    let(:parameters) { {email: "foobar", password: "foobar"} }
 
-      it "sets an error message" do
-        expect(form.save!).to be_false
-        expect(form.errors.messages).to \
-          eq({email: ["doesn't look right"]})
-      end
-
-      include_examples "does not sign up a User"
+    before do
+      allow(User).to receive(:email_available?).and_return(true)
     end
 
-    context "already taken" do
-      let!(:user) { User.make!(email: "foo@example.com") }
-      let(:parameters) { {email: "foo@example.com", password: "foobar"} }
+    it "sets an error message" do
+      form.save!
 
-      it "sets an error message" do
-        expect(form.save!).to be_false
-        expect(form.errors.messages).to \
-          eq({email: ["is already taken"]})
-      end
-
-      include_examples "does not sign up a User"
+      expect(form.errors.messages).to \
+        eq({email: ["doesn't look right"]})
     end
+
+    include_examples "does not sign up a User"
+  end
+
+  context "with an email that's already been taken" do
+    let(:parameters) { {email: "foo@example.com", password: "foobar"} }
+
+    before do
+      allow(User).to receive(:email_available?).and_return(false)
+    end
+
+    it "sets an error message" do
+      form.save!
+
+      expect(form.errors.messages).to \
+        eq({email: ["is already taken"]})
+    end
+
+    include_examples "does not sign up a User"
   end
 end

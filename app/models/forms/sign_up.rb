@@ -1,5 +1,8 @@
 module Forms
   class SignUp < Base
+    attr_reader :user
+    attr_writer :user_creator
+
     attribute :email
     attribute :password
 
@@ -13,8 +16,6 @@ module Forms
 
     validate :email_available?
 
-    attr_reader :user
-
     def initialize(authenticator, *args)
       super(*args)
       @authenticator = authenticator
@@ -23,7 +24,7 @@ module Forms
     def save!
       return false unless valid?
 
-      @user = create_user
+      @user = user_creator.call(email, password)
 
       @authenticator.sign_in(user)
 
@@ -34,8 +35,10 @@ module Forms
 
     private
 
-    def create_user
-      User.create!(email: email, password: password)
+    def user_creator
+      @user_creator || ->(email, password) {
+        User.create!(email: email, password: password)
+      }
     end
 
     def queue_welcome_email
