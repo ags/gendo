@@ -2,7 +2,6 @@ require_relative "../../../app/models/forms/base"
 require_relative "../../../app/models/forms/sign_in"
 
 class User; end
-module ActiveRecord; class RecordNotFound; end; end
 
 describe Forms::SignIn do
   let(:user) { double(:user) }

@@ -21,17 +21,16 @@ describe User do
     end.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  describe ".with_email!" do
+  describe ".with_email" do
     it "returns the User with the given email" do
       user = User.make!(email: "foo@bar.com")
-      expect(User.with_email!("foo@bar.com")).to eq(user)
+
+      expect(User.with_email("foo@bar.com")).to eq(user)
     end
 
     context "when no User with given email exists" do
-      it "raises ActiveRecord::RecordNotFound" do
-        expect do
-          User.with_email!("foo@bar.com")
-        end.to raise_error(ActiveRecord::RecordNotFound)
+      it "returns nil" do
+        expect(User.with_email("foo@bar.com")).to be_nil
       end
     end
   end

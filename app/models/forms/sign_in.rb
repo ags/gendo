@@ -31,12 +31,7 @@ module Forms
     end
 
     def user_finder
-      @user_finder || ->(email) {
-        begin
-          User.with_email!(email)
-        rescue ActiveRecord::RecordNotFound
-        end
-      }
+      @user_finder || ->(email) { User.with_email(email) }
     end
   end
 end

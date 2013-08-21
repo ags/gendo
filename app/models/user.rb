@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
     presence: true,
     on: :create
 
-  def self.with_email!(email)
-    where(email: email).first!
+  def self.with_email(email)
+    where(email: email).first
   end
 
   def self.email_available?(email)
