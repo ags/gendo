@@ -13,7 +13,10 @@ module Forms
     def save!
       return false unless valid?
       @authenticator.sign_in(user)
+      true
     end
+
+    attr_writer :user_finder
 
     private
 
@@ -24,8 +27,16 @@ module Forms
     end
 
     def user
-      User.with_email!(email)
-    rescue ActiveRecord::RecordNotFound
+      user_finder.call(email)
+    end
+
+    def user_finder
+      @user_finder || ->(email) {
+        begin
+          User.with_email!(email)
+        rescue ActiveRecord::RecordNotFound
+        end
+      }
     end
   end
 end
