@@ -1,11 +1,12 @@
 module Forms
   class NewApp < Base
+    attr_reader :app
+    attr_writer :app_creator
+
     attribute :name
 
     validates :name,
       length: {minimum: 1}
-
-    attr_reader :app
 
     def initialize(user, *args)
       super(*args)
@@ -14,18 +15,17 @@ module Forms
 
     def save!
       return false unless valid?
-      @app = create_app
+
+      @app = app_creator.call(name: name)
       true
     end
 
     private
 
-    def create_app
-      App.transaction do
-        @user.apps.create!(name: name).tap do |app|
-          AppAccessToken.generate(app).save!
-        end
-      end
+    def app_creator
+      @app_creator || ->(*attributes) {
+        CreatesAppForUser.create!(@user, *attributes)
+      }
     end
   end
 end

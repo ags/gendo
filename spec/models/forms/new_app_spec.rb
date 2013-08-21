@@ -1,18 +1,16 @@
-require "spec_helper"
+require_relative "../../../app/models/forms/base"
+require_relative "../../../app/models/forms/new_app"
 
 describe Forms::NewApp do
-  let(:user) { User.make! }
+  let(:user) { double(:user) }
   subject(:form) { Forms::NewApp.new(user, name: "Shinji") }
 
-  it "creates a new App" do
-    form.save!
-    expect(form.app.name).to eq("Shinji")
-    expect(form.app.user).to eq(user)
-  end
-  
-  it "creates an AppAccessToken for the created App" do
-    form.save!
-    expect(form.app.current_access_token).to be_present
+  it "creates an App for the user" do
+    app_creator = double(:app_creator)
+    form.app_creator = ->(*attributes) { app_creator.create!(*attributes) }
+
+    expect(app_creator).to receive(:create!).with(name: "Shinji")
+    expect(form.save!).to be_true
   end
 
   context "without a name" do
