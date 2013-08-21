@@ -28,7 +28,7 @@ module Forms
 
       @authenticator.sign_in(user)
 
-      queue_welcome_email
+      MailUserWelcomeWorker.welcome(user)
 
       true
     end
@@ -39,10 +39,6 @@ module Forms
       @user_creator || ->(email, password) {
         User.create!(email: email, password: password)
       }
-    end
-
-    def queue_welcome_email
-      MailUserWelcomeWorker.welcome(user)
     end
 
     def email_available?
