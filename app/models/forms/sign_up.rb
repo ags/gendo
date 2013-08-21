@@ -43,10 +43,9 @@ module Forms
     end
 
     def email_available?
-      if User.with_email!(email).present?
+      unless User.email_available?(email)
         errors.add(:email, "is already taken")
       end
-    rescue ActiveRecord::RecordNotFound
     end
   end
 end

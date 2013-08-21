@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
   def self.with_email!(email)
     where(email: email).first!
   end
+
+  def self.email_available?(email)
+    !exists?(email: email)
+  end
 end

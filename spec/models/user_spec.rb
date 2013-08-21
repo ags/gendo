@@ -35,4 +35,20 @@ describe User do
       end
     end
   end
+
+  describe ".email_available?" do
+    context "when no User exists with the given email" do
+      it "is true" do
+        expect(User.email_available?("foo@bar.com")).to be_true
+      end
+    end
+
+    context "when a User exists with the given email" do
+      it "is false" do
+        User.make!(email: "foo@bar.com")
+
+        expect(User.email_available?("foo@bar.com")).to be_false
+      end
+    end
+  end
 end
