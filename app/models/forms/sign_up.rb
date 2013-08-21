@@ -39,7 +39,7 @@ module Forms
     end
 
     def queue_welcome_email
-      UserWelcomeMailer.delay.welcome(user)
+      MailUserWelcomeWorker.welcome(user)
     end
 
     def email_available?

@@ -21,7 +21,7 @@ describe Forms::SignUp do
     it "queues a welcome email to the created user" do
       expect do
         form.save!
-      end.to change { Sidekiq::Extensions::DelayedMailer.jobs.size }.by(+1)
+      end.to change { MailUserWelcomeWorker.jobs.size }.by(+1)
     end
   end
 
