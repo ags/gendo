@@ -17,6 +17,7 @@ module Forms
       return false unless valid?
 
       @app = app_creator.call(name: name)
+
       true
     end
 
