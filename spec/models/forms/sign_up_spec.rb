@@ -1,11 +1,10 @@
-unless defined?(User::MINIMUM_PASSWORD_LENGTH)
-  class User; MINIMUM_PASSWORD_LENGTH = 6; end
-end
-class MailUserWelcomeWorker; end
-
+require_relative "../../../app/gendo/password_policy"
 require_relative "../../../lib/formats"
 require_relative "../../../app/models/forms/base"
 require_relative "../../../app/models/forms/sign_up"
+
+class User; end
+class MailUserWelcomeWorker; end
 
 describe Forms::SignUp do
   let(:authenticator) { double(:authenticator) }

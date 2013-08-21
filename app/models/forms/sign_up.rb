@@ -7,7 +7,7 @@ module Forms
     attribute :password
 
     validates :password,
-      length: {minimum: User::MINIMUM_PASSWORD_LENGTH}
+      length: {minimum: PasswordPolicy::MINIMUM_LENGTH}
 
     validates :email, format: {
       with: Formats::EMAIL,
