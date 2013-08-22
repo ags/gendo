@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ApiV1::RequestsController do
-  let(:params) { {request: request_payload_hash} }
+  let(:params) { {request: create_request_payload_hash} }
 
   describe "#create" do
     context "when authenticated" do

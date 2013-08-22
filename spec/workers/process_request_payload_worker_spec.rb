@@ -17,7 +17,7 @@ describe ProcessRequestPayloadWorker do
 
   describe "#perform" do
     # sidekiq serializes data as JSON, so encode and decode our sample hash
-    let(:payload) { JSON.load(request_payload_hash.to_json) }
+    let(:payload) { JSON.load(create_request_payload_hash.to_json) }
     let(:app) { App.make! }
     let(:perform!) {
       -> { ProcessRequestPayloadWorker.new.perform(app.id, payload) }
