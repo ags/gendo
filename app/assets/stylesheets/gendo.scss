@@ -1,5 +1,16 @@
 .top-bar {
-  margin-bottom: 0.5em;
+  a {
+    span {
+      padding-bottom: 10px;
+      border-bottom: 3px solid $secondary-color;
+    }
+  }
+  a:hover {
+    span {
+      padding-bottom: 10px;
+      border-bottom: 3px solid #fff;
+    }
+  }
 }
 
 .text-centered {
@@ -7,13 +18,13 @@
 }
 
 header.hero {
+  background-color: $primary-color;
   padding: 20px 0 20px;
+  margin-top: -$topbar-margin-bottom;
   margin-bottom: 30px;
 
   h1, h4 {
-    a {
-      color: #000;
-    }
+    color: #fff;
   }
 
   h1 {
@@ -40,5 +51,13 @@ pre {
 form {
   input.button {
     margin: 1em 0 0;
+  }
+}
+
+.full-table {
+  border: 0;
+  td {
+    padding-top: 1.3em;
+    padding-bottom: 1.3em;
   }
 }

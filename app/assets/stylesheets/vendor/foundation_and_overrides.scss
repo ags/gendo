@@ -28,8 +28,10 @@ $em-base: 16px !default;
 
 $default-float: left;
 
-$body-bg: #202027;
-$body-font-color: #d3d3d3;
+// $body-bg: #fff;
+//$body-bg: #2980b9;
+//$body-lighter: #3498db;
+// $body-font-color: #fff;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
@@ -44,8 +46,10 @@ $body-font-color: #d3d3d3;
 
 // Colors
 
-$primary-color: #b00028;
-// $secondary-color: #e9e9e9;
+
+//$primary-color: #b00028;
+$primary-color: #2980b9;
+$secondary-color: #3498db;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
 
@@ -139,7 +143,7 @@ $shiny-edge-size: 0;
 // $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $header-font-weight: bold;
 // $header-font-style: normal;
-$header-font-color: #d3d3d3;
+// $header-font-color: #fff;
 // $header-line-height: 1.4;
 // $header-top-margin: .2em;
 // $header-bottom-margin: .5em;
@@ -188,7 +192,7 @@ $header-font-color: #d3d3d3;
 
 // $anchor-text-decoration: none;
 // $anchor-font-color: $primary-color;
-$anchor-font-color-hover: lighten($primary-color, 5%);
+// $anchor-font-color-hover: lighten($primary-color, 5%);
 
 // <hr> element
 
@@ -260,8 +264,8 @@ $anchor-font-color-hover: lighten($primary-color, 5%);
 
 // $form-label-pointer: pointer;
 // $form-label-font-size: emCalc(14px);
-$form-label-font-weight: 500;
-$form-label-font-color: $body-font-color;
+// $form-label-font-weight: 500;
+// $form-label-font-color: $body-font-color;
 // $form-label-bottom-margin: emCalc(3px);
 // $input-font-family: inherit;
 // $input-font-color: rgba(0,0,0,0.75);
@@ -286,7 +290,7 @@ $form-label-font-color: $body-font-color;
 
 // Legends
 
-$legend-bg: $body-bg;
+// $legend-bg: $body-bg;
 // $legend-font-weight: bold;
 // $legend-padding: 0 emCalc(3px);
 
@@ -497,7 +501,7 @@ $button-border-width: 0;
 
 // Background color for the breadcrumb container.
 
-// $crumb-bg: lighten($secondary-color, 5%);
+$crumb-bg: #fff;//lighten($primary-color, 5%);
 
 // Padding around the breadcrumbs.
 
@@ -850,7 +854,7 @@ $crumb-radius: 0;
 
 // Background and border styles
 
-// $panel-bg: darken(#fff, 5%);
+$panel-bg: #fff;
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 
@@ -1203,12 +1207,13 @@ $crumb-radius: 0;
 
 // Background color for the top bar
 
-$topbar-bg: $body-bg !default;
+$topbar-bg: $primary-color !default;
 
 // Height and margin
 
-// $topbar-height: 45px;
+$topbar-height: 45px;
 // $topbar-margin-bottom: emCalc(30px);
+// $topbar-margin-bottom: 0;
 
 // Control Input height for top bar
 
@@ -1217,7 +1222,7 @@ $topbar-bg: $body-bg !default;
 // Controlling the styles for the title in the top bar
 
 // $topbar-title-weight: bold;
-// $topbar-title-font-size: emCalc(17px);
+$topbar-title-font-size: emCalc(24px);
 
 // Style the top bar dropdown elements
 
@@ -1230,15 +1235,15 @@ $topbar-bg: $body-bg !default;
 
 // Set the link colors and styles for top-level nav
 
-$topbar-link-color: $body-font-color;
+// $topbar-link-color: $body-font-color;
 
 // $topbar-link-color-hover: #fff;
 // $topbar-link-color-active: #fff;
 // $topbar-link-weight: bold;
-// $topbar-link-font-size: emCalc(13px);
+$topbar-link-font-size: emCalc(15px);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
-// $topbar-link-bg-hover: darken($topbar-bg, 3%);
-// $topbar-link-bg-active: darken($topbar-bg, 3%);
+$topbar-link-bg-hover: darken($topbar-bg, 3%);
+$topbar-link-bg-active: darken($topbar-bg, 3%);
 
 // $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
@@ -1272,7 +1277,7 @@ $topbar-link-color: $body-font-color;
 
 @import 'foundation';
 
-$button-bg-color: #b00028;
+$button-bg-color: #3498db;
 
 .button {
   @include button-style($button-bg-color);
