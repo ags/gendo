@@ -24,8 +24,8 @@ module Forms
     private
 
     def app_creator
-      @app_creator || ->(*attributes) {
-        CreatesAppForUser.create!(@user, *attributes)
+      @app_creator || ->(attributes={}) {
+        CreatesAppForUser.create!(@user, attributes)
       }
     end
   end

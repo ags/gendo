@@ -7,7 +7,7 @@ describe Forms::NewApp do
 
   it "creates an App for the user" do
     app_creator = double(:app_creator)
-    form.app_creator = ->(*attributes) { app_creator.create!(*attributes) }
+    form.app_creator = ->(attributes={}) { app_creator.create!(attributes) }
 
     expect(app_creator).to receive(:create!).with(name: "Shinji")
     expect(form.save!).to be_true
