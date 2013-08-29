@@ -35,13 +35,18 @@ describe ProcessRequestPayloadWorker do
     end
 
     it "creates a Request" do
-      expect(CreatesRequest).to receive(:create!).with(app, payload).and_return(request)
+      expect(CreatesRequest).to \
+        receive(:create!).
+        with(app, payload).
+        and_return(request)
 
       ProcessRequestPayloadWorker.new.perform(app.id, payload)
     end
 
     it "queues an IdentifyNPlusOneQueriesJob" do
-      expect(IdentifyNPlusOneQueriesWorker).to receive(:in_request).with(request)
+      expect(IdentifyNPlusOneQueriesWorker).to \
+        receive(:in_request).
+        with(request)
 
       ProcessRequestPayloadWorker.new.perform(app.id, payload)
     end
