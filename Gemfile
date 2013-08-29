@@ -19,6 +19,7 @@ group :assets do
   gem 'sass-rails'
   gem 'uglifier'
   gem 'zurb-foundation'
+  gem 'foundation-icons-sass-rails'
 end
 
 group :test do

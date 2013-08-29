@@ -17,27 +17,32 @@ head
   = csrf_meta_tags
 
 body.antialiased
-  .row
-    .small-12
-      nav.top-bar
-        ul.title-area
-          li.name
-            h1
-              a href=root_url Gendo
-          li.toggle-topbar.menu-icon
-            a href="#"
+  .contain-to-grid
+    nav.top-bar
+      ul.title-area
+        li.name
+          h1
+            a href=root_url Gendo
+        li.toggle-topbar.menu-icon
+          a href="#"
 
-        section.top-bar-section
-          ul.right
-            - if logged_in?
-              li= link_to "Apps", apps_path
-              li= link_to "Sign Out", sign_out_path
-            - else
-              li
-                a href="#" Features
-              li
-                a href="#" Pricing
-              li= link_to "Sign In", sign_in_path
+      section.top-bar-section
+        ul.right
+          - if logged_in?
+            li.top-bar-link
+              = link_to "Apps", apps_path
+            li.top-bar-link
+              = link_to "Sign Out", sign_out_path
+          - else
+            li.top-bar-link
+              a href="#"
+                span Features
+            li.top-bar-link
+              a href="#"
+                span Pricing & Sign Up
+            li.top-bar-link
+              a href=sign_in_path
+                span Sign In
 
   section.content
     - if crumbs.any?
@@ -46,6 +51,13 @@ body.antialiased
           = render_crumbs
 
     = yield
+
+  footer.row
+    .large-12.columns
+      hr
+      .row
+        .large-6.columns
+          p &copy; Copyright 2013 NervPoint
 
   = javascript_include_tag "application"
 

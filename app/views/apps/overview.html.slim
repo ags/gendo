@@ -2,50 +2,40 @@
 - add_crumb @app.name, app_path(@app)
 
 .row
-  .large-9.small-12.columns
+  .large-12.small-12.columns
     .row
-      .small-3.columns
+      .large-10.columns
         h3= @app.name
+      .large-2.columns
+        a href=app_settings_path(@app)
+          i.general.foundicon-settings
 
-    table
+    table.full-table
       thead
         tr
           th Source
+          th # Requests
           th
             span.has-tip(data-tooltip title="Total action duration (ms)")
-              | Duration
+              | Median Duration
           th
             span.has-tip(data-tooltip title="Database runtime (ms)")
-              | Database
+              | Median Database
           th
             span.has-tip(data-tooltip title="View runtime (ms)")
-              | Views
+              | Median Views
 
       tbody
         - @app.alphabetized_sources.each do |source|
           tr
             td= link_to source.name, app_source_path(source.app, source)
+            td= source.requests_count
             td= source.duration.median
             td= source.db.median
             td= source.view.median
-
-  .large-3.small-12.columns
-    h4 Stragglers
-
-    h5 Database
-    - @app.worst_sources_by_db_runtime.each do |source|
-      p
-        = link_to "#{source.name} (#{source.db.median})",
-            app_source_path(source.app, source)
-
-    h5 Views
-    - @app.worst_sources_by_view_runtime.each do |source|
-      p
-        = link_to "#{source.name} (#{source.view.median})",
-            app_source_path(source.app, source)
-
-    h4 500s
-    - @app.recent_internal_server_errors.each do |request|
-      p
-        = link_to "#{request.source.name} #{request.fuzzy_timestamp}",
-            app_request_path(request.app, request)
+.row
+  .large-12.small-12.columns
+    h3 Recent Requests
+    - #TODO obviously
+    - req = Request.joins(:app).where(sources: {app_id: @app}).order(created_at: :desc).limit(25).decorate
+    = render "/requests/table", requests: req

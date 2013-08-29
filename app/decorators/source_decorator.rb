@@ -5,6 +5,11 @@ class SourceDecorator < Draper::Decorator
     to: :app,
     prefix: true
 
+  # TODO counter cache would be handy
+  def requests_count
+    requests.count
+  end
+
   def latest_requests(limit: nil)
     source.latest_requests(limit: limit).decorate
   end
