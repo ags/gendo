@@ -1,7 +1,6 @@
-table.table.table-striped
+table.table.table-striped.full-table
   thead
     tr
-      th ID
       th Path
       th Status
       th Started At
@@ -12,8 +11,7 @@ table.table.table-striped
   tbody
     - requests.each do |request|
       tr
-        td= link_to request.id, app_request_path(request.app, request)
-        td= request.path
+        td= link_to request.path, app_request_path(request.app, request)
         td= request.status
         td= request.started_at
         td= request.ended_at
