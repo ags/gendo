@@ -70,18 +70,4 @@ describe AppDecorator do
       end
     end
   end
-
-  describe "#internal_server_errors" do
-    it "returns requests with status 500" do
-      decorated_requests = double(:decorated_requests)
-
-      app.
-        should_receive(:recent_requests_with_status).
-        with(500, limit: 3).
-        and_return(double(:requests, decorate: decorated_requests))
-
-      expect(decorated.recent_internal_server_errors).to \
-        eq(decorated_requests)
-    end
-  end
 end

@@ -18,8 +18,4 @@ class AppDecorator < Draper::Decorator
   def collecting_data?
     sources.any?
   end
-
-  def recent_internal_server_errors(limit: 3)
-    recent_requests_with_status(500, limit: limit).decorate
-  end
 end
