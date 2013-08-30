@@ -27,7 +27,7 @@ group :test do
   gem 'database_cleaner'
   gem 'machinist'
   gem 'rspec-rails'
-  gem 'simplecov'
+  gem 'simplecov', require: false
   gem 'turnip'
 end
 
