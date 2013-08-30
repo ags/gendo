@@ -146,11 +146,11 @@ GEM
       faraday (>= 0.7.6)
       hashie (>= 1.1.0)
       uuidtools
-    sidekiq (2.13.1)
+    sidekiq (2.14.0)
       celluloid (>= 0.14.1)
       connection_pool (>= 1.0.0)
       json
-      redis (>= 3.0)
+      redis (>= 3.0.4)
       redis-namespace
     simplecov (0.7.1)
       multi_json (~> 1.0)
