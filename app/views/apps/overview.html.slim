@@ -36,6 +36,4 @@
 .row
   .large-12.small-12.columns
     h3 Recent Requests
-    - #TODO obviously
-    - req = Request.joins(:app).where(sources: {app_id: @app}).order(created_at: :desc).limit(25).decorate
-    = render "/requests/table", requests: req
+    = render "/requests/table", requests: @app.recent_requests
