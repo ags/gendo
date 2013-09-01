@@ -9,7 +9,6 @@ gem 'draper'
 gem 'jquery-rails'
 gem 'pg'
 gem 'rails'
-gem 'sentry-raven'
 gem 'sidekiq'
 gem 'slim'
 gem 'unicorn'
@@ -47,4 +46,5 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'sentry-raven'
 end
