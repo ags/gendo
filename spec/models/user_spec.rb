@@ -3,12 +3,14 @@ require "spec_helper"
 describe User do
   it "requires an email address" do
     user = User.new(password: "foo")
+
     expect(user.valid?).to be_false
     expect(user.errors[:email]).to eq(["can't be blank"])
   end
 
   it "requires passwords of length 6 or more" do
     user = User.new(password: "foo")
+
     expect(user.valid?).to be_false
     expect(user.errors[:password]).to \
       eq(["is too short (minimum is 6 characters)"])
@@ -16,6 +18,7 @@ describe User do
 
   it "does not permit duplicate emails" do
     User.make!(email: "foo@bar.com")
+
     expect do
       User.make!(email: "foo@bar.com")
     end.to raise_error(ActiveRecord::RecordInvalid)
