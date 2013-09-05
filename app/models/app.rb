@@ -61,11 +61,4 @@ class App < ActiveRecord::Base
       order("median(requests.#{field}) DESC").
       limit(limit)
   end
-
-  def recent_requests_with_status(status, limit: 100)
-    requests.
-      where(status: status).
-      order(created_at: :desc).
-      limit(limit)
-  end
 end
