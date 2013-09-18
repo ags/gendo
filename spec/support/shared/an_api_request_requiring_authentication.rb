@@ -1,9 +1,7 @@
 shared_examples_for "an api request requiring authentication" do
-  before do
+  it "responds with 401 Unauthorized" do
     action!
-  end
 
-  it "requires an authentication header" do
     expect(response.status).to eq(401)
     expect(response.message).to eq("Unauthorized")
   end
