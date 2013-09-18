@@ -103,8 +103,6 @@ describe App do
       end
     end
 
-    # TODO this test mocks the AR boundary, which I'd rather not do.
-    # Experiments with threading and forking here weren't reliable.
     context "handling race conditions" do
       let(:not_unique_error) { ActiveRecord::RecordNotUnique.new('not unique') }
 
@@ -126,7 +124,7 @@ describe App do
           receive(:first_or_create!).
           and_return(source)
 
-        app.find_or_create_source!(params)
+        expect(app.find_or_create_source!(params)).to eq(source)
       end
 
       it "propogates other exceptions" do
