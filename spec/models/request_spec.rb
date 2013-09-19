@@ -1,13 +1,6 @@
 require "spec_helper"
 
 describe Request do
-  it "requires a source" do
-    request = Request.new
-
-    expect(request.valid?).to be_false
-    expect(request.errors.messages[:source]).to eq(["can't be blank"])
-  end
-
   describe "#create_n_plus_one_query!" do
     it "creates an associated NPlusOneQuery" do
       request = Request.make!
