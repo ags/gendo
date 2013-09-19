@@ -135,16 +135,9 @@ describe CreatesRequest do
     context "when the given source already exists" do
       it "uses the existing source" do
         source = Source.make!(payload[:source].merge(app: app))
+
         expect { creator.create! }.to_not change { Source.count }
         expect { creator.create! }.to change { source.requests.count }.by(1)
-      end
-    end
-
-    context "when a Source with the same attributes, but different App exists" do
-      it "creates a new source" do
-        source = Source.make!(payload[:source])
-        expect { creator.create! }.to change { app.sources.count }.by(+1)
-        expect { creator.create! }.to_not change { source.requests.count }
       end
     end
 
