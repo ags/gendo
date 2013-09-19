@@ -22,7 +22,7 @@ group :assets do
 end
 
 group :test do
-  gem 'capybara'
+  gem 'capybara', require: false
   gem 'database_cleaner'
   gem 'machinist'
   gem 'rspec-rails'
