@@ -27,7 +27,6 @@ group :test do
   gem 'machinist'
   gem 'rspec-rails'
   gem 'simplecov', require: false
-  gem 'turnip'
 end
 
 group :test, :development do
