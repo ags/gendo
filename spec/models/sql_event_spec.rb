@@ -9,6 +9,7 @@ describe SqlEvent do
         expect(event.cached?).to be_true
       end
     end
+
     context "when the event name is not 'CACHED'" do
       it "is false" do
         event = SqlEvent.new(name: "SqlEvent Load")
