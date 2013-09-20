@@ -1,8 +1,6 @@
 class AppDecorator < Draper::Decorator
   delegate_all
 
-  decorates_association :requests
-
   def alphabetized_sources
     sources.order(:controller, :action).decorate
   end
