@@ -53,12 +53,4 @@ class App < ActiveRecord::Base
   def current_access_token
     app_access_tokens.last
   end
-
-  def sources_by_median_desc(field, limit: 3)
-    sources.
-      joins(:requests).
-      group("sources.id").
-      order("median(requests.#{field}) DESC").
-      limit(limit)
-  end
 end

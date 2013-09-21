@@ -63,27 +63,6 @@ describe App do
     end
   end
 
-  describe "#sources_by_median_desc" do
-    it "returns the top n Sources for a field sorted by their median value" do
-      app = App.make!
-      source_a_1 = Source.make!(app: app, controller: "A", action: "a")
-      source_a_2 = Source.make!(app: app, controller: "A", action: "b")
-      source_b_1 = Source.make!(app: app, controller: "B", action: "a")
-      source_b_2 = Source.make!(app: app, controller: "B", action: "b")
-
-      Request.make!(source: source_a_1, db_runtime: 1)
-      Request.make!(source: source_a_2, db_runtime: 2)
-      Request.make!(source: source_b_1, db_runtime: 0)
-      Request.make!(source: source_b_2, db_runtime: 9)
-      Request.make!(source: source_b_2, db_runtime: 4)
-
-      expect(app.sources_by_median_desc(:db_runtime, limit: 2)).to eq([
-        source_b_2,
-        source_a_2
-      ])
-    end
-  end
-
   describe "#find_or_create_source!" do
     let(:params) { {
       controller: "FooCtrl",
