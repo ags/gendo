@@ -20,7 +20,7 @@
         = link_to "eager loading.",
           "http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations"
 
-        div.progress.large-12
+        .progress.large-12
           span.meter(style="width: #{@n_plus_one_query.percentage_of_db_runtime}%")
 
       p
@@ -32,7 +32,7 @@
           = @n_plus_one_query.percentage_of_db_runtime
           | %
         ' ) was the detected queries.
-        div.progress.large-12
+        .progress.large-12
           span.meter(style="width: #{@n_plus_one_query.percentage_of_request_duration}%")
 
       p
