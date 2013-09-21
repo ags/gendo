@@ -24,7 +24,7 @@ describe CreatesRequest do
 
   subject(:creator) { CreatesRequest.new(app, payload) }
 
-  describe ".create!" do
+  describe "#create!" do
     it "creates a Request from the given parameters" do
       request = creator.create!
 
