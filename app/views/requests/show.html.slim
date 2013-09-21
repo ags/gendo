@@ -62,15 +62,17 @@ section.content
             hr
             = render insight.partial_name, insight: insight, request: @request
 
-      table
-        thead
-          tr
-            th Started At
-            th Ended At
-            th Duration
-        tbody
-          - @request.events.each do |event|
-            = render "#{event.underscored_class_name}_row", event: event
+      .panel
+        h3 Event Log
+        table
+          thead
+            tr
+              th Started At
+              th Ended At
+              th Duration
+          tbody
+            - @request.events.each do |event|
+              = render "#{event.underscored_class_name}_row", event: event
 
 - content_for :javascript_body do
   javascript:
