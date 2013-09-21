@@ -3,85 +3,74 @@
 - add_source_breadcrumb(@request)
 - add_crumb @request.name, app_request_path(@request.app, @request)
 
-section.content
-  .row
-    .small-12.columns
+.row
+  .small-12.columns
+    .panel
+      h3
+        ' Request for
+        = @request.path
+      h3
+        ' Processed by
+        = link_to @request.source_name, app_source_path(@request.app, @request.source)
+
+.row
+  .small-4.columns
+    .panel
+      .row
+        .small-6.columns
+          strong Total Runtime
+        .small-6.columns
+          = @request.duration
+    .panel
+      .row
+        .small-6.columns
+          strong Status
+        .small-6.columns
+          = @request.status
+  .small-4.columns
+    .panel
+      .row
+        .small-6.columns
+          strong DB Runtime
+        .small-6.columns
+          = @request.db_runtime
+    .panel
+      .row
+        .small-2.columns
+          strong Start
+        .small-10.columns
+          = @request.started_at
+  .small-4.columns
+    .panel
+      .row
+        .small-6.columns
+          strong View Runtime
+        .small-6.columns
+          = @request.view_runtime
+    .panel
+      .row
+        .small-2.columns
+          strong End
+        .small-10.columns
+          = @request.ended_at
+
+.row
+  .small-12.columns
+    - if @request.insights.any?
       .panel
-        h3
-          ' Summary of
-          = link_to @request.source_name, app_source_path(@request.app, @request.source)
+        h3 Insights
+        - @request.insights.each do |insight|
+          hr
+          = render insight.partial_name, insight: insight, request: @request
 
-        .row
-          .small-12.large-4.columns
-            - if @request.collected_timings?
-              #time-breakdown(data-breakdown="#{@request.time_breakdown_graph_data.to_json}")
-            - else
-              h4 Timing data incomplete.
-
-          .small-12.large-4.columns
-            h4 Timing
-            table
-              tbody
-                tr
-                  td Total Duration
-                  td= @request.duration
-                tr
-                  td Database
-                  td= @request.db_runtime
-                tr
-                  td Views
-                  td= @request.view_runtime
-
-          .small-12.large-4.columns
-            h4 Request
-            table
-              tbody
-                tr
-                  td Started
-                  td= @request.started_at
-                tr
-                  td Ended
-                  td= @request.ended_at
-                tr
-                  td Path
-                  td= @request.path
-                tr
-                  td Method
-                  td= @request.source.method_name
-                tr
-                  td Format
-                  td= @request.source.format_type
-                tr
-                  td Status
-                  td= @request.status
-
-      - if @request.insights.any?
-        .panel
-          h3 Insights
-          - @request.insights.each do |insight|
-            hr
-            = render insight.partial_name, insight: insight, request: @request
-
-      .panel
-        h3 Event Log
-        table
-          thead
-            tr
-              th Started At
-              th Ended At
-              th Duration
-          tbody
-            - @request.events.each do |event|
-              = render "#{event.underscored_class_name}_row", event: event
-
-- content_for :javascript_body do
-  javascript:
-    Morris.Donut({
-      element: 'time-breakdown',
-      data: $("#time-breakdown").data("breakdown"),
-      formatter: function(value) { return value + "ms" },
-      colors: [
-        "#16a085",
-        "#3498db",
-      ],
-    });
+    .panel
+      h3 Event Log
+      table
+        thead
+          tr
+            th Started At
+            th Ended At
+            th Duration
+        tbody
+          - @request.events.each do |event|
+            = render "#{event.underscored_class_name}_row", event: event
