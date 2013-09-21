@@ -2,38 +2,20 @@
 - add_crumb @app.name, app_path(@app)
 
 .row
-  .large-12.small-12.columns
-    .row
-      .large-10.columns
-        h3= @app.name
-      .large-2.columns
-        a href=app_settings_path(@app)
-          i.general.foundicon-settings
-
-    table.full-table
-      thead
-        tr
-          th Source
-          th # Requests
-          th
-            span.has-tip(data-tooltip title="Total action duration (ms)")
-              | Median Duration
-          th
-            span.has-tip(data-tooltip title="Database runtime (ms)")
-              | Median Database
-          th
-            span.has-tip(data-tooltip title="View runtime (ms)")
-              | Median Views
-
-      tbody
-        - @app.alphabetized_sources.each do |source|
-          tr
-            td= link_to source.name, app_source_path(source.app, source)
-            td= source.requests_count
-            td= source.duration.median
-            td= source.db.median
-            td= source.view.median
-.row
-  .large-12.small-12.columns
-    h3 Recent Requests
-    = render "/requests/table", requests: @app.recent_requests
+  .small-12.columns
+    h3 Sources
+    - @app.alphabetized_sources.each do |source|
+      .panel
+        .row
+          .small-1.columns.text-centered
+            - if source.insights.any?
+              i.fi-lightbulb
+            | &nbsp;
+          .small-7.columns
+            = link_to source.name, app_source_path(source.app, source)
+          .small-2.columns
+            strong= source.requests_count
+            |  requests
+          .small-2.columns
+            strong= source.duration.median
+            |  ms
