@@ -3,18 +3,18 @@ table.table.table-striped.full-table
     tr
       th Path
       th Status
-      th Started At
-      th Ended At
+      th Duration
       th DB Runtime
       th View Runtime
-      th Duration
+      th Started At
+      th Ended At
   tbody
     - requests.each do |request|
       tr
         td= link_to request.path, app_request_path(request.app, request)
         td= request.status
-        td= request.started_at
-        td= request.ended_at
+        td= request.duration
         td= request.db_runtime
         td= request.view_runtime
-        td= request.duration
+        td= request.started_at
+        td= request.ended_at

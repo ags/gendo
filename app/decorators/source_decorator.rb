@@ -35,4 +35,12 @@ class SourceDecorator < Draper::Decorator
       Insights::Source.applicable_to(object)
     )
   end
+
+  def request_duration_breakdown_graph_data
+    median_request_duration_by_day.
+      limit(100).
+      map { |request|
+        {date: request.date, value: request.duration}
+      }
+  end
 end

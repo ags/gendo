@@ -51,4 +51,10 @@ class Source < ActiveRecord::Base
   def latest_n_plus_one_query
     n_plus_one_queries.order(:created_at).last
   end
+
+  def median_request_duration_by_day
+    requests.
+      group("DATE(created_at)").
+      select("DATE(created_at) AS date, median(duration) AS duration")
+  end
 end

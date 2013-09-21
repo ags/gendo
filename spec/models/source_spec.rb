@@ -55,4 +55,21 @@ describe Source do
       expect(request.source.latest_n_plus_one_query).to eq(b)
     end
   end
+
+  describe "#median_request_duration_by_day" do
+    it "returns the median request duration grouped by day" do
+      source = Source.make!
+      date_a = Date.new(2013, 1, 1)
+      date_b = Date.new(2013, 1, 2)
+
+      Request.make!(source: source, duration: 1, created_at: date_a)
+      Request.make!(source: source, duration: 2, created_at: date_a)
+      Request.make!(source: source, duration: 3, created_at: date_b)
+
+      expect(source.median_request_duration_by_day.map(&:attributes)).to eq([
+        {"date" => date_b, "duration" => 3, "id" => nil},
+        {"date" => date_a, "duration" => 1.5, "id" => nil},
+      ])
+    end
+  end
 end
