@@ -8,8 +8,4 @@ class AppDecorator < Draper::Decorator
   def collecting_data?
     sources.any?
   end
-
-  def recent_requests(limit: 25)
-    requests.order(created_at: :desc).limit(limit).decorate
-  end
 end
