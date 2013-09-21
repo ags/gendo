@@ -25,32 +25,6 @@ describe AppDecorator do
     end
   end
 
-  describe "#worst_sources_by_db_runtime" do
-    it "delegates to App#sources_by_median_desc for db_runtime" do
-      decorated_worst_sources = double(:decorated_worst_sources)
-
-      app.should_receive(:sources_by_median_desc).
-        with(:db_runtime, limit: 3).
-        and_return(double(:worst_sources, decorate: decorated_worst_sources))
-
-      expect(decorated.worst_sources_by_db_runtime).to \
-        eq(decorated_worst_sources)
-    end
-  end
-
-  describe "#worst_sources_by_view_runtime" do
-    it "delegates to App#sources_by_median_desc for view_runtime" do
-      decorated_worst_sources = double(:decorated_worst_sources)
-
-      app.should_receive(:sources_by_median_desc).
-        with(:view_runtime, limit: 3).
-        and_return(double(:worst_sources, decorate: decorated_worst_sources))
-
-      expect(decorated.worst_sources_by_view_runtime).to \
-        eq(decorated_worst_sources)
-    end
-  end
-
   describe "#collecting_data?" do
     let(:app) { double(:app, sources: sources) }
 

@@ -5,14 +5,6 @@ class AppDecorator < Draper::Decorator
     sources.order(:controller, :action).decorate
   end
 
-  def worst_sources_by_db_runtime(limit: 3)
-    sources_by_median_desc(:db_runtime, limit: limit).decorate
-  end
-
-  def worst_sources_by_view_runtime(limit: 3)
-    sources_by_median_desc(:view_runtime, limit: limit).decorate
-  end
-
   def collecting_data?
     sources.any?
   end
