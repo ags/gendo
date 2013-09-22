@@ -294,7 +294,8 @@ CREATE TABLE sources (
     method_name character varying(255) NOT NULL,
     format_type character varying(255) NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    requests_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -737,3 +738,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130803052040');
 INSERT INTO schema_migrations (version) VALUES ('20130803062221');
 
 INSERT INTO schema_migrations (version) VALUES ('20130803062609');
+
+INSERT INTO schema_migrations (version) VALUES ('20130922022421');

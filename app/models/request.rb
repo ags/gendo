@@ -1,5 +1,6 @@
 class Request < ActiveRecord::Base
-  belongs_to :source
+  belongs_to :source,
+    counter_cache: true
 
   has_one :app,
     through: :source
