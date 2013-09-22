@@ -8,7 +8,7 @@
           .small-2.columns
             = f.label :name, class: "inline"
           .small-10.columns
-            = f.text_field :name, placeholder: "my app name", tabindex: 1
+            = f.text_field :name, placeholder: "new app name", tabindex: 1
             - new_app_form.errors.messages[:name].each do |error_message|
               small.error
                 ' Name

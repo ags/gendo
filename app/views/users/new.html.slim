@@ -8,7 +8,7 @@
           .small-2.columns
             = f.label :email, class: "inline"
           .small-10.columns
-            = f.email_field :email, placeholder: "Email Address"
+            = f.email_field :email, placeholder: "email address"
             - form.errors.messages[:email].each do |error_message|
               small.error
                 ' Email
@@ -18,7 +18,7 @@
           .small-2.columns
             = f.label :password, class: "inline"
           .small-10.columns
-            = f.password_field :password, placeholder: "Password"
+            = f.password_field :password, placeholder: "password"
             - form.errors.messages[:password].each do |error_message|
               small.error
                 ' Password
