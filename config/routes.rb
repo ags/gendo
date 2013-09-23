@@ -23,11 +23,14 @@ Gendo::Application.routes.draw do
 
   resources :users, only: [:create]
 
-  get "/sign-up", to: "users#new", as: :signup
-  get "/sign-out", to: "sessions#destroy", as: :sign_out
+  namespace :oauth do
+    resource :github, controller: :github, only: [] do
+      get :authorize
+      get :callback
+    end
+  end
 
-  get "/sign-in", to: "sessions#new", as: :sign_in
-  post "/sign-in", to: "sessions#create"
+  get "/sign-out", to: "sessions#destroy", as: :sign_out
 
   ## Engines
 

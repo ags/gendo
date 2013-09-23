@@ -7,6 +7,8 @@ gem 'bcrypt-ruby'
 gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
+gem 'oauth2'
+gem 'octokit'
 gem 'pg'
 gem 'rails'
 gem 'sidekiq'
@@ -27,6 +29,9 @@ group :test do
   gem 'machinist'
   gem 'rspec-rails'
   gem 'simplecov', require: false
+  gem 'vcr',
+    git: 'git@github.com:vcr/vcr.git'
+  gem 'webmock'
 end
 
 group :test, :development do

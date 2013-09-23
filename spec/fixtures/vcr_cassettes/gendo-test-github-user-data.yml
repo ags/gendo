@@ -1,0 +1,138 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.beta+json
+      User-Agent:
+      - Octokit Ruby Gem 2.1.1
+      Authorization:
+      - token 6d4dbae87749ecf8c2678d2635c7cd18d74b76a0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Mon, 23 Sep 2013 13:46:02 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4999'
+      X-Ratelimit-Reset:
+      - '1379947562'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 22 Sep 2013 23:45:09 GMT
+      Etag:
+      - '"23bd7c27299523295a062d78fa95ca19"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - user, user:email, user:follow, site_admin
+      Vary:
+      - Accept, Authorization, Cookie
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.beta; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin:
+      - '*'
+      X-Github-Request-Id:
+      - 3CF0887A:46FF:15D5FF2:5240461A
+    body:
+      encoding: UTF-8
+      string: '{"login":"gendo-test","id":5514833,"avatar_url":"https://2.gravatar.com/avatar/f8edf524a2ff7da7bd4b794df8431a5a?d=https%3A%2F%2Fidenticons.github.com%2F7df0c272514c22fccbd1e8448754c41c.png","gravatar_id":"f8edf524a2ff7da7bd4b794df8431a5a","url":"https://api.github.com/users/gendo-test","html_url":"https://github.com/gendo-test","followers_url":"https://api.github.com/users/gendo-test/followers","following_url":"https://api.github.com/users/gendo-test/following{/other_user}","gists_url":"https://api.github.com/users/gendo-test/gists{/gist_id}","starred_url":"https://api.github.com/users/gendo-test/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/gendo-test/subscriptions","organizations_url":"https://api.github.com/users/gendo-test/orgs","repos_url":"https://api.github.com/users/gendo-test/repos","events_url":"https://api.github.com/users/gendo-test/events{/privacy}","received_events_url":"https://api.github.com/users/gendo-test/received_events","type":"User","name":"Gendo
+        Test","company":null,"blog":null,"location":null,"email":null,"hireable":false,"bio":null,"public_repos":0,"followers":0,"following":0,"created_at":"2013-09-22T22:25:12Z","updated_at":"2013-09-22T23:45:09Z","public_gists":0}'
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 13:46:03 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user/emails
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3
+      User-Agent:
+      - Octokit Ruby Gem 2.1.1
+      Authorization:
+      - token 6d4dbae87749ecf8c2678d2635c7cd18d74b76a0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Mon, 23 Sep 2013 13:46:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4998'
+      X-Ratelimit-Reset:
+      - '1379947562'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 22 Sep 2013 23:45:09 GMT
+      Etag:
+      - '"79991e85ddcf9fdd5d63a84edd099907"'
+      X-Oauth-Scopes:
+      - repo, user:email
+      X-Accepted-Oauth-Scopes:
+      - user, user:email, user:follow, site_admin
+      Vary:
+      - Accept, Authorization, Cookie
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin:
+      - '*'
+      X-Github-Request-Id:
+      - 3CF0887A:46FF:15D68F5:52404620
+    body:
+      encoding: UTF-8
+      string: '[{"email":"alex.geoffrey.smith+gendotest@gmail.com","primary":true,"verified":true}]'
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 13:46:09 GMT
+recorded_with: VCR 2.5.0
