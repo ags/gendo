@@ -4,3 +4,6 @@
 require File.expand_path('../config/application', __FILE__)
 
 Gendo::Application.load_tasks
+
+# Disable Heroku attempts to dump database structure after migrations.
+Rake::Task["db:structure:dump"].clear if Rails.env.production?
