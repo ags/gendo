@@ -18,7 +18,8 @@ describe Source do
 
   describe "#name" do
     it "returns the controller and action" do
-      source = Source.make!(controller: "PostsController", action: "new")
+      source = Source.new(controller: "PostsController", action: "new")
+
       expect(source.name).to eq("PostsController#new")
     end
   end
