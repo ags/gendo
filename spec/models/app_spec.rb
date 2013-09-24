@@ -1,18 +1,6 @@
 require "spec_helper"
 
 describe App do
-  it "requires a user" do
-    app = App.new
-    expect(app.valid?).to be_false
-    expect(app.errors.messages[:user]).to eq(["can't be blank"])
-  end
-
-  it "requires a name" do
-    app = App.new
-    expect(app.valid?).to be_false
-    expect(app.errors.messages[:name]).to eq(["can't be blank"])
-  end
-
   it "sets a slug on name assignment" do
     app = App.new(name: "Shinji Ikari")
     expect(app.slug).to eq("shinji-ikari")
