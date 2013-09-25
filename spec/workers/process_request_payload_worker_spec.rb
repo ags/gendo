@@ -43,7 +43,7 @@ describe ProcessRequestPayloadWorker do
       ProcessRequestPayloadWorker.new.perform(app.id, payload)
     end
 
-    it "queues an IdentifyNPlusOneQueriesJob" do
+    it "queues an IdentifyNPlusOneQueriesWorker" do
       expect(IdentifyNPlusOneQueriesWorker).to \
         receive(:in_request).
         with(request)

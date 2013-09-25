@@ -5,7 +5,7 @@ class Request; end
 class IdentifiesNPlusOneQueries; end
 
 describe IdentifyNPlusOneQueriesWorker do
-  describe "#from_request" do
+  describe "#in_request" do
     it "queues the worker with the given request id" do
       request = double(id: 123)
 
