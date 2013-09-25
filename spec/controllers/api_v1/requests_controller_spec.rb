@@ -9,6 +9,12 @@ describe ApiV1::RequestsController do
     context "when authenticated" do
       include_context "App authentication"
 
+      it "responds with 201 Created" do
+        action!
+
+        expect(response.status).to eq(201)
+      end
+
       it "queues a ProcessRequestPayloadWorker" do
         expect do
           action!

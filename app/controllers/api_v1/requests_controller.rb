@@ -6,7 +6,7 @@ module ApiV1
         request_payload.to_h
       )
 
-      render json: {}
+      head :created
     end
 
     private
