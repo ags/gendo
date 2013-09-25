@@ -18,6 +18,10 @@ class Request < ActiveRecord::Base
     inverse_of: :request,
     dependent: :destroy
 
+  has_many :bulk_insertables,
+    inverse_of: :request,
+    dependent: :destroy
+
   validates :source,
     presence: true
 
@@ -25,6 +29,14 @@ class Request < ActiveRecord::Base
     n_plus_one_queries.create!(
       culprit_table_name: table_name,
       sql_events: sql_events,
+    )
+  end
+
+  def create_bulk_insertable!(table_name, column_names, sql_events)
+    bulk_insertables.create!(
+      culprit_table_name: table_name,
+      column_names:       column_names,
+      sql_events:         sql_events,
     )
   end
 end

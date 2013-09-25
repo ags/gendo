@@ -7,6 +7,7 @@ require_relative "../../app/workers/process_request_payload_worker"
 class App; end
 class CreatesRequest; end
 class IdentifyNPlusOneQueriesWorker; end
+class IdentifyBulkInsertablesWorker; end
 
 describe ProcessRequestPayloadWorker do
   describe "#process_for_app" do
@@ -32,6 +33,7 @@ describe ProcessRequestPayloadWorker do
       allow(App).to receive(:find).with(123).and_return(app)
       allow(CreatesRequest).to receive(:create!).and_return(request)
       allow(IdentifyNPlusOneQueriesWorker).to receive(:in_request)
+      allow(IdentifyBulkInsertablesWorker).to receive(:in_request)
     end
 
     it "creates a Request" do
@@ -45,6 +47,14 @@ describe ProcessRequestPayloadWorker do
 
     it "queues an IdentifyNPlusOneQueriesWorker" do
       expect(IdentifyNPlusOneQueriesWorker).to \
+        receive(:in_request).
+        with(request)
+
+      ProcessRequestPayloadWorker.new.perform(app.id, payload)
+    end
+
+    it "queues an IdentifyBulkInsertablesWorker" do
+      expect(IdentifyBulkInsertablesWorker).to \
         receive(:in_request).
         with(request)
 
