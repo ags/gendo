@@ -1,4 +1,5 @@
-require "sidekiq"
+module Sidekiq; module Worker; end; end
+
 require_relative "../../app/workers/identify_n_plus_one_queries_worker"
 
 class Request; end
