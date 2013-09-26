@@ -6,7 +6,7 @@ module Insights
       delegate :latest_n_plus_one_query, to: :source
 
       def applicable?
-        NPlusOneQuery.exists?(request_id: checkable_requests)
+        NPlusOneQuery.exists_for_requests?(checkable_requests)
       end
 
       private

@@ -10,4 +10,22 @@ describe NPlusOneQuery do
       expect(query.duration).to eq(3)
     end
   end
+
+  describe "#exists_for_requests?" do
+    context "when one of the requests has an associated NPlusOneQuery" do
+      it "is true" do
+        requests = [Request.make!, NPlusOneQuery.make!.request]
+
+        expect(NPlusOneQuery.exists_for_requests?(requests)).to be_true
+      end
+    end
+
+    context "when none of the requests has an associated NPlusOneQuery" do
+      it "is false" do
+        requests = [Request.make!, Request.make!]
+
+        expect(NPlusOneQuery.exists_for_requests?(requests)).to be_false
+      end
+    end
+  end
 end

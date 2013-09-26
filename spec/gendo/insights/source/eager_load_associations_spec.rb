@@ -1,31 +1,39 @@
-require "spec_helper"
+require "active_support/core_ext/module/delegation"
+require_relative "../../../../app/gendo/insights/source/base"
+require_relative "../../../../app/gendo/insights/source/eager_load_associations"
+
+class NPlusOneQuery; end
 
 describe Insights::Source::EagerLoadAssociations do
   describe "#applicable?" do
-    let(:source) { Source.make! }
+    let(:source) { double(:source) }
     let(:insight) { Insights::Source::EagerLoadAssociations.new(source) }
+      let(:requests) { [double(:request)] }
 
-    context "when one or more of the 10 most recent associated requests has an n+1 query" do
+    before do
+      allow(source).to \
+        receive(:latest_requests).
+        with(limit: described_class::REQUESTS_CHECKED_COUNT).
+        and_return(requests)
+    end
+
+    context "when an NPlusOneQuery exists for the latest associated requests" do
       it "is true" do
-        requests = 10.times.map { Request.create!(source: source) }
-        NPlusOneQuery.make!(request: requests[0])
+        allow(NPlusOneQuery).to \
+          receive(:exists_for_requests?).
+          with(requests).
+          and_return(true)
 
         expect(insight.applicable?).to be_true
       end
     end
 
-    context "when none of the 10 most recent associated requests has an n+1 query" do
+    context "when no NPlusOneQuery exists for the latest associated requests" do
       it "is false" do
-        requests = 11.times.map { Request.create!(source: source) }
-        NPlusOneQuery.make!(request: requests[0])
-
-        expect(insight.applicable?).to be_false
-      end
-    end
-
-    context "when no associated requests include NPlusOneQueries" do
-      it "is false" do
-        Request.make!(source: source)
+        allow(NPlusOneQuery).to \
+          receive(:exists_for_requests?).
+          with(requests).
+          and_return(false)
 
         expect(insight.applicable?).to be_false
       end
