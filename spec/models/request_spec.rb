@@ -13,4 +13,22 @@ describe Request do
       expect(query.sql_events).to eq([sql_event])
     end
   end
+
+  describe "#create_bulk_insertable!" do
+    it "creates an associated BulkInsertable" do
+      request = Request.make!
+      sql_event = SqlEvent.create!(request: request)
+
+      bulk_insertable = request.create_bulk_insertable!(
+        "posts",
+        ["title", "content"],
+        [sql_event]
+      )
+
+      expect(bulk_insertable.request).to eq(request)
+      expect(bulk_insertable.culprit_table_name).to eq("posts")
+      expect(bulk_insertable.column_names).to eq(["title", "content"])
+      expect(bulk_insertable.sql_events).to eq([sql_event])
+    end
+  end
 end

@@ -12,6 +12,9 @@ class App < ActiveRecord::Base
   has_many :requests,
     through: :sources
 
+  has_many :bulk_insertables,
+    through: :requests
+
   has_many :n_plus_one_queries,
     through: :requests
 

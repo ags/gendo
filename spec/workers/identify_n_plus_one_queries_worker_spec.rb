@@ -1,11 +1,12 @@
-require "sidekiq"
+module Sidekiq; module Worker; end; end
+
 require_relative "../../app/workers/identify_n_plus_one_queries_worker"
 
 class Request; end
 class IdentifiesNPlusOneQueries; end
 
 describe IdentifyNPlusOneQueriesWorker do
-  describe "#from_request" do
+  describe "#in_request" do
     it "queues the worker with the given request id" do
       request = double(id: 123)
 

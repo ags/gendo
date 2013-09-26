@@ -135,6 +135,71 @@ ALTER SEQUENCE apps_id_seq OWNED BY apps.id;
 
 
 --
+-- Name: bulk_insertable_sql_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bulk_insertable_sql_events (
+    id integer NOT NULL,
+    bulk_insertable_id integer NOT NULL,
+    sql_event_id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: bulk_insertable_sql_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bulk_insertable_sql_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bulk_insertable_sql_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bulk_insertable_sql_events_id_seq OWNED BY bulk_insertable_sql_events.id;
+
+
+--
+-- Name: bulk_insertables; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bulk_insertables (
+    id integer NOT NULL,
+    request_id integer NOT NULL,
+    culprit_table_name character varying(255) NOT NULL,
+    column_names character varying(255)[] NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: bulk_insertables_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bulk_insertables_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bulk_insertables_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bulk_insertables_id_seq OWNED BY bulk_insertables.id;
+
+
+--
 -- Name: mailer_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -442,6 +507,20 @@ ALTER TABLE ONLY apps ALTER COLUMN id SET DEFAULT nextval('apps_id_seq'::regclas
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY bulk_insertable_sql_events ALTER COLUMN id SET DEFAULT nextval('bulk_insertable_sql_events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bulk_insertables ALTER COLUMN id SET DEFAULT nextval('bulk_insertables_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY mailer_events ALTER COLUMN id SET DEFAULT nextval('mailer_events_id_seq'::regclass);
 
 
@@ -500,6 +579,22 @@ ALTER TABLE ONLY view_events ALTER COLUMN id SET DEFAULT nextval('view_events_id
 
 ALTER TABLE ONLY apps
     ADD CONSTRAINT apps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bulk_insertable_sql_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bulk_insertable_sql_events
+    ADD CONSTRAINT bulk_insertable_sql_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bulk_insertables_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bulk_insertables
+    ADD CONSTRAINT bulk_insertables_pkey PRIMARY KEY (id);
 
 
 --
@@ -745,3 +840,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130803062609');
 INSERT INTO schema_migrations (version) VALUES ('20130922022421');
 
 INSERT INTO schema_migrations (version) VALUES ('20130922041241');
+
+INSERT INTO schema_migrations (version) VALUES ('20130925131559');

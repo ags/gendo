@@ -4,6 +4,7 @@ module Insights
       [
         SendEmailAsync,
         EagerLoadAssociations,
+        BulkInsertData,
       ]
     end
 

@@ -1,0 +1,29 @@
+- add_app_index_breadcrumb
+- add_app_breadcrumb(@bulk_insertable)
+- add_source_breadcrumb(@bulk_insertable)
+- add_request_breadcrumb(@bulk_insertable)
+- add_crumb "bulk insertable",
+  app_bulk_insertable_path(@bulk_insertable.app, @bulk_insertable)
+
+.row
+  .small-12.columns
+    .panel
+      h3
+        ' Found
+        = @bulk_insertable.sql_events.count
+        |  similar inserts into the
+        | '#{@bulk_insertable.culprit_table_name}' table!
+
+      p
+        | You may be able to combine these into a single bulk insert statement.
+
+    table
+      thead
+        tr
+          th Started At
+          th Ended At
+          th Duration
+      tbody
+        - @bulk_insertable.sql_events.each do |event|
+          = render "requests/sql_event_row", event: event
+

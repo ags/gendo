@@ -11,5 +11,7 @@ class ProcessRequestPayloadWorker
     request = CreatesRequest.create!(app, request_payload)
 
     IdentifyNPlusOneQueriesWorker.in_request(request)
+
+    IdentifyBulkInsertablesWorker.in_request(request)
   end
 end

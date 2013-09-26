@@ -1,0 +1,3 @@
+- request.bulk_insertables.each do |insertable|
+  a(href=app_bulk_insertable_path(insertable.app, insertable))
+    | Bulk insert data into the '#{insertable.culprit_table_name}' table.
