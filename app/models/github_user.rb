@@ -1,3 +1,5 @@
+require 'octokit'
+
 class GithubUser
   def self.find_or_initialize(github_access_token)
     github      = Octokit::Client.new(access_token: github_access_token)

@@ -7,7 +7,7 @@ gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
 gem 'oauth2'
-gem 'octokit'
+gem 'octokit', require: false
 gem 'pg'
 gem 'rails'
 gem 'sidekiq'
