@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'active_attr'
+gem 'active_attr', require: false
 gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
