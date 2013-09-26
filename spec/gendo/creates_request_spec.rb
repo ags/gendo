@@ -22,12 +22,10 @@ describe CreatesRequest do
   } }
   let(:payload) { default_payload }
 
-  subject(:creator) { CreatesRequest.new(app, payload) }
+  subject(:request) { CreatesRequest.create!(app, payload) }
 
   describe "#create!" do
     it "creates a Request from the given parameters" do
-      request = creator.create!
-
       expect(request.source.app).to         eq(app)
       expect(request.source.controller).to  eq("PostsController")
       expect(request.source.action).to      eq("new")
@@ -61,8 +59,6 @@ describe CreatesRequest do
       } }
 
       it "creates nested SqlEvents" do
-        request = creator.create!
-
         expect(request.sql_events.count).to eq(1)
 
         sql_event = request.sql_events.first
@@ -89,8 +85,6 @@ describe CreatesRequest do
       } }
 
       it "creates nested ViewEvents" do
-        request = creator.create!
-
         expect(request.view_events.count).to eq(1)
 
         view_event = request.view_events.first
@@ -118,8 +112,6 @@ describe CreatesRequest do
       } }
 
       it "creates nested MailerEvents" do
-        request = creator.create!
-
         expect(request.mailer_events.count).to eq(1)
 
         mailer_event = request.mailer_events.first
@@ -136,8 +128,9 @@ describe CreatesRequest do
       it "uses the existing source" do
         source = Source.make!(payload[:source].merge(app: app))
 
-        expect { creator.create! }.to_not change { Source.count }
-        expect { creator.create! }.to change { source.requests.count }.by(1)
+        expect {
+          expect { request }.to change { source.requests.count }.by(1)
+        }.to_not change { Source.count }
       end
     end
 
@@ -145,7 +138,6 @@ describe CreatesRequest do
       let(:payload) { default_payload.merge(db_runtime: nil) }
 
       it "sets the db_runtime to 0.0" do
-        request = creator.create!
         expect(request.db_runtime).to eq(0.0)
       end
     end
@@ -154,7 +146,6 @@ describe CreatesRequest do
       let(:payload) { default_payload.merge(view_runtime: nil) }
 
       it "sets the view_runtime to 0.0" do
-        request = creator.create!
         expect(request.view_runtime).to eq(0.0)
       end
     end
@@ -163,7 +154,6 @@ describe CreatesRequest do
       let(:payload) { default_payload.merge(duration: nil) }
 
       it "sets the duration to 0.0" do
-        request = creator.create!
         expect(request.duration).to eq(0.0)
       end
     end
