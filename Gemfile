@@ -28,8 +28,7 @@ group :test do
   gem 'machinist'
   gem 'rspec-rails'
   gem 'simplecov', require: false
-  gem 'vcr',
-    git: 'git@github.com:vcr/vcr.git'
+  gem 'vcr'
   gem 'webmock'
 end
 
