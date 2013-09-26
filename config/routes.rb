@@ -18,6 +18,8 @@ Gendo::Application.routes.draw do
 
     resources :n_plus_one_queries, only: [:show]
 
+    resources :bulk_insertables, only: [:show]
+
     resources :mailer_events, only: [:show]
   end
 

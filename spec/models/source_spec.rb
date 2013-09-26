@@ -57,6 +57,17 @@ describe Source do
     end
   end
 
+  describe "#latest_bulk_insertable" do
+    it "returns the most recently detected associated BulkInsertable" do
+      request = Request.make!
+      a = BulkInsertable.make!(request: request, created_at: 3.days.ago)
+      b = BulkInsertable.make!(request: request, created_at: 1.days.ago)
+      c = BulkInsertable.make!(request: request, created_at: 2.days.ago)
+
+      expect(request.source.latest_bulk_insertable).to eq(b)
+    end
+  end
+
   describe "#median_request_duration_by_day" do
     it "returns the median request duration grouped by day" do
       source = Source.make!

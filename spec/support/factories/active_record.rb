@@ -14,6 +14,12 @@ AppAccessToken.blueprint do
   token { sn }
 end
 
+BulkInsertable.blueprint do
+  request
+  culprit_table_name { "posts" }
+  column_names { %w(title content) }
+end
+
 MailerEvent.blueprint do
   request
   mailer     { "FooMailer" }

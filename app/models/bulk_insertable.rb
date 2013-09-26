@@ -21,4 +21,8 @@ class BulkInsertable < ActiveRecord::Base
 
   has_many :sql_events,
     through: :bulk_insertable_sql_events
+
+  def self.exists_for_requests?(requests)
+    exists?(request_id: requests)
+  end
 end

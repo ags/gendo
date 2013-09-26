@@ -16,6 +16,9 @@ class Source < ActiveRecord::Base
   has_many :n_plus_one_queries,
     through: :requests
 
+  has_many :bulk_insertables,
+    through: :requests
+
   validates :app,
     presence: true
 
@@ -50,6 +53,10 @@ class Source < ActiveRecord::Base
 
   def latest_n_plus_one_query
     n_plus_one_queries.order(:created_at).last
+  end
+
+  def latest_bulk_insertable
+    bulk_insertables.order(:created_at).last
   end
 
   def median_request_duration_by_day
