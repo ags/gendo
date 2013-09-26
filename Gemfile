@@ -6,7 +6,7 @@ gem 'active_attr', require: false
 gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
-gem 'oauth2'
+gem 'oauth2', require: false
 gem 'octokit', require: false
 gem 'pg'
 gem 'rails'
