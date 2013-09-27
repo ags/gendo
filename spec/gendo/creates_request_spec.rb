@@ -103,7 +103,7 @@ describe CreatesRequest do
         mailer_events: [
           {
             mailer:     "FooMailer",
-            message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
+            message_id: "123@mba.local.mail",
             started_at: 1370939786.0706801,
             ended_at:   1370939787.0706801,
             duration:   0.321,
@@ -116,8 +116,7 @@ describe CreatesRequest do
 
         mailer_event = request.mailer_events.first
         expect(mailer_event.mailer).to eq("FooMailer")
-        expect(mailer_event.message_id).to \
-          eq("4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail")
+        expect(mailer_event.message_id).to eq("123@mba.local.mail")
         expect(mailer_event.duration).to eq(0.321)
         expect(mailer_event.started_at.to_f).to eq(1370939786.0706801)
         expect(mailer_event.ended_at.to_f).to eq(1370939787.0706801)
