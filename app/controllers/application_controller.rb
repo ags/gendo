@@ -29,4 +29,7 @@ class ApplicationController < ActionController::Base
     return render "/statics/unauthorized", status: :unauthorized
   end
 
+  def render_not_found
+    return render "/statics/not_found", status: :not_found
+  end
 end
