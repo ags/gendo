@@ -31,4 +31,34 @@ describe Request do
       expect(bulk_insertable.sql_events).to eq([sql_event])
     end
   end
+
+  context "when the given db_runtime is nil" do
+    it "sets the db_runtime to 0.0" do
+      request = Request.new(db_runtime: nil)
+
+      request.valid?
+
+      expect(request.db_runtime).to eq(0.0)
+    end
+  end
+
+  context "when the given view_runtime is nil" do
+    it "sets the view_runtime to 0.0" do
+      request = Request.new(view_runtime: nil)
+
+      request.valid?
+
+      expect(request.view_runtime).to eq(0.0)
+    end
+  end
+
+  context "when the given duration is nil" do
+    it "sets the duration to 0.0" do
+      request = Request.new(duration: nil)
+
+      request.valid?
+
+      expect(request.duration).to eq(0.0)
+    end
+  end
 end

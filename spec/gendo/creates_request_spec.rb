@@ -133,28 +133,5 @@ describe CreatesRequest do
       end
     end
 
-    context "when the given db_runtime is nil" do
-      let(:payload) { default_payload.merge(db_runtime: nil) }
-
-      it "sets the db_runtime to 0.0" do
-        expect(request.db_runtime).to eq(0.0)
-      end
-    end
-
-    context "when the given view_runtime is nil" do
-      let(:payload) { default_payload.merge(view_runtime: nil) }
-
-      it "sets the view_runtime to 0.0" do
-        expect(request.view_runtime).to eq(0.0)
-      end
-    end
-
-    context "when the given duration is nil" do
-      let(:payload) { default_payload.merge(duration: nil) }
-
-      it "sets the duration to 0.0" do
-        expect(request.duration).to eq(0.0)
-      end
-    end
   end
 end

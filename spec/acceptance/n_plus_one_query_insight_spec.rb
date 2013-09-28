@@ -4,7 +4,7 @@ feature "n+1 query insight" do
   let(:user) { User.make! }
   let(:app) { App.make!(user: user) }
   let(:source) { Source.make!(app: app) }
-  let(:request) { Request.make!(:with_zero_runtime, source: source) }
+  let(:request) { Request.make!(source: source) }
   let!(:n_plus_one_query) { NPlusOneQuery.make!(request: request) }
 
   background do

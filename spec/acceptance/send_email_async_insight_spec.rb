@@ -4,7 +4,7 @@ feature "Send email asynchronously insight" do
   let(:user) { User.make! }
   let(:app) { App.make!(user: user) }
   let(:source) { Source.make!(app: app) }
-  let(:request) { Request.make!(:with_zero_runtime, source: source) }
+  let(:request) { Request.make!(source: source) }
   let!(:mailer_event) { MailerEvent.make!(request: request) }
 
   background do

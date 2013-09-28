@@ -25,6 +25,12 @@ class Request < ActiveRecord::Base
   validates :source,
     presence: true
 
+  before_validation do
+    self.duration     ||= 0
+    self.db_runtime   ||= 0
+    self.view_runtime ||= 0
+  end
+
   def create_n_plus_one_query!(table_name, sql_events)
     n_plus_one_queries.create!(
       culprit_table_name: table_name,

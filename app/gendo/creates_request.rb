@@ -19,11 +19,8 @@ class CreatesRequest
       :source
     )
 
-    @request[:started_at]   = Time(@request.fetch(:started_at))
-    @request[:ended_at]     = Time(@request.fetch(:ended_at))
-    @request[:duration]     = @request[:duration].to_f
-    @request[:db_runtime]   = @request[:db_runtime].to_f
-    @request[:view_runtime] = @request[:view_runtime].to_f
+    @request[:started_at] = Time(@request.fetch(:started_at))
+    @request[:ended_at]   = Time(@request.fetch(:ended_at))
 
     events.each do |event|
       # TODO remove once the deep_symbolize_keys patch is in Rails master.

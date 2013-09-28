@@ -309,9 +309,9 @@ CREATE TABLE requests (
     status integer,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
-    db_runtime double precision,
-    view_runtime double precision,
-    duration double precision,
+    db_runtime double precision DEFAULT 0,
+    view_runtime double precision DEFAULT 0,
+    duration double precision DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     source_id integer NOT NULL,
@@ -842,3 +842,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130922022421');
 INSERT INTO schema_migrations (version) VALUES ('20130922041241');
 
 INSERT INTO schema_migrations (version) VALUES ('20130925131559');
+
+INSERT INTO schema_migrations (version) VALUES ('20130928000652');

@@ -52,14 +52,8 @@ end
 
 Request.blueprint do
   source
-end
-
-Request.blueprint(:with_zero_runtime) do
-  db_runtime   { 0 }
-  view_runtime { 0 }
-  duration     { 0 }
-  started_at   { Time.now }
-  ended_at     { Time.now }
+  started_at { Time.now }
+  ended_at   { Time.now }
 end
 
 User.blueprint do
