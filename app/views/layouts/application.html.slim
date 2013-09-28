@@ -44,6 +44,13 @@ body.antialiased
               a href=authorize_oauth_github_path
                 span Sign In
 
+  - if flash[:notice]
+    .row
+      .small-12.columns
+        .alert-box(data-alert)
+          = flash[:notice]
+          a.close(href="#") &times;
+
   section.content
     - if crumbs.any?
       .row.crumbs
