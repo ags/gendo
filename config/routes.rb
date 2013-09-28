@@ -9,6 +9,13 @@ Gendo::Application.routes.draw do
     resource :requests, only: [:create]
   end
 
+  namespace :oauth do
+    resource :github, controller: :github, only: [] do
+      get :authorize
+      get :callback
+    end
+  end
+
   resources :apps, only: [:index, :new, :create, :show] do
     get :settings
 
@@ -24,13 +31,6 @@ Gendo::Application.routes.draw do
   end
 
   resources :users, only: [:create]
-
-  namespace :oauth do
-    resource :github, controller: :github, only: [] do
-      get :authorize
-      get :callback
-    end
-  end
 
   get "/sign-out", to: "sessions#destroy", as: :sign_out
 
