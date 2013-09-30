@@ -1,0 +1,26 @@
+.row
+  .small-12.columns
+    = form_for(user, url: user_url(user), method: :patch) do |f|
+      fieldset
+        legend Update Account Settings
+
+        .row
+          .small-2.columns
+            = f.label :email, class: "inline"
+          .small-10.columns
+            = f.email_field :email, value: user.email, tabindex: 1
+            - user.errors.messages[:email].each do |error_message|
+              small.error
+                ' Email
+                = error_message
+        .row
+          .small-2.columns
+            = f.label :name, class: "inline"
+          .small-10.columns
+            = f.text_field :name, value: user.name, tabindex: 1
+            - user.errors.messages[:name].each do |error_message|
+              small.error
+                ' Name
+                = error_message
+
+        = f.submit "Update", class: "button", tabindex: 2
