@@ -10,7 +10,7 @@ describe Insights::Request::BulkInsertData do
       let(:bulk_insertables) { [double(:bulk_insertable)] }
 
       it "is true" do
-        expect(insight.applicable?).to be_true
+        expect(insight.applicable?).to eq(true)
       end
     end
 
@@ -20,7 +20,7 @@ describe Insights::Request::BulkInsertData do
       it "is false" do
         insight = Insights::Request::BulkInsertData.new(request)
 
-        expect(insight.applicable?).to be_false
+        expect(insight.applicable?).to eq(false)
       end
     end
   end

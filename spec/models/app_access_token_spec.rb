@@ -6,7 +6,8 @@ describe AppAccessToken do
     subject(:app_access_token) { AppAccessToken.generate(app) }
 
     before do
-      SecureRandom.stub(:urlsafe_base64).
+      allow(class_double("SecureRandom").as_stubbed_const).to \
+        receive(:urlsafe_base64).
         and_return("first_token", "second_token")
     end
 
@@ -16,7 +17,7 @@ describe AppAccessToken do
     end
 
     it "does not persist the token" do
-      expect(app_access_token.persisted?).to be_false
+      expect(app_access_token.persisted?).to eq(false)
     end
 
     context "if a AppAccessToken already exists with the generated token" do

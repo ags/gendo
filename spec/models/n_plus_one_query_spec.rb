@@ -16,7 +16,7 @@ describe NPlusOneQuery do
       it "is true" do
         requests = [Request.make!, NPlusOneQuery.make!.request]
 
-        expect(NPlusOneQuery.exists_for_requests?(requests)).to be_true
+        expect(NPlusOneQuery.exists_for_requests?(requests)).to eq(true)
       end
     end
 
@@ -24,7 +24,7 @@ describe NPlusOneQuery do
       it "is false" do
         requests = [Request.make!, Request.make!]
 
-        expect(NPlusOneQuery.exists_for_requests?(requests)).to be_false
+        expect(NPlusOneQuery.exists_for_requests?(requests)).to eq(false)
       end
     end
   end

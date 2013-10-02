@@ -30,7 +30,7 @@ describe Forms::GithubSignIn do
       expect(user).to \
         receive(:save!)
 
-      expect(form.save!).to be_true
+      expect(form.save!).to eq(true)
     end
   end
 

@@ -77,7 +77,7 @@ describe RequestDecorator do
       let(:request) { double(:request, db_runtime: 1, view_runtime: 2) }
 
       it "is true" do
-        expect(decorated.collected_timings?).to be_true
+        expect(decorated.collected_timings?).to eq(true)
       end
     end
 
@@ -85,7 +85,7 @@ describe RequestDecorator do
       let(:request) { double(:request, db_runtime: 1, view_runtime: nil) }
 
       it "is false" do
-        expect(decorated.collected_timings?).to be_false
+        expect(decorated.collected_timings?).to eq(false)
       end
     end
 
@@ -93,7 +93,7 @@ describe RequestDecorator do
       let(:request) { double(:request, db_runtime: nil, view_runtime: 2) }
 
       it "is false" do
-        expect(decorated.collected_timings?).to be_false
+        expect(decorated.collected_timings?).to eq(false)
       end
     end
 
@@ -101,7 +101,7 @@ describe RequestDecorator do
       let(:request) { double(:request, db_runtime: nil, view_runtime: nil) }
 
       it "is false" do
-        expect(decorated.collected_timings?).to be_false
+        expect(decorated.collected_timings?).to eq(false)
       end
     end
   end
@@ -137,7 +137,10 @@ describe RequestDecorator do
         with([applicable_insight]).
         and_return(decorated_insights)
 
-      Insights::Request.stub(:applicable_to) { [applicable_insight] }
+      allow(Insights::Request).to \
+        receive(:applicable_to).
+        with(request).
+        and_return([applicable_insight])
 
       expect(decorated.insights).to eq(decorated_insights)
     end

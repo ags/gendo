@@ -22,7 +22,7 @@ describe ApiV1::ApiController, "error handling" do
 
   context "in production" do
     before do
-      Rails.env.stub(:production?) { true }
+      allow(Rails.env).to receive(:production?).and_return(true)
     end
 
     it "only responds with the error type" do

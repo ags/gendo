@@ -18,7 +18,7 @@ describe GithubUser do
         expect(user.github_user_id).to eq(5514833)
         expect(user.email).to eq("alex.geoffrey.smith+gendotest@gmail.com")
         expect(user.name).to eq("Gendo Test")
-        expect(user.new_record?).to be_true
+        expect(user.new_record?).to eq(true)
       end
     end
 
@@ -28,7 +28,7 @@ describe GithubUser do
 
         user = GithubUser.find_or_initialize(access_token)
 
-        expect(user.new_record?).to be_false
+        expect(user.new_record?).to eq(false)
         expect(existing.id).to eq(user.id)
         expect(user.name).to eq("Gendo Test")
       end

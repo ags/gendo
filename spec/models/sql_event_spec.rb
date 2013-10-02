@@ -6,7 +6,7 @@ describe SqlEvent do
       it "is true" do
         event = SqlEvent.new(name: "CACHED")
 
-        expect(event.cached?).to be_true
+        expect(event.cached?).to eq(true)
       end
     end
 
@@ -14,7 +14,7 @@ describe SqlEvent do
       it "is false" do
         event = SqlEvent.new(name: "SqlEvent Load")
 
-        expect(event.cached?).to be_false
+        expect(event.cached?).to eq(false)
       end
     end
   end

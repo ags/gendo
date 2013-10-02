@@ -6,7 +6,7 @@ describe BulkInsertable do
       it "is true" do
         requests = [Request.make!, BulkInsertable.make!.request]
 
-        expect(BulkInsertable.exists_for_requests?(requests)).to be_true
+        expect(BulkInsertable.exists_for_requests?(requests)).to eq(true)
       end
     end
 
@@ -14,7 +14,7 @@ describe BulkInsertable do
       it "is false" do
         requests = [Request.make!, Request.make!]
 
-        expect(BulkInsertable.exists_for_requests?(requests)).to be_false
+        expect(BulkInsertable.exists_for_requests?(requests)).to eq(false)
       end
     end
   end

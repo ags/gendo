@@ -20,13 +20,13 @@ describe Authenticator do
       end
 
       it "is true" do
-        expect(authenticator.logged_in?).to be_true
+        expect(authenticator.logged_in?).to eq(true)
       end
     end
 
     context "when logged out" do
       it "is false" do
-        expect(authenticator.logged_in?).to be_false
+        expect(authenticator.logged_in?).to eq(false)
       end
     end
   end

@@ -3,7 +3,6 @@ module Sidekiq; module Worker; end; end
 require_relative "../../app/workers/identify_n_plus_one_queries_worker"
 
 class Request; end
-class IdentifiesNPlusOneQueries; end
 
 describe IdentifyNPlusOneQueriesWorker do
   describe "#in_request" do
@@ -19,6 +18,9 @@ describe IdentifyNPlusOneQueriesWorker do
   end
 
   describe "#perform" do
+    let(:identifier) {
+      class_double("IdentifiesNPlusOneQueries").as_stubbed_const
+    }
     it "persists n+1 queries identified in the given request" do
       sql_event = double(:sql_event)
       request = double(:request, id: 123, sql_events: [sql_event])
@@ -28,7 +30,7 @@ describe IdentifyNPlusOneQueriesWorker do
         with(request.id).
         and_return(request)
 
-      expect(IdentifiesNPlusOneQueries).to \
+      expect(identifier).to \
         receive(:identify).
         with([sql_event]).
         and_return({"posts" => [sql_event]})

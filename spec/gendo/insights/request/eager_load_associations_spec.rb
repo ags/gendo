@@ -12,7 +12,7 @@ describe Insights::Request::EagerLoadAssociations do
       let(:queries) { [double(:query)] }
 
       it "is true" do
-        expect(insight.applicable?).to be_true
+        expect(insight.applicable?).to eq(true)
       end
     end
 
@@ -20,7 +20,7 @@ describe Insights::Request::EagerLoadAssociations do
       let(:queries) { [] }
 
       it "is false" do
-        expect(insight.applicable?).to be_false
+        expect(insight.applicable?).to eq(false)
       end
     end
   end

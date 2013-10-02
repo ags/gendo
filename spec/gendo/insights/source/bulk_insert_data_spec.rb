@@ -1,3 +1,4 @@
+require "active_support/core_ext/module/delegation"
 require_relative "../../../../app/gendo/insights/source/base"
 require_relative "../../../../app/gendo/insights/source/bulk_insert_data"
 
@@ -23,7 +24,7 @@ describe Insights::Source::BulkInsertData do
           with(requests).
           and_return(true)
 
-        expect(insight.applicable?).to be_true
+        expect(insight.applicable?).to eq(true)
       end
     end
 
@@ -34,7 +35,7 @@ describe Insights::Source::BulkInsertData do
           with(requests).
           and_return(false)
 
-        expect(insight.applicable?).to be_false
+        expect(insight.applicable?).to eq(false)
       end
     end
   end

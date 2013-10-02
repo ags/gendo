@@ -9,7 +9,7 @@ describe Insights::Source::SendEmailAsync do
 
     context "when no associated requests include MailerEvents" do
       it "is false" do
-        expect(insight.applicable?).to be_false
+        expect(insight.applicable?).to eq(false)
       end
     end
 
@@ -17,7 +17,7 @@ describe Insights::Source::SendEmailAsync do
       it "is false" do
         MailerEvent.make!(request: request, created_at: 2.days.ago)
 
-        expect(insight.applicable?).to be_false
+        expect(insight.applicable?).to eq(false)
       end
     end
 
@@ -25,7 +25,7 @@ describe Insights::Source::SendEmailAsync do
       it "is true" do
         MailerEvent.make!(request: request)
 
-        expect(insight.applicable?).to be_true
+        expect(insight.applicable?).to eq(true)
       end
     end
   end
@@ -35,11 +35,11 @@ describe Insights::Source::SendEmailAsync do
       request = Request.make!
       insight = Insights::Source::SendEmailAsync.new(request.source)
 
-      a = MailerEvent.make!(request: request, created_at: 3.days.ago)
-      b = MailerEvent.make!(request: request, created_at: 1.days.ago)
-      c = MailerEvent.make!(request: request, created_at: 2.days.ago)
+      MailerEvent.make!(request: request, created_at: 3.days.ago)
+      latest = MailerEvent.make!(request: request, created_at: 1.days.ago)
+      MailerEvent.make!(request: request, created_at: 2.days.ago)
 
-      expect(insight.latest_mailer_event).to eq(b)
+      expect(insight.latest_mailer_event).to eq(latest)
     end
   end
 end

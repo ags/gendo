@@ -40,7 +40,7 @@ describe SourceDecorator do
       let(:requests) { [double(:request)] }
 
       it "is true" do
-        expect(decorated.has_requests?).to be_true
+        expect(decorated.has_requests?).to eq(true)
       end
     end
 
@@ -48,7 +48,7 @@ describe SourceDecorator do
       let(:requests) { [] }
 
       it "is false" do
-        expect(decorated.has_requests?).to be_false
+        expect(decorated.has_requests?).to eq(false)
       end
     end
   end
@@ -85,12 +85,15 @@ describe SourceDecorator do
       applicable_insight = double(:applicable_insight)
       decorated_insights = double(:decorated_insights)
 
+      allow(Insights::Source).to \
+        receive(:applicable_to).
+        with(source).
+        and_return([applicable_insight])
+
       expect(InsightDecorator).to \
         receive(:decorate_collection).
         with([applicable_insight]).
         and_return(decorated_insights)
-
-      Insights::Source.stub(:applicable_to) { [applicable_insight] }
 
       expect(decorated.insights).to eq(decorated_insights)
     end

@@ -10,15 +10,15 @@ describe Forms::NewApp do
     form.app_creator = ->(attributes={}) { app_creator.create!(attributes) }
 
     expect(app_creator).to receive(:create!).with(name: "Shinji")
-    expect(form.save!).to be_true
+    expect(form.save!).to eq(true)
   end
 
   context "without a name" do
     subject(:form) { Forms::NewApp.new(user) }
 
     it "is invalid" do
-      expect(form.valid?).to be_false
-      expect(form.save!).to be_false
+      expect(form.valid?).to eq(false)
+      expect(form.save!).to eq(false)
     end
   end
 end

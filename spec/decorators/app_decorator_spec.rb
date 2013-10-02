@@ -7,17 +7,16 @@ Draper::ViewContext.test_strategy :fast
 class App; end
 
 describe AppDecorator do
-  let(:app) { double(:app) }
+  let(:app) { double(:app, sources: sources) }
   subject(:decorated) { AppDecorator.new(app) }
 
   describe "#alphabetized_sources" do
-    it "orders sources by their controller and action" do
-      decorated_sources = double(:decorated_sources)
-      sources = double(:sources, decorate: decorated_sources)
+    let(:decorated_sources) { double(:decorated_sources) }
+    let(:sources) { double(:sources, decorate: decorated_sources) }
 
-      app.stub(:sources) { sources }
-      sources.
-        should_receive(:order).
+    it "orders sources by their controller and action" do
+      expect(sources).to \
+        receive(:order).
         with(:controller, :action).
         and_return(sources)
 
@@ -32,7 +31,7 @@ describe AppDecorator do
       let(:sources) { [double(:source, decorate: double)] }
 
       it "is true" do
-        expect(decorated.collecting_data?).to be_true
+        expect(decorated.collecting_data?).to eq(true)
       end
     end
 
@@ -40,7 +39,7 @@ describe AppDecorator do
       let(:sources) { [] }
 
       it "is false" do
-        expect(decorated.collecting_data?).to be_false
+        expect(decorated.collecting_data?).to eq(false)
       end
     end
   end

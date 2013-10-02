@@ -24,7 +24,7 @@ describe Insights::Source::EagerLoadAssociations do
           with(requests).
           and_return(true)
 
-        expect(insight.applicable?).to be_true
+        expect(insight.applicable?).to eq(true)
       end
     end
 
@@ -35,7 +35,7 @@ describe Insights::Source::EagerLoadAssociations do
           with(requests).
           and_return(false)
 
-        expect(insight.applicable?).to be_false
+        expect(insight.applicable?).to eq(false)
       end
     end
   end
