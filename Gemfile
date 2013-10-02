@@ -23,10 +23,21 @@ group :assets do
 end
 
 group :test do
-  gem 'capybara', require: false
+  gem 'capybara',
+    git: 'git@github.com:jnicklas/capybara.git',
+    require: false
   gem 'database_cleaner'
   gem 'machinist'
-  gem 'rspec-rails'
+  gem 'rspec-expectations',
+    git: 'git@github.com:rspec/rspec-expectations.git'
+  gem 'rspec-mocks',
+    git: 'git@github.com:rspec/rspec-mocks.git'
+  gem 'rspec-core',
+    git: 'git@github.com:rspec/rspec-core.git'
+  gem 'rspec',
+    git: 'git@github.com:rspec/rspec.git'
+  gem 'rspec-rails',
+    git: 'git@github.com:rspec/rspec-rails.git'
   gem 'simplecov', require: false
   gem 'vcr'
   gem 'webmock'
