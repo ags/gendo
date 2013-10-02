@@ -3,14 +3,12 @@ module Insights
     class SendEmailAsync < Base
       APPLICABILITY_LIFETIME = 1.day
 
-      def applicable?
-        source.mailer_events.
-          where("mailer_events.created_at > ?", APPLICABILITY_LIFETIME.ago).
-          any?
-      end
+      delegate :latest_mailer_event, to: :source
 
-      def latest_mailer_event
-        source.mailer_events.order(:created_at).last
+      def applicable?
+        source.
+          mailer_events_created_after(APPLICABILITY_LIFETIME.ago).
+          any?
       end
     end
   end

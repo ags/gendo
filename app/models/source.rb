@@ -59,6 +59,14 @@ class Source < ActiveRecord::Base
     bulk_insertables.order(:created_at).last
   end
 
+  def latest_mailer_event
+    mailer_events.order(:created_at).last
+  end
+
+  def mailer_events_created_after(time)
+    mailer_events.where("mailer_events.created_at > ?", time)
+  end
+
   def median_request_duration_by_day
     requests.
       group("DATE(created_at)").

@@ -1,43 +1,43 @@
-require "spec_helper"
+require "active_support/core_ext/module/delegation"
+require "active_support/time"
+require_relative "../../../../app/gendo/insights/source/base"
+require_relative "../../../../app/gendo/insights/source/send_email_async"
 
 describe Insights::Source::SendEmailAsync do
-  describe "#applicable?" do
-    let(:request) { Request.make! }
-    let(:insight) {
-      Insights::Source::SendEmailAsync.new(request.source)
-    }
+  let(:source) { instance_double("Source") }
+  let(:insight) { described_class.new(source) }
 
-    context "when no associated requests include MailerEvents" do
-      it "is false" do
-        expect(insight.applicable?).to eq(false)
-      end
+  describe "#applicable?" do
+    before do
+      allow(source).to \
+        receive(:mailer_events_created_after).
+        and_return(mailer_events)
     end
 
     context "when the source only has MailerEvents older than a day" do
-      it "is false" do
-        MailerEvent.make!(request: request, created_at: 2.days.ago)
+      let(:mailer_events) { [] }
 
+      it "is false" do
         expect(insight.applicable?).to eq(false)
       end
     end
 
     context "when the source has MailerEvents from the past day" do
-      it "is true" do
-        MailerEvent.make!(request: request)
+      let(:mailer_events) { [double(:mailer_event)] }
 
+      it "is true" do
         expect(insight.applicable?).to eq(true)
       end
     end
   end
 
   describe "#latest_mailer_event" do
-    it "returns the most recently detected associated MailerEvent" do
-      request = Request.make!
-      insight = Insights::Source::SendEmailAsync.new(request.source)
+    it "delegates to the source" do
+      latest = double(:latest_mailer_event)
 
-      MailerEvent.make!(request: request, created_at: 3.days.ago)
-      latest = MailerEvent.make!(request: request, created_at: 1.days.ago)
-      MailerEvent.make!(request: request, created_at: 2.days.ago)
+      expect(source).to \
+        receive(:latest_mailer_event).
+        and_return(latest)
 
       expect(insight.latest_mailer_event).to eq(latest)
     end

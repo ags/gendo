@@ -3,7 +3,7 @@ require_relative "../../../../app/gendo/insights/request/eager_load_associations
 
 describe Insights::Request::EagerLoadAssociations do
   describe "#applicable?" do
-    let(:request) { double(:request, n_plus_one_queries: queries) }
+    let(:request) { instance_double("Request", n_plus_one_queries: queries) }
     let(:insight) {
       Insights::Request::EagerLoadAssociations.new(request)
     }

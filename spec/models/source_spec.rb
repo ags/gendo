@@ -68,6 +68,29 @@ describe Source do
     end
   end
 
+  describe "#latest_mailer_event" do
+    it "returns the most recently detected associated MailerEvent" do
+      request = Request.make!
+      MailerEvent.make!(request: request, created_at: 3.days.ago)
+      latest = MailerEvent.make!(request: request, created_at: 1.days.ago)
+      MailerEvent.make!(request: request, created_at: 2.days.ago)
+
+      expect(request.source.latest_mailer_event).to eq(latest)
+    end
+  end
+
+  describe "#mailer_events_created_after" do
+    it "returns associated mailer events created after the given date" do
+      request = Request.make!
+
+      MailerEvent.make!(request: request, created_at: 2.days.ago)
+      recent = MailerEvent.make!(request: request, created_at: 1.minute.ago)
+
+      events = request.source.mailer_events_created_after(1.day.ago)
+      expect(events).to eq([recent])
+    end
+  end
+
   describe "#median_request_duration_by_day" do
     it "returns the median request duration grouped by day" do
       source = Source.make!

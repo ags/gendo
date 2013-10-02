@@ -4,7 +4,7 @@ require_relative "../../../../app/gendo/insights/request/send_email_async"
 
 describe Insights::Request::SendEmailAsync do
   describe "#applicable?" do
-    let(:request) { double(:request, mailer_events: queries) }
+    let(:request) { instance_double("Request", mailer_events: queries) }
     let(:insight) {
       Insights::Request::SendEmailAsync.new(request)
     }

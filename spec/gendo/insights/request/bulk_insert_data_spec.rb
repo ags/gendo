@@ -3,7 +3,7 @@ require_relative "../../../../app/gendo/insights/request/bulk_insert_data"
 
 describe Insights::Request::BulkInsertData do
   describe "#applicable?" do
-    let(:request) { double(:request, bulk_insertables: bulk_insertables) }
+    let(:request) { instance_double("Request", bulk_insertables: bulk_insertables) }
     let(:insight) { Insights::Request::BulkInsertData.new(request) }
 
     context "with associated bulk insertables" do

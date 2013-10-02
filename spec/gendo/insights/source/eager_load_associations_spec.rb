@@ -2,13 +2,12 @@ require "active_support/core_ext/module/delegation"
 require_relative "../../../../app/gendo/insights/source/base"
 require_relative "../../../../app/gendo/insights/source/eager_load_associations"
 
-class NPlusOneQuery; end
-
 describe Insights::Source::EagerLoadAssociations do
   describe "#applicable?" do
-    let(:source) { double(:source) }
+    let(:source) { instance_double("Source") }
+    let(:n_plus_one_query) { class_double("NPlusOneQuery").as_stubbed_const }
     let(:insight) { Insights::Source::EagerLoadAssociations.new(source) }
-      let(:requests) { [double(:request)] }
+    let(:requests) { [double(:request)] }
 
     before do
       allow(source).to \
@@ -19,7 +18,7 @@ describe Insights::Source::EagerLoadAssociations do
 
     context "when an NPlusOneQuery exists for the latest associated requests" do
       it "is true" do
-        allow(NPlusOneQuery).to \
+        allow(n_plus_one_query).to \
           receive(:exists_for_requests?).
           with(requests).
           and_return(true)
@@ -30,7 +29,7 @@ describe Insights::Source::EagerLoadAssociations do
 
     context "when no NPlusOneQuery exists for the latest associated requests" do
       it "is false" do
-        allow(NPlusOneQuery).to \
+        allow(n_plus_one_query).to \
           receive(:exists_for_requests?).
           with(requests).
           and_return(false)

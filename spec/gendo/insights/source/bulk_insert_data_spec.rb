@@ -2,11 +2,10 @@ require "active_support/core_ext/module/delegation"
 require_relative "../../../../app/gendo/insights/source/base"
 require_relative "../../../../app/gendo/insights/source/bulk_insert_data"
 
-class BulkInsertable; end
-
 describe Insights::Source::BulkInsertData do
   describe "#applicable?" do
-    let(:source) { double(:source) }
+    let(:source) { instance_double("Source") }
+    let(:bulk_insertable) { class_double("BulkInsertable").as_stubbed_const }
     let(:insight) { Insights::Source::BulkInsertData.new(source) }
     let(:requests) { [double(:request)] }
 
@@ -19,7 +18,7 @@ describe Insights::Source::BulkInsertData do
 
     context "when a BulkInsertable exists for the latest associated requests" do
       it "is true" do
-        allow(BulkInsertable).to \
+        allow(bulk_insertable).to \
           receive(:exists_for_requests?).
           with(requests).
           and_return(true)
@@ -30,7 +29,7 @@ describe Insights::Source::BulkInsertData do
 
     context "when no NPlusOneQuery exists for the latest associated requests" do
       it "is false" do
-        allow(BulkInsertable).to \
+        allow(bulk_insertable).to \
           receive(:exists_for_requests?).
           with(requests).
           and_return(false)
