@@ -20,7 +20,7 @@ class NPlusOneQuery < ActiveRecord::Base
     through: :n_plus_one_query_sql_events
 
   def self.exists_for_requests?(requests)
-    exists?(request_id: requests)
+    !!exists?(request_id: requests)
   end
 
   def duration
