@@ -6,11 +6,16 @@ describe Forms::NewApp do
   subject(:form) { Forms::NewApp.new(user, name: "Shinji") }
 
   it "creates an App for the user" do
-    app_creator = double(:app_creator)
-    form.app_creator = ->(attributes={}) { app_creator.create!(attributes) }
+    app_creator = class_double("CreatesAppForUser").as_stubbed_const
+    app = double(:app)
 
-    expect(app_creator).to receive(:create!).with(name: "Shinji")
+    expect(app_creator).to \
+      receive(:create!).
+      with(user, name: "Shinji").
+      and_return(app)
+
     expect(form.save!).to eq(true)
+    expect(form.app).to eq(app)
   end
 
   context "without a name" do
