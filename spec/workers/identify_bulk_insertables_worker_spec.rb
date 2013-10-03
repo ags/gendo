@@ -1,9 +1,5 @@
 module Sidekiq; module Worker; end; end
-
 require_relative "../../app/workers/identify_bulk_insertables_worker"
-
-class Request; end
-class IdentifiesBulkInsertables; end
 
 describe IdentifyBulkInsertablesWorker do
   describe "#in_request" do
@@ -21,14 +17,14 @@ describe IdentifyBulkInsertablesWorker do
   describe "#perform" do
     it "persits bulk insertable queries identified in the request" do
       sql_event = double(:sql_event)
-      request = double(:request, id: 123, sql_events: [sql_event])
+      request = instance_double("Request", id: 123, sql_events: [sql_event])
 
-      expect(Request).to \
+      expect(class_double("Request").as_stubbed_const).to \
         receive(:find).
         with(request.id).
         and_return(request)
 
-      expect(IdentifiesBulkInsertables).to \
+      expect(class_double("IdentifiesBulkInsertables").as_stubbed_const).to \
         receive(:identify).
         with(request.sql_events).
         and_return({"posts" => {["title", "content"] => [sql_event]}})

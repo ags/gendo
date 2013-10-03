@@ -22,7 +22,8 @@ describe CreatesRequest do
   } }
   let(:payload) { default_payload }
 
-  subject(:request) { CreatesRequest.create!(app, payload) }
+  # sidekiq serializes data as JSON, so encode and decode our sample hash
+  subject(:request) { CreatesRequest.create!(app, JSON.load(payload.to_json)) }
 
   describe "#create!" do
     it "creates a Request from the given parameters" do
@@ -127,11 +128,10 @@ describe CreatesRequest do
       it "uses the existing source" do
         source = Source.make!(payload[:source].merge(app: app))
 
-        expect {
+        expect do
           expect { request }.to change { source.requests.count }.by(1)
-        }.to_not change { Source.count }
+        end.to_not change { Source.count }
       end
     end
-
   end
 end

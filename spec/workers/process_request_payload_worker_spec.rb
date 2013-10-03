@@ -1,20 +1,12 @@
 module Sidekiq; module Worker; end; end
-
-require "json"
-require "support/factories/request_payload_hash"
 require_relative "../../app/workers/process_request_payload_worker"
 
-class App; end
-class CreatesRequest; end
-class IdentifyNPlusOneQueriesWorker; end
-class IdentifyBulkInsertablesWorker; end
-
 describe ProcessRequestPayloadWorker do
+  let(:payload) { double(:request_payload) }
+  let(:app) { double(id: 123) }
+
   describe "#process_for_app" do
     it "queues the worker with the given app id and payload" do
-      payload = double(:payload)
-      app = double(:app, id: 123)
-
       expect(ProcessRequestPayloadWorker).to \
         receive(:perform_async).
         with(app.id, payload)
@@ -24,41 +16,49 @@ describe ProcessRequestPayloadWorker do
   end
 
   describe "#perform" do
-    # sidekiq serializes data as JSON, so encode and decode our sample hash
-    let(:payload) { JSON.load(create_request_payload_hash.to_json) }
-    let(:app) { double(id: 123) }
+    let(:app_class) { class_double("App").as_stubbed_const }
+    let(:creates_request) { class_double("CreatesRequest").as_stubbed_const }
+    let(:n_plus_one_identifier) {
+      class_double("IdentifyNPlusOneQueriesWorker").as_stubbed_const
+    }
+    let(:bulk_insertables_identifier) {
+      class_double("IdentifyBulkInsertablesWorker").as_stubbed_const
+    }
+
     let(:request) { double(:request) }
 
+    subject(:perform!) { described_class.new.perform(app.id, payload) }
+
     before do
-      allow(App).to receive(:find).with(123).and_return(app)
-      allow(CreatesRequest).to receive(:create!).and_return(request)
-      allow(IdentifyNPlusOneQueriesWorker).to receive(:in_request)
-      allow(IdentifyBulkInsertablesWorker).to receive(:in_request)
+      allow(app_class).to receive(:find).with(123).and_return(app)
+      allow(creates_request).to receive(:create!).and_return(request)
+      allow(n_plus_one_identifier).to receive(:in_request)
+      allow(bulk_insertables_identifier).to receive(:in_request)
     end
 
     it "creates a Request" do
-      expect(CreatesRequest).to \
+      expect(creates_request).to \
         receive(:create!).
         with(app, payload).
         and_return(request)
 
-      ProcessRequestPayloadWorker.new.perform(app.id, payload)
+      perform!
     end
 
     it "queues an IdentifyNPlusOneQueriesWorker" do
-      expect(IdentifyNPlusOneQueriesWorker).to \
+      expect(n_plus_one_identifier).to \
         receive(:in_request).
         with(request)
 
-      ProcessRequestPayloadWorker.new.perform(app.id, payload)
+      perform!
     end
 
     it "queues an IdentifyBulkInsertablesWorker" do
-      expect(IdentifyBulkInsertablesWorker).to \
+      expect(bulk_insertables_identifier).to \
         receive(:in_request).
         with(request)
 
-      ProcessRequestPayloadWorker.new.perform(app.id, payload)
+      perform!
     end
   end
 end
