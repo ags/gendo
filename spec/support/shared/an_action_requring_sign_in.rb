@@ -1,8 +1,10 @@
 shared_examples_for "an action requiring sign in" do
   context "when logged in" do
     before do
-      user = User.make!
-      controller.authenticator.sign_in(user)
+      expect(controller.authenticator).to \
+        receive(:logged_in?).
+        and_return(true)
+
       action!
     end
 
@@ -13,12 +15,25 @@ shared_examples_for "an action requiring sign in" do
 
   context "when not logged in" do
     before do
-      controller.authenticator.sign_out
+      stub_authenicator
+
+      expect(controller.authenticator).to \
+        receive(:logged_in?).
+        and_return(false)
+
       action!
     end
 
     it "requires login" do
       expect(response.status).to eq(401)
     end
+  end
+
+  def stub_authenicator
+    authenticator = instance_double("Authenticator")
+
+    allow(controller).to \
+      receive(:authenticator).
+      and_return(authenticator)
   end
 end
