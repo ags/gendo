@@ -33,11 +33,11 @@ class AppsController < ApplicationController
   private
 
   def new_app_form
-    @_new_app_form ||= Forms::NewApp.new(current_user, new_app_params)
+    @_new_app_form ||= Form::NewApp.new(current_user, new_app_params)
   end
   helper_method :new_app_form
 
   def new_app_params
-    params.fetch(:forms_new_app, {}).permit(:name)
+    params.fetch(:form_new_app, {}).permit(:name)
   end
 end

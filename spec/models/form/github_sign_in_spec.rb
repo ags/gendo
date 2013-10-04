@@ -1,25 +1,28 @@
-require_relative "../../../app/models/forms/base"
-require_relative "../../../app/models/forms/github_sign_in"
-# Required due to odd behaviour with re-opening empty class.
-require_relative "../../../app/models/github_user"
+require_relative "../../../lib/form/model"
+require_relative "../../../app/models/form/github_sign_in"
 
-class MailUserWelcomeWorker; end
+describe Form::GithubSignIn do
+  let(:github_user) { class_double("GithubUser").as_stubbed_const }
+  let(:authenticator) { instance_double("Authenticator") }
+  let(:mailer) { class_double("MailUserWelcomeWorker").as_stubbed_const }
 
-describe Forms::GithubSignIn do
-  let(:github_access_token) { "github-access-token" }
-  let(:authenticator) { double(:authenticator).as_null_object }
+  let(:github_access_token) { double(:github_access_token) }
 
   subject(:form) {
-    Forms::GithubSignIn.new(
+    Form::GithubSignIn.new(
       authenticator,
       github_access_token: github_access_token
     )
   }
 
   before do
-    allow(MailUserWelcomeWorker).to receive(:welcome)
+    allow(mailer).to \
+      receive(:welcome)
 
-    expect(GithubUser).to \
+    allow(authenticator).to \
+      receive(:sign_in)
+
+    expect(github_user).to \
       receive(:find_or_initialize).
       with(github_access_token).
       and_return(user)
@@ -68,7 +71,7 @@ describe Forms::GithubSignIn do
     include_examples "signs in as the user"
 
     it "does not queue a welcome email" do
-      expect(MailUserWelcomeWorker).to_not \
+      expect(mailer).to_not \
         receive(:welcome)
 
       form.save!

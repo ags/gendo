@@ -28,7 +28,7 @@ describe Oauth::GithubController do
         with("code-123").
         and_return("access-456")
 
-      allow(Forms::GithubSignIn).to \
+      allow(Form::GithubSignIn).to \
         receive(:new).
         with(controller.authenticator, github_access_token: "access-456").
         and_return(signup_form)

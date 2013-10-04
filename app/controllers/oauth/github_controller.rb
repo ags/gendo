@@ -7,7 +7,7 @@ module Oauth
     def callback
       github_access_token = github_client.access_token(params[:code])
 
-      form = Forms::GithubSignIn.new(
+      form = Form::GithubSignIn.new(
         authenticator,
         github_access_token: github_access_token
       )

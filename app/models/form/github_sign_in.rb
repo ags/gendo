@@ -1,5 +1,7 @@
-module Forms
-  class GithubSignIn < Base
+module Form
+  class GithubSignIn
+    include Form::Model
+
     attribute :github_access_token
 
     attr_reader :user

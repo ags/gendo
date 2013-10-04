@@ -1,9 +1,9 @@
-require_relative "../../../app/models/forms/base"
-require_relative "../../../app/models/forms/new_app"
+require_relative "../../../lib/form/model"
+require_relative "../../../app/models/form/new_app"
 
-describe Forms::NewApp do
+describe Form::NewApp do
   let(:user) { double(:user) }
-  subject(:form) { Forms::NewApp.new(user, name: "Shinji") }
+  subject(:form) { Form::NewApp.new(user, name: "Shinji") }
 
   it "creates an App for the user" do
     app_creator = class_double("CreatesAppForUser").as_stubbed_const
@@ -19,7 +19,7 @@ describe Forms::NewApp do
   end
 
   context "without a name" do
-    subject(:form) { Forms::NewApp.new(user) }
+    subject(:form) { Form::NewApp.new(user) }
 
     it "is invalid" do
       expect(form.valid?).to eq(false)

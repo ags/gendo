@@ -1,11 +1,13 @@
-module Forms
-  class NewApp < Base
-    attr_reader :app
+module Form
+  class NewApp
+    include Form::Model
 
     attribute :name
 
     validates :name,
       length: {minimum: 1}
+
+    attr_reader :app
 
     def initialize(user, *args)
       super(*args)
