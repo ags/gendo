@@ -1,5 +1,5 @@
 module DecoratesDuration
-  def duration
-    "#{object.duration.round(2)} ms"
+  def duration(precision: 2)
+    "#{object.duration.round(precision)} ms"
   end
 end
