@@ -10,11 +10,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def assert_authenticated!
-    render_unauthorized unless logged_in?
-  end
-
-  def assert_authenticated_as_app_user!
-    unless logged_in? && app.user.id == current_user.id
+    unless logged_in?
       render_unauthorized
     end
   end

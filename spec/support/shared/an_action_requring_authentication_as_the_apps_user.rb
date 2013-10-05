@@ -1,39 +1,33 @@
 shared_examples_for "an action requiring authentication as the App's User" do
-  context "authenticated as the User associated with the Transaction App" do
-    let(:user) { User.make! }
-    let(:app) { App.make!(user: user) }
+  let(:app_access) { class_double("AppAccess").as_stubbed_const }
+  let(:app) { double(:app, to_param: 1).as_null_object }
 
-    before do
-      controller.authenticator.sign_in(user)
-      action!
-    end
-    
+  before do
+    allow(controller).to \
+      receive(:app).
+      and_return(app)
+
+    expect(app_access).to \
+      receive(:permitted?).
+      and_return(accessible)
+  end
+
+  context "when the app is accessible" do
+    let(:accessible) { true }
+
     it "is accessible" do
+      action!
+
       expect(response.status).to eq(200)
     end
   end
 
-  context "authenticated as a User not associated with the Transaction App" do
-    let(:user) { User.make! }
-    let(:app) { App.make! }
-
-    before do
-      controller.authenticator.sign_in(user)
-      action!
-    end
+  context "when the app is not accessible" do
+    let(:accessible) { false }
 
     it "requires login" do
-      expect(response.status).to eq(401)
-      expect(response).to render_template("statics/unauthorized")
-    end
-  end
-
-  context "unauthenticated" do
-    before do
       action!
-    end
 
-    it "requires login" do
       expect(response.status).to eq(401)
       expect(response).to render_template("statics/unauthorized")
     end

@@ -4,6 +4,6 @@ class SourcesController < ApplicationController
   before_action :assert_authenticated_as_app_user!
 
   def show
-    @source = Source.from_param!(params[:id]).decorate
+    @source = app.sources.from_param!(params[:id]).decorate
   end
 end
