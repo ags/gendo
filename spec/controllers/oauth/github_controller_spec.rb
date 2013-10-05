@@ -1,21 +1,26 @@
 require "spec_helper"
 
 describe Oauth::GithubController do
+  let(:github_oauth_client) { instance_double("GithubOauthClient") }
+
   describe "GET #authorize" do
     it "redirects to the GitHub OAuth endpoint" do
+      allow(GithubOauthClient).to \
+        receive(:new).
+        and_return(github_oauth_client)
+
+      allow(github_oauth_client).to \
+        receive(:authorize_url).
+        with("user:email", "repo").
+        and_return("http://github.com/login/etc")
+
       get :authorize
 
-      expect(response).to redirect_to(
-        "https://github.com/login/oauth/authorize?"\
-        "response_type=code&"\
-        "client_id=#{ENV["GITHUB_CLIENT_ID"]}&"\
-        "scope=user%3Aemail%2Crepo"
-      )
+      expect(response).to redirect_to("http://github.com/login/etc")
     end
   end
 
   describe "GET #callback" do
-    let(:github_oauth_client) { double(:github_oauth_client) }
     let(:signup_form) { double(:signup_form).as_null_object }
 
     before do
