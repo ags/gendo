@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  include UrlHasUser
+
   before_action :assert_authenticated!
-  before_action :assert_authenticated_as_request_user!
+  before_action :assert_authenticated_as_requested_user!
 
   def update
     user.update_attributes!(user_params)
@@ -13,17 +15,7 @@ class UsersController < ApplicationController
 
   private
 
-  def user
-    @_user || User.from_param!(params[:user_id] || params[:id])
-  end
-
   def user_params
     params.fetch(:user, {}).permit(:email, :name)
-  end
-
-  def assert_authenticated_as_request_user!
-    unless user == current_user
-      render_not_found
-    end
   end
 end
