@@ -7,10 +7,6 @@ require_relative "../../app/decorators/has_undecorated_class_name"
 require_relative "../../app/decorators/decorates_duration"
 require_relative "../../app/decorators/mailer_event_decorator"
 
-Draper::ViewContext.test_strategy :fast
-
-class MailerEvent; end
-
 describe MailerEventDecorator do
   it_behaves_like "an object with decorated event timestamps"
 

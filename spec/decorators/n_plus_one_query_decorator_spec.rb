@@ -3,8 +3,6 @@ require_relative "../support/shared/decorates_duration"
 require_relative "../../app/decorators/decorates_duration"
 require_relative "../../app/decorators/n_plus_one_query_decorator"
 
-class NPlusOneQuery; end
-
 describe NPlusOneQueryDecorator do
   it_behaves_like "an object with a decorated duration"
 

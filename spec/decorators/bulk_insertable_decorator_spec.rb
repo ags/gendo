@@ -2,10 +2,10 @@ require "draper"
 require_relative "../../app/decorators/bulk_insertable_decorator"
 
 describe BulkInsertableDecorator do
+  subject(:decorated) { BulkInsertableDecorator.new(double(:insertable)) }
+
   describe "#source_name" do
     it "delegates to the associated source" do
-      decorated = BulkInsertableDecorator.new(double(:insertable))
-
       allow(decorated).to \
         receive(:source).
         and_return(double(:source, name: "sauce name"))
@@ -16,8 +16,6 @@ describe BulkInsertableDecorator do
 
   describe "#app_name" do
     it "delegates to the associated app" do
-      decorated = BulkInsertableDecorator.new(double(:insertable))
-
       allow(decorated).to \
         receive(:app).
         and_return(double(:app, name: "mah app"))
@@ -28,8 +26,6 @@ describe BulkInsertableDecorator do
 
   describe "#request_name" do
     it "delegates to the associated request" do
-      decorated = BulkInsertableDecorator.new(double(:insertable))
-
       allow(decorated).to \
         receive(:request).
         and_return(double(:request, name: "dat request"))

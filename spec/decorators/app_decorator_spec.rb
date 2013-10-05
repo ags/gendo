@@ -1,13 +1,8 @@
 require 'draper'
-require './spec/support/shared/decorates_event_timestamps'
-require './app/decorators/app_decorator'
-
-Draper::ViewContext.test_strategy :fast
-
-class App; end
+require_relative '../../app/decorators/app_decorator'
 
 describe AppDecorator do
-  let(:app) { double(:app, sources: sources) }
+  let(:app) { instance_double("App", sources: sources) }
   subject(:decorated) { AppDecorator.new(app) }
 
   describe "#alphabetized_sources" do

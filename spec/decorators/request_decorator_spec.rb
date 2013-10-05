@@ -1,21 +1,18 @@
 require 'draper'
 require './spec/support/shared/decorates_duration'
 require './spec/support/shared/decorates_event_timestamps'
-require './app/gendo/insights/request'
 require './app/decorators/decorates_event_timestamps'
 require './app/decorators/decorates_duration'
-require './app/decorators/insight_decorator'
 require './app/decorators/request_decorator'
 
 Draper::ViewContext.test_strategy :fast
 
-class Request; end
-
 describe RequestDecorator do
-  it_behaves_like "an object with decorated event timestamps"
-  it_behaves_like "an object with a decorated duration"
-
   subject(:decorated) { RequestDecorator.new(request) }
+
+  it_behaves_like "an object with decorated event timestamps"
+
+  it_behaves_like "an object with a decorated duration"
 
   describe "#events" do
     let(:a) { double(:a, started_at: 1.minute.ago).as_null_object }
@@ -72,7 +69,6 @@ describe RequestDecorator do
   end
 
   describe "#collected_timings?" do
-
     context "with a db_runtime and view_runtime" do
       let(:request) { double(:request, db_runtime: 1, view_runtime: 2) }
 
@@ -118,9 +114,9 @@ describe RequestDecorator do
   end
 
   describe "#fuzzy_timestamp" do
+    let(:request) { double(:request, created_at: 57.minutes.ago) }
+
     it "is a fuzzy timestamp of created_at" do
-      request = double(:request, created_at: 57.minutes.ago)
-      decorated = RequestDecorator.new(request)
       expect(decorated.fuzzy_timestamp).to eq("about 1 hour ago")
     end
   end
@@ -129,18 +125,21 @@ describe RequestDecorator do
     let(:request) { double(:request) }
 
     it "is a list of applicable insight classes" do
-      applicable_insight = double(:applicable_insight)
+      applicable_insights = double(:applicable_insights)
       decorated_insights = double(:decorated_insights)
 
-      expect(InsightDecorator).to \
-        receive(:decorate_collection).
-        with([applicable_insight]).
-        and_return(decorated_insights)
+      insight_decorator = class_double("InsightDecorator").as_stubbed_const
+      request_insights = class_double("Insights::Request").as_stubbed_const
 
-      allow(Insights::Request).to \
+      expect(request_insights).to \
         receive(:applicable_to).
         with(request).
-        and_return([applicable_insight])
+        and_return(applicable_insights)
+
+      expect(insight_decorator).to \
+        receive(:decorate_collection).
+        with(applicable_insights).
+        and_return(decorated_insights)
 
       expect(decorated.insights).to eq(decorated_insights)
     end
