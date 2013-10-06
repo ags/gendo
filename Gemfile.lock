@@ -11,20 +11,20 @@ GIT
 
 GIT
   remote: git@github.com:rspec/rspec-core.git
-  revision: 2ecfec855dea47c59c0c848de4b55b73b48be6a4
+  revision: fb2c4c5a513e239561dad6d20ec6cb78100febd6
   specs:
     rspec-core (3.0.0.pre)
 
 GIT
   remote: git@github.com:rspec/rspec-expectations.git
-  revision: c7e84247840e6aee1e2940521b8e00542c753f87
+  revision: ac2293ff0f67c128856c256cb3435e843ccf2af5
   specs:
     rspec-expectations (3.0.0.pre)
       diff-lcs (>= 1.1.3, < 2.0)
 
 GIT
   remote: git@github.com:rspec/rspec-mocks.git
-  revision: 07f96d4d65d283cd1a4aa66ba4527890f33025aa
+  revision: 5a66a1c36f94bd3e701dbdc50344d5164a9e9b83
   specs:
     rspec-mocks (3.0.0.pre)
 
