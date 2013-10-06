@@ -13,16 +13,16 @@ class SourceDecorator < Draper::Decorator
     requests.any?
   end
 
-  def db
-    RequestStats.new(requests, :db_runtime)
+  def median_request_duration
+    @_median_request_duration ||= requests.median(:duration)
   end
 
-  def view
-    RequestStats.new(requests, :view_runtime)
+  def median_request_db_runtime
+    @_median_request_db_runtime ||= requests.median(:db_runtime)
   end
 
-  def duration
-    RequestStats.new(requests, :duration)
+  def median_request_view_runtime
+    @_median_request_view_runtime ||= requests.median(:view_runtime)
   end
 
   def insights

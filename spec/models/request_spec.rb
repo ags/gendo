@@ -1,6 +1,20 @@
 require "spec_helper"
 
 describe Request do
+  describe ".median" do
+    describe "#median" do
+      it "returns the median of the given attribute name" do
+        Request.make!(db_runtime: 2, view_runtime: 1, duration: 5)
+        Request.make!(db_runtime: 1, view_runtime: 4, duration: 10)
+        Request.make!(db_runtime: 3, view_runtime: 5, duration: 8)
+
+        expect(Request.median(:db_runtime)).to eq(2)
+        expect(Request.median(:view_runtime)).to eq(4)
+        expect(Request.median(:duration)).to eq(8)
+      end
+    end
+  end
+
   describe "#create_n_plus_one_query!" do
     it "creates an associated NPlusOneQuery" do
       request = Request.make!

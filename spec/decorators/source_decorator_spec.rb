@@ -47,46 +47,46 @@ describe SourceDecorator do
     end
   end
 
-  describe "RequestStats" do
-    let(:source) { double(:source, requests: double(:requests)) }
-    let(:request_stats) { class_double("RequestStats").as_stubbed_const }
+  describe "median request statistics" do
+    let(:requests) { double(:requests) }
+    let(:source) { double(:source, requests: requests) }
 
-    describe "#db" do
-      it "is RequestStats for db_runtime" do
-        db_stats = double(:db_stats)
+    describe "#median_request_duration" do
+      it "is the median duration for associated requests" do
+        median_duration = double(:median_duration)
 
-        expect(request_stats).to \
-          receive(:new).
-          with(source.requests, :db_runtime).
-          and_return(db_stats)
+        expect(requests).to \
+          receive(:median).
+          with(:duration).
+          and_return(median_duration)
 
-        expect(decorated.db).to eq(db_stats)
+        expect(decorated.median_request_duration).to eq(median_duration)
       end
     end
 
-    describe "#view" do
-      it "is RequestStats for view_runtime" do
-        view_stats = double(:view_stats)
+    describe "#median_request_db_runtime" do
+      it "is the median db_runtime for associated requests" do
+        median_db_runtime = double(:median_db_runtime)
 
-        expect(request_stats).to \
-          receive(:new).
-          with(source.requests, :view_runtime).
-          and_return(view_stats)
+        expect(requests).to \
+          receive(:median).
+          with(:db_runtime).
+          and_return(median_db_runtime)
 
-        expect(decorated.view).to eq(view_stats)
+        expect(decorated.median_request_db_runtime).to eq(median_db_runtime)
       end
     end
 
-    describe "#duration" do
-      it "is RequestStats for duration" do
-        duration_stats = double(:duration_stats)
+    describe "#median_request_view_runtime" do
+      it "is the median view_runtime for associated requests" do
+        median_view_runtime = double(:median_view_runtime)
 
-        expect(request_stats).to \
-          receive(:new).
-          with(source.requests, :duration).
-          and_return(duration_stats)
+        expect(requests).to \
+          receive(:median).
+          with(:view_runtime).
+          and_return(median_view_runtime)
 
-        expect(decorated.duration).to eq(duration_stats)
+        expect(decorated.median_request_view_runtime).to eq(median_view_runtime)
       end
     end
   end

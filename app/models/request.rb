@@ -31,6 +31,11 @@ class Request < ActiveRecord::Base
     self.view_runtime ||= 0
   end
 
+  def self.median(attribute)
+    # using #first here attempts to do a LIMIT
+    select("median(#{attribute}) AS median")[0].median
+  end
+
   def create_n_plus_one_query!(table_name, sql_events)
     n_plus_one_queries.create!(
       culprit_table_name: table_name,

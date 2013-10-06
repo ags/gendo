@@ -16,7 +16,7 @@
         .small-6.columns
           strong Total Runtime
         .small-6.columns
-          = @source.duration.median
+          = @source.median_request_duration
           |  ms
   .small-4.columns
     .panel
@@ -24,7 +24,7 @@
         .small-6.columns
           strong DB Runtime
         .small-6.columns
-          = @source.db.median
+          = @source.median_request_db_runtime
           |  ms
   .small-4.columns
     .panel
@@ -32,7 +32,7 @@
         .small-6.columns
           strong View Runtime
         .small-6.columns
-          = @source.view.median
+          = @source.median_request_view_runtime
           |  ms
 
 - if @source.insights.any?
