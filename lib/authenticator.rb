@@ -32,6 +32,8 @@ class Authenticator
   private
 
   def user_finder
-    @user_finder || ->(id) { User.where(id: id).first }
+    @user_finder || ->(id) {
+      @_user ||= User.where(id: id).first!
+    }
   end
 end
