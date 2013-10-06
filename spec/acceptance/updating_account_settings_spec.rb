@@ -13,4 +13,13 @@ feature "Updating account settings" do
 
     expect_to_see "Updated your account"
   end
+
+  scenario "specifying invalid details" do
+    visit settings_account_path
+
+    fill_in "Email", with: ""
+    click_button "Update"
+
+    expect_to_see "Email is invalid"
+  end
 end

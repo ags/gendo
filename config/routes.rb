@@ -16,7 +16,7 @@ Gendo::Application.routes.draw do
     end
   end
 
-  resource :account, only: [] do
+  resource :account, only: [:update] do
     get :settings
   end
 
@@ -33,8 +33,6 @@ Gendo::Application.routes.draw do
 
     resources :mailer_events, only: [:show]
   end
-
-  resources :users, only: [:update]
 
   get "/sign-out", to: "sessions#destroy", as: :sign_out
 

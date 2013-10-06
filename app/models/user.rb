@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
     dependent: :destroy
 
   validates :email,
-    presence: true,
     format: {with: Formats::EMAIL}
 
   def self.from_param!(param)
