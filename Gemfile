@@ -26,8 +26,13 @@ group :test do
   gem 'capybara',
     git: 'git@github.com:jnicklas/capybara.git',
     require: false
-  gem 'database_cleaner'
-  gem 'machinist'
+
+  gem 'database_cleaner',
+    require: false
+
+  gem 'machinist',
+    require: false
+
   gem 'rspec-expectations',
     git: 'git@github.com:rspec/rspec-expectations.git'
   gem 'rspec-mocks',
@@ -38,9 +43,15 @@ group :test do
     git: 'git@github.com:rspec/rspec.git'
   gem 'rspec-rails',
     git: 'git@github.com:rspec/rspec-rails.git'
-  gem 'simplecov', require: false
-  gem 'vcr'
-  gem 'webmock'
+
+  gem 'simplecov',
+    require: false
+
+  gem 'vcr',
+    require: false
+
+  gem 'webmock',
+    require: false
 end
 
 group :test, :development do

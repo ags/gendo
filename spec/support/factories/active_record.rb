@@ -1,3 +1,4 @@
+require "machinist"
 require "machinist/active_record"
 
 App.blueprint do
