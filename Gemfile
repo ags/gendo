@@ -56,7 +56,6 @@ end
 
 group :test, :development do
   gem 'dotenv-rails'
-  gem 'quiet_assets'
 end
 
 group :development, :production do
@@ -66,6 +65,7 @@ end
 
 group :development do
   gem 'foreman'
+  gem 'quiet_assets'
 end
 
 group :production do
