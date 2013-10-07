@@ -33,7 +33,7 @@ class Authenticator
 
   def user_finder
     @user_finder || ->(id) {
-      @_user ||= User.where(id: id).first!
+      @_user ||= User.where(id: id).first
     }
   end
 end
