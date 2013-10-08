@@ -200,6 +200,71 @@ ALTER SEQUENCE bulk_insertables_id_seq OWNED BY bulk_insertables.id;
 
 
 --
+-- Name: counter_cacheable_query_set_sql_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE counter_cacheable_query_set_sql_events (
+    id integer NOT NULL,
+    counter_cacheable_query_set_id integer NOT NULL,
+    sql_event_id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: counter_cacheable_query_set_sql_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE counter_cacheable_query_set_sql_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: counter_cacheable_query_set_sql_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE counter_cacheable_query_set_sql_events_id_seq OWNED BY counter_cacheable_query_set_sql_events.id;
+
+
+--
+-- Name: counter_cacheable_query_sets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE counter_cacheable_query_sets (
+    id integer NOT NULL,
+    request_id integer NOT NULL,
+    culprit_association_name character varying(255) NOT NULL,
+    sql_events_count integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: counter_cacheable_query_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE counter_cacheable_query_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: counter_cacheable_query_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE counter_cacheable_query_sets_id_seq OWNED BY counter_cacheable_query_sets.id;
+
+
+--
 -- Name: mailer_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -521,6 +586,20 @@ ALTER TABLE ONLY bulk_insertables ALTER COLUMN id SET DEFAULT nextval('bulk_inse
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY counter_cacheable_query_set_sql_events ALTER COLUMN id SET DEFAULT nextval('counter_cacheable_query_set_sql_events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY counter_cacheable_query_sets ALTER COLUMN id SET DEFAULT nextval('counter_cacheable_query_sets_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY mailer_events ALTER COLUMN id SET DEFAULT nextval('mailer_events_id_seq'::regclass);
 
 
@@ -595,6 +674,22 @@ ALTER TABLE ONLY bulk_insertable_sql_events
 
 ALTER TABLE ONLY bulk_insertables
     ADD CONSTRAINT bulk_insertables_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: counter_cacheable_query_set_sql_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY counter_cacheable_query_set_sql_events
+    ADD CONSTRAINT counter_cacheable_query_set_sql_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: counter_cacheable_query_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY counter_cacheable_query_sets
+    ADD CONSTRAINT counter_cacheable_query_sets_pkey PRIMARY KEY (id);
 
 
 --
@@ -844,3 +939,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130922041241');
 INSERT INTO schema_migrations (version) VALUES ('20130925131559');
 
 INSERT INTO schema_migrations (version) VALUES ('20130928000652');
+
+INSERT INTO schema_migrations (version) VALUES ('20131008110613');

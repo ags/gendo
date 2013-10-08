@@ -22,6 +22,10 @@ class Request < ActiveRecord::Base
     inverse_of: :request,
     dependent: :destroy
 
+  has_many :counter_cacheable_query_sets,
+    inverse_of: :request,
+    dependent: :destroy
+
   validates :source,
     presence: true
 

@@ -19,6 +19,9 @@ class Source < ActiveRecord::Base
   has_many :bulk_insertables,
     through: :requests
 
+  has_many :counter_cacheable_query_sets,
+    through: :requests
+
   validates :app,
     presence: true
 
