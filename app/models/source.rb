@@ -66,6 +66,10 @@ class Source < ActiveRecord::Base
     mailer_events.order(:created_at).last
   end
 
+  def latest_counter_cacheable_query_set
+    counter_cacheable_query_sets.order(:created_at).last
+  end
+
   def mailer_events_created_after(time)
     mailer_events.where("mailer_events.created_at > ?", time)
   end

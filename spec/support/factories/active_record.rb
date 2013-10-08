@@ -21,6 +21,11 @@ BulkInsertable.blueprint do
   column_names { %w(title content) }
 end
 
+CounterCacheableQuerySet.blueprint do
+  request
+  culprit_association_name { "comments" }
+end
+
 MailerEvent.blueprint do
   request
   mailer     { "FooMailer" }
