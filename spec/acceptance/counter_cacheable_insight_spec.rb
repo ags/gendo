@@ -22,4 +22,11 @@ feature "counter cacheable insight" do
     expect_to_see "querying posts"
     expect_to_see "counter cache column"
   end
+
+  scenario "Viewing a Request with a counter cacheable query set" do
+    visit app_request_path(request.app, request)
+
+    expect_to_see "counter cache column"
+    expect_to_see "queries on posts"
+  end
 end

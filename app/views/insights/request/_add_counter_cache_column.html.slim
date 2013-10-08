@@ -1,0 +1,5 @@
+- request.counter_cacheable_query_sets.each do |query_set|
+  a(href="#")
+    ' Add a counter cache column to reduce the number of queries on
+    = query_set.culprit_association_name.pluralize
+    | .
