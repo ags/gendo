@@ -29,9 +29,8 @@ module Gendo
     config.active_record.schema_format = :sql
 
     config.action_mailer.default_url_options = {
-      protocol: ENV.fetch("DEFAULT_URL_PROTOCOL", "http"),
-      host:     ENV.fetch("DEFAULT_URL_HOST",     "localhost"),
-      port:     ENV.fetch("DEFAULT_URL_PORT",     "5000")
+      host: ENV['HTTPS_HOST'] || ENV['HTTP_HOST'] || '0.0.0.0',
+      port: Rails.env.development? ? (ENV["HTTP_PORT"] || "3000") : nil,
     }
   end
 end
