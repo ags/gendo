@@ -46,6 +46,23 @@ describe Request do
     end
   end
 
+  describe "#create_counter_cacheable_query_set!" do
+    it "creates an associated CounterCacheableQuerySet" do
+      request = Request.make!
+      sql_event = SqlEvent.create!(request: request)
+
+      counter_cacheable= request.create_counter_cacheable_query_set!(
+        "posts",
+        [sql_event]
+      )
+
+      expect(counter_cacheable.request).to eq(request)
+      expect(counter_cacheable.culprit_association_name).to eq("posts")
+      expect(counter_cacheable.sql_events).to eq([sql_event])
+      expect(counter_cacheable.sql_events_count).to eq(1)
+    end
+  end
+
   context "when the given db_runtime is nil" do
     it "sets the db_runtime to 0.0" do
       request = Request.new(db_runtime: nil)

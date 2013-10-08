@@ -24,6 +24,9 @@ describe ProcessRequestPayloadWorker do
     let(:bulk_insertables_identifier) {
       class_double("IdentifyBulkInsertablesWorker").as_stubbed_const
     }
+    let(:counter_cacheable_query_sets_identifer) {
+      class_double("IdentifyCounterCacheableQuerySetsWorker").as_stubbed_const
+    }
 
     let(:request) { double(:request) }
 
@@ -34,6 +37,7 @@ describe ProcessRequestPayloadWorker do
       allow(creates_request).to receive(:create!).and_return(request)
       allow(n_plus_one_identifier).to receive(:in_request)
       allow(bulk_insertables_identifier).to receive(:in_request)
+      allow(counter_cacheable_query_sets_identifer).to receive(:in_request)
     end
 
     it "creates a Request" do
@@ -55,6 +59,14 @@ describe ProcessRequestPayloadWorker do
 
     it "queues an IdentifyBulkInsertablesWorker" do
       expect(bulk_insertables_identifier).to \
+        receive(:in_request).
+        with(request)
+
+      perform!
+    end
+
+    it "queues an IdentifyCounterCacheableQuerySetsWorker" do
+      expect(counter_cacheable_query_sets_identifer).to \
         receive(:in_request).
         with(request)
 

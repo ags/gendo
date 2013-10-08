@@ -13,5 +13,7 @@ class ProcessRequestPayloadWorker
     IdentifyNPlusOneQueriesWorker.in_request(request)
 
     IdentifyBulkInsertablesWorker.in_request(request)
+
+    IdentifyCounterCacheableQuerySetsWorker.in_request(request)
   end
 end

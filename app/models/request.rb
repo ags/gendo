@@ -54,4 +54,11 @@ class Request < ActiveRecord::Base
       sql_events:         sql_events,
     )
   end
+
+  def create_counter_cacheable_query_set!(association_name, sql_events)
+    counter_cacheable_query_sets.create!(
+      culprit_association_name: association_name,
+      sql_events: sql_events,
+    )
+  end
 end
