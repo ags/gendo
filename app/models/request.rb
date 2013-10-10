@@ -22,6 +22,10 @@ class Request < ActiveRecord::Base
     inverse_of: :request,
     dependent: :destroy
 
+  has_many :counter_cacheable_query_sets,
+    inverse_of: :request,
+    dependent: :destroy
+
   validates :source,
     presence: true
 
@@ -48,6 +52,13 @@ class Request < ActiveRecord::Base
       culprit_table_name: table_name,
       column_names:       column_names,
       sql_events:         sql_events,
+    )
+  end
+
+  def create_counter_cacheable_query_set!(association_name, sql_events)
+    counter_cacheable_query_sets.create!(
+      culprit_association_name: association_name,
+      sql_events: sql_events,
     )
   end
 end

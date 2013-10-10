@@ -68,6 +68,17 @@ describe Source do
     end
   end
 
+  describe "#latest_counter_cacheable_query_set" do
+    it "returns the most recently detected associated CounterCacheableQuerySet" do
+      request = Request.make!
+      CounterCacheableQuerySet.make!(request: request, created_at: 3.days.ago)
+      latest = CounterCacheableQuerySet.make!(request: request, created_at: 1.days.ago)
+      CounterCacheableQuerySet.make!(request: request, created_at: 2.days.ago)
+
+      expect(request.source.latest_counter_cacheable_query_set).to eq(latest)
+    end
+  end
+
   describe "#latest_mailer_event" do
     it "returns the most recently detected associated MailerEvent" do
       request = Request.make!

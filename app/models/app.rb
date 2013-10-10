@@ -18,6 +18,9 @@ class App < ActiveRecord::Base
   has_many :n_plus_one_queries,
     through: :requests
 
+  has_many :counter_cacheable_query_sets,
+    through: :requests
+
   has_many :mailer_events,
     through: :requests
 

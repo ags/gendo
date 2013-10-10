@@ -1,0 +1,53 @@
+- add_app_index_breadcrumb
+- add_app_breadcrumb(counter_cacheable_query_set)
+- add_source_breadcrumb(counter_cacheable_query_set)
+- add_request_breadcrumb(counter_cacheable_query_set)
+- add_crumb "counter cacheable",
+  app_counter_cacheable_query_set_path(counter_cacheable_query_set.app, counter_cacheable_query_set)
+
+.row
+  .small-12.columns
+    .panel
+
+      h3
+        ' Found
+        = counter_cacheable_query_set.sql_events_count
+        '  COUNT queries on
+        ' '#{counter_cacheable_query_set.culprit_association_name}'!
+
+      p
+        ' You may be able to entirely avoid querying
+        = counter_cacheable_query_set.culprit_association_name
+        '  by adding a counter cache column.
+
+      p
+        strong= counter_cacheable_query_set.request_db_runtime
+        '  was spent doing database processing during this request,
+        strong= counter_cacheable_query_set.duration
+        |  of which (
+        strong
+          = counter_cacheable_query_set.percentage_of_db_runtime
+          | %
+        ' ) was the detected queries.
+        .progress.large-12
+          span.meter(style="width: #{counter_cacheable_query_set.percentage_of_request_duration}%")
+
+      p
+        ' That's also
+        strong
+          = counter_cacheable_query_set.percentage_of_request_duration
+          | %
+        |  of the total request time (
+        strong= counter_cacheable_query_set.request_duration
+        | )!
+
+
+    table
+      thead
+        tr
+          th Started At
+          th Ended At
+          th Duration
+      tbody
+        - counter_cacheable_query_set.sql_events.each do |event|
+          = render "requests/sql_event_row", event: event

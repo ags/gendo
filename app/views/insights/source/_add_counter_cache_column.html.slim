@@ -1,0 +1,12 @@
+- counter_cacheable = insight.latest_counter_cacheable_query_set
+
+h6 Counter Cache
+
+p
+  ' Recent requests appear to be repeatedly querying
+  strong= counter_cacheable.culprit_association_name.pluralize
+  '  for a record count. You maybe be able to reduce the total number of queries
+  ' by
+  a(href=app_counter_cacheable_query_set_path(counter_cacheable.app, counter_cacheable))
+    ' adding a counter cache column
+  | instead.

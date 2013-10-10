@@ -5,6 +5,7 @@ module Insights
         SendEmailAsync,
         EagerLoadAssociations,
         BulkInsertData,
+        AddCounterCacheColumn,
       ]
     end
 

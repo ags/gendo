@@ -19,6 +19,9 @@ class Source < ActiveRecord::Base
   has_many :bulk_insertables,
     through: :requests
 
+  has_many :counter_cacheable_query_sets,
+    through: :requests
+
   validates :app,
     presence: true
 
@@ -61,6 +64,10 @@ class Source < ActiveRecord::Base
 
   def latest_mailer_event
     mailer_events.order(:created_at).last
+  end
+
+  def latest_counter_cacheable_query_set
+    counter_cacheable_query_sets.order(:created_at).last
   end
 
   def mailer_events_created_after(time)
