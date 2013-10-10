@@ -23,6 +23,8 @@ Gendo::Application.routes.draw do
   resources :apps, only: [:index, :new, :create, :show] do
     get :settings
 
+    resources :counter_cacheable_query_sets, only: [:show]
+
     resources :sources, only: [:show]
 
     resources :requests, only: [:show]

@@ -29,4 +29,13 @@ feature "counter cacheable insight" do
     expect_to_see "counter cache column"
     expect_to_see "queries on posts"
   end
+
+  scenario "Viewing the counter cacheable insight" do
+    visit app_counter_cacheable_query_set_path(
+      counter_cacheable.app,
+      counter_cacheable
+    )
+
+    expect_to_see "counter cache column"
+  end
 end

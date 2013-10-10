@@ -18,4 +18,14 @@ describe CounterCacheableQuerySet do
       end
     end
   end
+
+  describe "#duration" do
+    it "is the sum of associated SQL events" do
+      query = CounterCacheableQuerySet.make!
+      query.sql_events << SqlEvent.make!(duration: 1)
+      query.sql_events << SqlEvent.make!(duration: 2)
+
+      expect(query.duration).to eq(3)
+    end
+  end
 end

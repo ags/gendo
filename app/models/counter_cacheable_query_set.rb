@@ -22,4 +22,8 @@ class CounterCacheableQuerySet < ActiveRecord::Base
   def self.exists_for_requests?(requests)
     !!exists?(request_id: requests)
   end
+
+  def duration
+    sql_events.sum(:duration)
+  end
 end
