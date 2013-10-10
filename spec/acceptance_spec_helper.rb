@@ -4,7 +4,7 @@ require "capybara/rspec"
 require "capybara/rails"
 
 def sign_in_as(user)
-  visit bypass_url(user_id: user.id)
+  visit sign_in_as_path(user_id: user.id)
 end
 
 def expect_to_see(content)

@@ -45,9 +45,9 @@ Gendo::Application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
   end
 
-  ## Test helpers
+  ## Development helpers
 
-  if Rails.env.test?
-    get "/bypass", to: "sessions#bypass", as: :bypass
+  unless Rails.env.production?
+    get "/sign_in_as", to: "development#sign_in_as", as: :sign_in_as
   end
 end
