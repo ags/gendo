@@ -63,13 +63,9 @@ body.antialiased
           = flash[:notice]
           a.close(href="#") &times;
 
-  section.content
-    - if crumbs.any?
-      .row.crumbs
-        .small-12.columns
-          = render_crumbs
+  = render "/breadcrumbs"
 
-    = yield
+  = yield
 
   footer.row
     .large-12.columns

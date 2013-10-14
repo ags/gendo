@@ -2,6 +2,7 @@
 @import 'foundation-icons';
 @import 'vendor/morris';
 
+@import 'modules/breadcrumbs';
 @import 'modules/forms';
 @import 'modules/header';
 @import 'modules/tables';
@@ -10,10 +11,6 @@
 
 .text-centered {
   text-align: center;
-}
-
-.row.crumbs {
-  margin-bottom: 0.5em;
 }
 
 pre {
