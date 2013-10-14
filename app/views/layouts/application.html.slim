@@ -16,24 +16,35 @@ head
   = csrf_meta_tags
 
 body.antialiased
-  .contain-to-grid
+  header role="banner"
     nav.top-bar
       ul.title-area
         li.name
-          h1
-            a href=root_url Gendo
+          h1 class="logo"
+            a href=root_url gendo
         li.toggle-topbar.menu-icon
           a href="#"
 
       section.top-bar-section
         ul.right
           - if logged_in?
-            li.top-bar-link
-              = link_to "Apps", apps_path
-            li.top-bar-link
-              = link_to "Account", settings_account_path
-            li.top-bar-link
-              = link_to "Sign Out", sign_out_path
+            li.has-dropdown
+              a href=apps_path Apps
+              ul.dropdown
+                - current_user.apps.each do |app|
+                  li
+                    = link_to app.name, app_path(app)
+                  li.divider
+                li.has-form
+                  a.button href=new_app_path create new app
+
+            li.has-dropdown
+              a href=account_path
+                img.avatar src=current_user.decorate.avatar_url
+              ul.dropdown
+                li= link_to "Account", settings_account_path
+                li.divider
+                li= link_to "Sign Out", sign_out_path
           - else
             li.top-bar-link
               a href="#"

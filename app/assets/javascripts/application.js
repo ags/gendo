@@ -12,5 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require vendor/raphael-min
 //= require_tree .
+
+$(function() {
+  $(document).foundation();
+});

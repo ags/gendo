@@ -1222,13 +1222,13 @@ $topbar-height: 45px;
 // Controlling the styles for the title in the top bar
 
 // $topbar-title-weight: bold;
-$topbar-title-font-size: emCalc(24px);
+$topbar-title-font-size: emCalc(20px);
 
 // Style the top bar dropdown elements
 
-// $topbar-dropdown-bg: #222;
+$topbar-dropdown-bg: $primary-color;
 // $topbar-dropdown-link-color: #fff;
-// $topbar-dropdown-link-bg: lighten($topbar-bg, 5%);
+$topbar-dropdown-link-bg: lighten($topbar-bg, 5%);
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
 // $topbar-dropdown-toggle-alpha: 0.5;
@@ -1240,10 +1240,10 @@ $topbar-title-font-size: emCalc(24px);
 // $topbar-link-color-hover: #fff;
 // $topbar-link-color-active: #fff;
 // $topbar-link-weight: bold;
-$topbar-link-font-size: emCalc(15px);
-// $topbar-link-hover-lightness: -30%; // Darken by 30%
-$topbar-link-bg-hover: darken($topbar-bg, 3%);
-$topbar-link-bg-active: darken($topbar-bg, 3%);
+$topbar-link-font-size: emCalc(13px);
+$topbar-link-hover-lightness: -10%; // Darken by 30%
+// $topbar-link-bg-hover: darken($topbar-bg, 3%);
+// $topbar-link-bg-active: darken($topbar-bg, 3%);
 
 // $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
@@ -1268,8 +1268,8 @@ $topbar-link-bg-active: darken($topbar-bg, 3%);
 
 // Divider Styles
 
-// $topbar-divider-border-bottom: solid 1px lighten($topbar-bg, 10%);
-// $topbar-divider-border-top: solid 1px darken($topbar-bg, 10%);
+$topbar-divider-border-bottom: solid 1px lighten($topbar-bg, 10%);
+$topbar-divider-border-top: solid 1px darken($topbar-bg, 10%);
 
 // Sticky Class
 

@@ -1,4 +1,21 @@
 @import 'vendor/foundation_and_overrides';
 @import 'foundation-icons';
 @import 'vendor/morris';
-@import 'gendo';
+
+@import 'modules/forms';
+@import 'modules/header';
+@import 'modules/tables';
+
+// TODO move these into modules
+
+.text-centered {
+  text-align: center;
+}
+
+.row.crumbs {
+  margin-bottom: 0.5em;
+}
+
+pre {
+  margin-bottom: 1.25em;
+}

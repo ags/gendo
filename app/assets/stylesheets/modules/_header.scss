@@ -1,20 +1,32 @@
+/* Header styles */
+
+header[role="banner"] {
+  background:$topbar-bg;
+  min-height:$topbar-height;
+}
+
 .top-bar {
+  @include grid-row();
+
   a {
     span {
       padding-bottom: 10px;
       border-bottom: 3px solid $secondary-color;
     }
-  }
-  a:hover {
-    span {
-      padding-bottom: 10px;
-      border-bottom: 3px solid #fff;
+
+    &:hover {
+      span {
+        padding-bottom: 10px;
+        border-bottom: 3px solid #fff;
+      }
     }
   }
-}
 
-.text-centered {
-  text-align: center;
+  .avatar {
+    border-radius: 18px;
+    margin: -3px 0 0;
+    width: 30px;
+  }
 }
 
 header.hero {
@@ -37,27 +49,5 @@ header.hero {
 
   a.button {
     margin-top: 15px;
-  }
-}
-
-.row.crumbs {
-  margin-bottom: 0.5em;
-}
-
-pre {
-  margin-bottom: 1.25em;
-}
-
-form {
-  input.button {
-    margin: 1em 0 0;
-  }
-}
-
-.full-table {
-  border: 0;
-  td {
-    padding-top: 1.3em;
-    padding-bottom: 1.3em;
   }
 }
