@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
 APP_PATH = File.expand_path('../../config/application',  __FILE__)
 require_relative '../config/boot'
+
+if ARGV.first =~ /\Ac(ommand)?\z/
+  require "rails" # make Rails available for gems that check for it.
+  Bundler.require(:console)
+end
+
 require 'rails/commands'

@@ -72,3 +72,10 @@ group :production do
   gem 'rails_12factor'
   gem 'sentry-raven'
 end
+
+group :console do
+  # Better REPL with debugging capability and some Rails integration.
+  # https://github.com/rweng/pry-rails
+  gem "pry-rails",
+    group: :console
+end
