@@ -48,6 +48,7 @@ Gendo::Application.routes.draw do
   ## Development helpers
 
   unless Rails.env.production?
+    get "/dev/:action", controller: "development"
     get "/sign_in_as", to: "development#sign_in_as", as: :sign_in_as
   end
 end
