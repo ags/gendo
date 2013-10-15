@@ -1,0 +1,29 @@
+.notification {
+  @include alert-base;
+  @include alert-style($success-color);
+  border: none;
+  font-size: emCalc(16px);
+  margin-bottom:0;
+  padding: emCalc(10px) 0;
+}
+
+.notification-alert {
+  @include alert-style($alert-color);
+}
+
+.notification-content {
+  @include grid-row();
+  position: relative;
+
+  p {
+    font-weight:inherit;
+    margin-bottom:0;
+    padding: 0 0.8em;
+  }
+
+  .close {
+    @include alert-close;
+    top:0.25em;
+  }
+}
+

@@ -56,12 +56,16 @@ body.antialiased
               a href=authorize_oauth_github_path
                 span Sign In
 
-  - if flash[:notice]
-    .row
-      .small-12.columns
-        .alert-box(data-alert)
-          = flash[:notice]
-          a.close(href="#") &times;
+  - if flash[:notice].present?
+    .notification data-alert=""
+      .notification-content
+        p = flash[:notice]
+        a.close(href="#") &times;
+  - if flash[:error].present?
+    .notification.notification-alert data-alert=""
+      .notification-content
+        p = flash[:error]
+        a.close(href="#") &times;
 
   = render "/breadcrumbs"
 
