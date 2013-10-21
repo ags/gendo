@@ -9,7 +9,7 @@ gem 'jquery-rails'
 gem 'oauth2', require: false
 gem 'octokit', require: false
 gem 'pg'
-gem 'rails'
+gem 'rails', '>= 4.0.1.rc2'
 gem 'sidekiq'
 gem 'slim'
 gem 'unicorn'
