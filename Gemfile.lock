@@ -43,6 +43,12 @@ GIT
       rspec-mocks (= 3.0.0.pre)
 
 GIT
+  remote: git@github.com:rspec/rspec-support.git
+  revision: 610e7d78350e2b6d4b75cb8c8dac09d6bca6fbc0
+  specs:
+    rspec-support (3.0.0.pre)
+
+GIT
   remote: git@github.com:rspec/rspec.git
   revision: 90e3db8c90cd9423a9d89a32c9dee2c1444223e4
   specs:
@@ -285,6 +291,7 @@ DEPENDENCIES
   rspec-expectations!
   rspec-mocks!
   rspec-rails!
+  rspec-support!
   sass-rails
   sentry-raven
   sidekiq

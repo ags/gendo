@@ -34,16 +34,16 @@ group :test do
   gem 'machinist',
     require: false
 
-  gem 'rspec-expectations',
-    git: 'git@github.com:rspec/rspec-expectations.git'
-  gem 'rspec-mocks',
-    git: 'git@github.com:rspec/rspec-mocks.git'
-  gem 'rspec-core',
-    git: 'git@github.com:rspec/rspec-core.git'
-  gem 'rspec',
-    git: 'git@github.com:rspec/rspec.git'
-  gem 'rspec-rails',
-    git: 'git@github.com:rspec/rspec-rails.git'
+  %w(
+    rspec-support
+    rspec-expectations
+    rspec-mocks
+    rspec-core
+    rspec
+    rspec-rails
+  ).each do |name|
+    gem name, git: "git@github.com:rspec/#{name}.git"
+  end
 
   gem 'simplecov',
     require: false
