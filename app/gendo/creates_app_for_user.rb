@@ -1,9 +1,11 @@
 class CreatesAppForUser
   def self.create!(user, attributes={})
     App.transaction do
-      user.apps.create!(attributes).tap do |app|
-        AppAccessToken.generate(app).save!
-      end
+      app = user.apps.create!(attributes)
+
+      AppAccessToken.generate(app).save!
+
+      app
     end
   end
 end
