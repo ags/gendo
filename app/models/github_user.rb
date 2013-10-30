@@ -10,7 +10,7 @@ class GithubUser
 
     user.github_access_token = github_access_token
     user.email               = emails.find(&:primary?).email
-    user.name                = github_user[:name]
+    user.name              ||= github_user[:name]
 
     user
   end

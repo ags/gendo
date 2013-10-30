@@ -14,23 +14,32 @@ describe GithubUser do
       it "initializes one with github data" do
         user = GithubUser.find_or_initialize(access_token)
 
+        expect(user.new_record?).to eq(true)
         expect(user.github_access_token).to eq(access_token)
         expect(user.github_user_id).to eq(5514833)
         expect(user.email).to eq("alex.geoffrey.smith+gendotest@gmail.com")
         expect(user.name).to eq("Gendo Test")
-        expect(user.new_record?).to eq(true)
       end
     end
 
     context "when a user with the associated github user id exists" do
-      it "updates the User's github data" do
-        existing = User.make!(github_user_id: 5514833, name: "Bob")
+      let!(:existing) {
+        User.make!(github_user_id: 5514833, email: "a@b.com", name: "Bob")
+      }
 
+      it "updates the User's github data" do
         user = GithubUser.find_or_initialize(access_token)
 
         expect(user.new_record?).to eq(false)
-        expect(existing.id).to eq(user.id)
-        expect(user.name).to eq("Gendo Test")
+        expect(user.id).to eq(existing.id)
+        expect(user.email).to eq("alex.geoffrey.smith+gendotest@gmail.com")
+      end
+
+      it "does not change the user's name" do
+        user = GithubUser.find_or_initialize(access_token)
+
+        expect(user.id).to eq(existing.id)
+        expect(user.name).to eq(existing.name)
       end
     end
   end
