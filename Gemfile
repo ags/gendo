@@ -34,16 +34,7 @@ group :test do
   gem 'machinist',
     require: false
 
-  %w(
-    rspec-support
-    rspec-expectations
-    rspec-mocks
-    rspec-core
-    rspec
-    rspec-rails
-  ).each do |name|
-    gem name, git: "git@github.com:rspec/#{name}.git"
-  end
+  gem 'rspec-rails', '>= 3.0.0.beta1'
 
   gem 'simplecov',
     require: false
