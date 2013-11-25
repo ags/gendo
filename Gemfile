@@ -25,7 +25,6 @@ end
 
 group :test do
   gem 'capybara',
-    git: 'git@github.com:jnicklas/capybara.git',
     require: false
 
   gem 'database_cleaner',
