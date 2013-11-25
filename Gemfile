@@ -18,8 +18,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'uglifier'
-  # Staying on 4.1.6 for now as 4.2 > causes topbar issues
-  gem 'zurb-foundation', '4.1.6'
+  gem 'zurb-foundation'
   gem 'foundation-icons-sass-rails'
 end
 
