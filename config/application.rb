@@ -32,5 +32,14 @@ module Gendo
       host: ENV['HTTPS_HOST'] || ENV['HTTP_HOST'] || '0.0.0.0',
       port: Rails.env.development? ? (ENV["HTTP_PORT"] || "3000") : nil,
     }
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          methods: [:get, :post, :options]
+      end
+    end
   end
 end

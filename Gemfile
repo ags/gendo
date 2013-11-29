@@ -10,6 +10,7 @@ gem 'oauth2', require: false
 gem 'octokit', require: false
 gem 'pg'
 gem 'rails', '>= 4.0.1.rc2'
+gem 'rack-cors', require: 'rack/cors'
 gem 'sidekiq'
 gem 'slim'
 gem 'unicorn'
