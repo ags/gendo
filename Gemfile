@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 gem 'active_attr', require: false
+gem 'active_model_serializers'
 gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
