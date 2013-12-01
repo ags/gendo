@@ -10,6 +10,8 @@ class AppAccessToken < ActiveRecord::Base
     presence: true
 
   class << self
+    attr_writer :token_generator
+
     def generate(app)
       new(app: app, token: generate_token)
     end
@@ -18,8 +20,12 @@ class AppAccessToken < ActiveRecord::Base
 
     def generate_token
       begin
-        token = SecureRandom.urlsafe_base64(32)
+        token = token_generator.call
       end while exists?(token: token); token
+    end
+
+    def token_generator
+      @token_generator || ->{ SecureRandom.urlsafe_base64(32) }
     end
   end
 end

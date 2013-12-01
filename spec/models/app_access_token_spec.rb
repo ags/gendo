@@ -5,10 +5,18 @@ describe AppAccessToken do
     let(:app) { App.new }
     subject(:app_access_token) { AppAccessToken.generate(app) }
 
-    before do
-      allow(class_double("SecureRandom").as_stubbed_const).to \
-        receive(:urlsafe_base64).
-        and_return("first_token", "second_token")
+    around do |example|
+      tokens = %w(first_token second_token)
+      AppAccessToken.token_generator = ->{
+        @_tokens_generated ||= 0
+        token = tokens[@_tokens_generated]
+        @_tokens_generated += 1
+        token
+      }
+
+      example.run
+
+      AppAccessToken.token_generator = nil
     end
 
     it "instantiates a new AppAccessToken" do
