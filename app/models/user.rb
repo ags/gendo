@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
     dependent: :destroy
 
   validates :email,
-    format: {with: Formats::EMAIL}
+    format: {with: Formats::EMAIL},
+    uniqueness: true
 
   validates_length_of :password,
     minimum: PasswordPolicy::MINIMUM_LENGTH,

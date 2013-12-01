@@ -9,6 +9,9 @@ module ApiV1
 
       rescue_from Unauthorized,
         with: :respond_with_unauthorized
+
+      rescue_from ActiveRecord::RecordInvalid,
+        with: :respond_with_validation_failed
     end
 
     private
@@ -30,6 +33,26 @@ module ApiV1
     def respond_with_unauthorized(error)
       render status: :unauthorized,
         json: {message: error.message || "Unauthorized"}
+    end
+
+    def respond_with_validation_failed(error)
+      render status: :unprocessable_entity,
+        json: {
+          message: "Validation failed.",
+          errors: extract_validation_errors(error)
+        }
+    end
+
+    def extract_validation_errors(error)
+      error.record.errors.messages.map do |field, messages|
+        messages.map do |message|
+          {
+            resource: error.record.class.name,
+            field: field,
+            message: message
+          }
+        end
+      end.flatten
     end
 
     def verbose_errors?

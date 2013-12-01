@@ -9,6 +9,8 @@ Gendo::Application.routes.draw do
     resource :requests, only: [:create]
 
     resource :authentication, only: [:create]
+
+    resources :users, only: [:create]
   end
 
   namespace :oauth do
