@@ -16,4 +16,21 @@ describe User do
       end
     end
   end
+
+  describe "creation" do
+    let(:email) { "shinji@nerv.com" }
+    let(:password) { "hunter2" }
+
+    it "can be created with a github user id and email" do
+      user = User.create!(github_user_id: 1, email: email)
+
+      expect(user.valid?).to eq(true)
+    end
+
+    it "can be created with an email and password" do
+      user = User.create!(email: email, password: password)
+
+      expect(user.valid?).to eq(true)
+    end
+  end
 end

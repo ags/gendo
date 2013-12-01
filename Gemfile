@@ -4,6 +4,7 @@ ruby '2.1.0'
 
 gem 'active_attr', require: false
 gem 'active_model_serializers'
+gem 'bcrypt-ruby'
 gem 'crummy'
 gem 'draper'
 gem 'jquery-rails'
