@@ -22,4 +22,12 @@ class User < ActiveRecord::Base
   def self.from_param!(param)
     where(id: param).first!
   end
+
+  def self.with_email(email)
+    where(email: email).first
+  end
+
+  def current_access_token
+    user_access_tokens.current
+  end
 end

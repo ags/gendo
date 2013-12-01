@@ -7,6 +7,8 @@ Gendo::Application.routes.draw do
 
   namespace :api_v1, path: "api/v1", defaults: {format: "json"} do
     resource :requests, only: [:create]
+
+    resource :authentication, only: [:create]
   end
 
   namespace :oauth do
