@@ -66,3 +66,12 @@ User.blueprint do
   email    { "user#{sn}@blargh.com" }
   password { "hunter2" }
 end
+
+User.blueprint(:with_access_token) do
+  user_access_tokens { [UserAccessToken.make!] }
+end
+
+UserAccessToken.blueprint do
+  user
+  token { sn }
+end

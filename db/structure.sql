@@ -486,6 +486,38 @@ ALTER SEQUENCE sql_events_id_seq OWNED BY sql_events.id;
 
 
 --
+-- Name: user_access_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE user_access_tokens (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    token character varying(255) NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: user_access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE user_access_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE user_access_tokens_id_seq OWNED BY user_access_tokens.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -644,6 +676,13 @@ ALTER TABLE ONLY sql_events ALTER COLUMN id SET DEFAULT nextval('sql_events_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY user_access_tokens ALTER COLUMN id SET DEFAULT nextval('user_access_tokens_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -748,6 +787,14 @@ ALTER TABLE ONLY requests
 
 ALTER TABLE ONLY app_access_tokens
     ADD CONSTRAINT user_access_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_access_tokens_pkey1; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY user_access_tokens
+    ADD CONSTRAINT user_access_tokens_pkey1 PRIMARY KEY (id);
 
 
 --
@@ -865,6 +912,13 @@ CREATE INDEX index_sql_events_on_request_id ON sql_events USING btree (request_i
 
 
 --
+-- Name: index_user_access_tokens_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_user_access_tokens_on_user_id ON user_access_tokens USING btree (user_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -954,3 +1008,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131008110613');
 INSERT INTO schema_migrations (version) VALUES ('20131130134119');
 
 INSERT INTO schema_migrations (version) VALUES ('20131201003651');
+
+INSERT INTO schema_migrations (version) VALUES ('20131201020521');

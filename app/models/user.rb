@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   has_many :apps,
     dependent: :destroy
 
+  has_many :user_access_tokens,
+    dependent: :destroy
+
   validates :email,
     format: {with: Formats::EMAIL}
 
