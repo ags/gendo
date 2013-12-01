@@ -1,5 +1,7 @@
-def expect_response_body(body)
-  expect(response_body).to eq(body.stringify_keys)
+JsonExpressions::Matcher.assume_strict_hashes = false
+
+def expect_response_body(expression)
+  expect(response_body).to match_json_expression(expression)
 end
 
 def response_body

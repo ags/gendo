@@ -32,6 +32,9 @@ group :test do
   gem 'database_cleaner',
     require: false
 
+  gem 'json_expressions',
+    require: false
+
   gem 'machinist',
     require: false
 
