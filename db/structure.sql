@@ -496,7 +496,9 @@ CREATE TABLE users (
     updated_at timestamp without time zone,
     github_user_id integer,
     github_access_token character varying(255),
-    name character varying(255)
+    name character varying(255),
+    password_digest character varying(255),
+    salt character varying(255)
 );
 
 
@@ -941,3 +943,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130925131559');
 INSERT INTO schema_migrations (version) VALUES ('20130928000652');
 
 INSERT INTO schema_migrations (version) VALUES ('20131008110613');
+
+INSERT INTO schema_migrations (version) VALUES ('20131130134119');
