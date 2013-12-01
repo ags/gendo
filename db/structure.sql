@@ -865,6 +865,13 @@ CREATE INDEX index_sql_events_on_request_id ON sql_events USING btree (request_i
 
 
 --
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
 -- Name: index_view_events_on_request_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -945,3 +952,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130928000652');
 INSERT INTO schema_migrations (version) VALUES ('20131008110613');
 
 INSERT INTO schema_migrations (version) VALUES ('20131130134119');
+
+INSERT INTO schema_migrations (version) VALUES ('20131201003651');
