@@ -29,7 +29,7 @@ module ApiV1
 
     def respond_with_unauthorized(error)
       render status: :unauthorized,
-        json: {message: "Unauthorized"}
+        json: {message: error.message || "Unauthorized"}
     end
 
     def verbose_errors?
