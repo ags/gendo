@@ -3,11 +3,10 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 gem 'active_attr', require: false
-gem 'active_model_serializers',
-  git: 'https://github.com/rails-api/active_model_serializers.git'
 gem 'bcrypt-ruby'
 gem 'crummy'
 gem 'draper'
+gem 'jbuilder'
 gem 'jquery-rails'
 gem 'oauth2', require: false
 gem 'octokit', require: false

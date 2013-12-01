@@ -1,6 +1,4 @@
 class UserAuthentication < Struct.new(:user)
-  include SerializableStruct
-
   def user_id
     user.id
   end

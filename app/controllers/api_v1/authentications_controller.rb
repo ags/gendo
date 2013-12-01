@@ -6,7 +6,7 @@ module ApiV1
       authentication = Authenticator.new(email, password).authenticate
 
       if authentication.valid?
-        render json: authentication, root: false
+        respond_with(@authentication = authentication)
       else
         raise Unauthorized.new(authentication.message)
       end
