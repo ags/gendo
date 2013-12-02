@@ -12,6 +12,9 @@ module ApiV1
 
       rescue_from ActiveRecord::RecordInvalid,
         with: :respond_with_validation_failed
+
+      rescue_from ActiveRecord::RecordNotFound,
+        with: :respond_with_not_found
     end
 
     private
@@ -41,6 +44,11 @@ module ApiV1
           message: "Validation failed.",
           errors: extract_validation_errors(error)
         }
+    end
+
+    def respond_with_not_found(error)
+      render status: :not_found,
+        json: {message: "Resource not found."}
     end
 
     def extract_validation_errors(error)

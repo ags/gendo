@@ -7,6 +7,10 @@ module ApiV1
       respond_with(@user, status: :created)
     end
 
+    def show
+      respond_with(@user = authorized_user)
+    end
+
     private
 
     def user_params

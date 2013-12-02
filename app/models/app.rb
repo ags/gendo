@@ -36,6 +36,7 @@ class App < ActiveRecord::Base
   end
 
   def self.with_access_token!(access_token)
+    # TODO this should check for current token
     joins(:app_access_tokens).
       where(app_access_tokens: {token: access_token}).
       first!

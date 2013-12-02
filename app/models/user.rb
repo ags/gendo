@@ -28,6 +28,13 @@ class User < ActiveRecord::Base
     where(email: email).first
   end
 
+  def self.with_access_token!(access_token)
+    # TODO this should check for current token
+    joins(:user_access_tokens).
+      where(user_access_tokens: {token: access_token}).
+      first!
+  end
+
   def current_access_token
     user_access_tokens.current
   end

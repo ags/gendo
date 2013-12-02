@@ -2,7 +2,13 @@ module ApiV1
   module Authentication
     def current_app
       App.with_access_token!(bearer_token)
-    rescue RequestError, ActiveRecord::RecordNotFound => e
+    rescue AuthorizationError, ActiveRecord::RecordNotFound => e
+      raise ::ApiV1::Unauthorized, e.message
+    end
+
+    def authorized_user
+      User.with_access_token!(bearer_token)
+    rescue AuthorizationError => e
       raise ::ApiV1::Unauthorized, e.message
     end
 
@@ -10,11 +16,11 @@ module ApiV1
 
     def bearer_token
       if authorization_header.blank?
-        raise RequestError, "Authorization header missing or empty."
+        raise AuthorizationError, "Authorization header missing or empty."
       elsif authorization_header.match(/\ABearer (.*)\z/)
         $1
       else
-        raise RequestError, "Authorization header contains no bearer token."
+        raise AuthorizationError, "Authorization header contains no bearer token."
       end
     end
 
@@ -23,6 +29,6 @@ module ApiV1
     end
 
     Error = Class.new(StandardError)
-    RequestError = Class.new(Error)
+    AuthorizationError = Class.new(Error)
   end
 end

@@ -19,3 +19,13 @@ def expect_validation_failure(errors)
     errors: errors.is_a?(Array) ? errors : [errors]
   )
 end
+
+def expect_missing_authorization
+  expect_response_status(401)
+  expect_response_body(message: "Authorization header missing or empty.")
+end
+
+def expect_not_found
+  expect_response_status(404)
+  expect_response_body(message: "Resource not found.")
+end
