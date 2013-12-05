@@ -10,12 +10,9 @@ describe "creating a user" do
       expect_response_status(201)
       expect_response_body({
         user: {
-          id: :user_id,
+          id: Integer,
           email: "shinji@nerv.org",
-        },
-        authentication: {
-          user_id: :user_id,
-          access_token: :access_token,
+          access_token: String,
         }
       })
     end

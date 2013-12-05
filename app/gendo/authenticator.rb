@@ -10,7 +10,7 @@ class Authenticator
     if user && user.authenticate(password)
       UserAuthentication.new(user)
     else
-      InvalidAuthentication.new("Incorrect email or password")
+      InvalidAuthentication.new("Incorrect email or password.")
     end
   end
 

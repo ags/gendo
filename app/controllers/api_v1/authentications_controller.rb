@@ -1,9 +1,9 @@
 module ApiV1
   class AuthenticationsController < ApiController
     def create
-      email, password = params.values_at(:email, :password)
+      username, password = params.values_at(:username, :password)
 
-      authentication = Authenticator.new(email, password).authenticate
+      authentication = Authenticator.new(username, password).authenticate
 
       if authentication.valid?
         respond_with(@authentication = authentication)

@@ -1,4 +1,4 @@
 json.(authentication,
-  :user_id,
   :access_token
 )
+json.token_type "bearer"
