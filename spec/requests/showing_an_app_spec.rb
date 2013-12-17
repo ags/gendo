@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "showing an app" do
-  let(:_app) { App.make!(user: user) }
+  let(:_app) { App.make!(:with_access_token, user: user) }
   let(:user) { User.make!(:with_access_token) }
 
   let(:authorization) { bearer_auth(user.current_access_token) }
@@ -22,6 +22,7 @@ describe "showing an app" do
         id: _app.id,
         slug: _app.slug,
         name: _app.name,
+        access_token: _app.current_access_token.token,
       }}.strict!)
     end
   end
