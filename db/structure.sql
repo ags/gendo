@@ -109,7 +109,6 @@ CREATE TABLE apps (
     id integer NOT NULL,
     user_id integer NOT NULL,
     name character varying(255) NOT NULL,
-    slug character varying(255) NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -1010,3 +1009,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131130134119');
 INSERT INTO schema_migrations (version) VALUES ('20131201003651');
 
 INSERT INTO schema_migrations (version) VALUES ('20131201020521');
+
+INSERT INTO schema_migrations (version) VALUES ('20131217110522');

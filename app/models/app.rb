@@ -42,13 +42,8 @@ class App < ActiveRecord::Base
       first!
   end
 
-  def to_param
-    "#{id}-#{slug}"
-  end
-
-  def name=(name)
-    super
-    self.slug ||= name.parameterize
+  def slug
+    "#{id}-#{name.parameterize}"
   end
 
   def find_or_create_source!(params)

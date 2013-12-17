@@ -1,15 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe App do
-  it "sets a slug on name assignment" do
-    app = App.new(name: "Shinji Ikari")
-    expect(app.slug).to eq("shinji-ikari")
-  end
-
   describe ".from_param" do
-    it "returns the App with the given id + slug" do
+    it "returns the App with the given slug" do
       app = App.make!
-      expect(App.from_param(app.to_param)).to eq(app)
+      expect(App.from_param(app.slug)).to eq(app)
     end
 
     context "when no such app exists" do
@@ -36,10 +31,10 @@ describe App do
     end
   end
 
-  describe "#to_param" do
-    it "returns the App id + slug" do
+  describe "#slug" do
+    it "returns the App id + parameterized name" do
       app = App.make!
-      expect(app.to_param).to eq("#{app.id}-#{app.slug}")
+      expect(app.slug).to eq("#{app.id}-#{app.name.parameterize}")
     end
   end
 
