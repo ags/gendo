@@ -6,7 +6,7 @@ Gendo::Application.routes.draw do
   root "home#index"
 
   namespace :api_v1, path: "api/v1", defaults: {format: "json"} do
-    resources :apps, only: [:index]
+    resources :apps, only: [:index, :show]
 
     resource :requests, only: [:create]
 

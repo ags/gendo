@@ -13,7 +13,7 @@ module ApiV1
       rescue_from ActiveRecord::RecordInvalid,
         with: :respond_with_validation_failed
 
-      rescue_from ActiveRecord::RecordNotFound,
+      rescue_from ActiveRecord::RecordNotFound, NotFound,
         with: :respond_with_not_found
     end
 
