@@ -1,10 +1,8 @@
 class App < ActiveRecord::Base
   include RetryOnException
+  include HasAccessTokens
 
   belongs_to :user
-
-  has_many :app_access_tokens,
-    dependent: :destroy
 
   has_many :sources,
     dependent: :destroy
@@ -35,13 +33,6 @@ class App < ActiveRecord::Base
     where(id: id).first!
   end
 
-  def self.with_access_token!(access_token)
-    # TODO this should check for current token
-    joins(:app_access_tokens).
-      where(app_access_tokens: {token: access_token}).
-      first!
-  end
-
   def slug
     "#{id}-#{name.parameterize}"
   end
@@ -50,9 +41,5 @@ class App < ActiveRecord::Base
     retry_on_exception(ActiveRecord::RecordNotUnique) do
       sources.where(params).first_or_create!
     end
-  end
-
-  def current_access_token
-    app_access_tokens.last
   end
 end

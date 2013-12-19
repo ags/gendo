@@ -1,10 +1,8 @@
 class User < ActiveRecord::Base
   include SecurePasswordWithoutValidation
+  include HasAccessTokens
 
   has_many :apps,
-    dependent: :destroy
-
-  has_many :user_access_tokens,
     dependent: :destroy
 
   validates :email,
@@ -26,16 +24,5 @@ class User < ActiveRecord::Base
 
   def self.with_email(email)
     where(email: email).first
-  end
-
-  def self.with_access_token!(access_token)
-    # TODO this should check for current token
-    joins(:user_access_tokens).
-      where(user_access_tokens: {token: access_token}).
-      first!
-  end
-
-  def current_access_token
-    user_access_tokens.current
   end
 end

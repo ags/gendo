@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe App do
+  include_examples "has access tokens", AppAccessToken
+
   describe ".from_param" do
     it "returns the App with the given slug" do
       app = App.make!
@@ -16,33 +18,10 @@ describe App do
     end
   end
 
-  describe ".with_access_token!" do
-    it "returns the App associated with the given access token" do
-      token = AppAccessToken.make!(token: "mah-token")
-      expect(App.with_access_token!("mah-token")).to eq(token.app)
-    end
-
-    context "no such App exists" do
-      it "raises ActiveRecord::RecordNotFound" do
-        expect do
-          App.with_access_token!("wat")
-        end.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-  end
-
   describe "#slug" do
     it "returns the App id + parameterized name" do
       app = App.make!
       expect(app.slug).to eq("#{app.id}-#{app.name.parameterize}")
-    end
-  end
-
-  describe "#current_access_token" do
-    it "returns the associated UserAccessToken currently in-use" do
-      token = AppAccessToken.make!
-      app = token.app
-      expect(app.current_access_token).to eq(token)
     end
   end
 

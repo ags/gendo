@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe User do
+  include_examples "has access tokens", UserAccessToken
+
   describe "creation" do
     let(:email) { "shinji@nerv.com" }
     let(:password) { "hunter2" }
