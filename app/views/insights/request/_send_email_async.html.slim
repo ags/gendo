@@ -1,3 +1,4 @@
 - insight.mailer_events.each do |mailer_event|
-  = link_to "Send #{mailer_event.mailer} asynchronously",
-    app_mailer_event_path(mailer_event.app, mailer_event)
+  p
+    = link_to "Send #{mailer_event.mailer} asynchronously",
+      app_mailer_event_path(mailer_event.app, mailer_event)
